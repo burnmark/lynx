@@ -1,2 +1,2 @@
 # lynx
-Web app for sharing lynx
+Web app for sharing links
