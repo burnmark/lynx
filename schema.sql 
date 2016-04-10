@@ -1,8 +1,9 @@
+DROP DATABASE IF EXISTS lynx;
 CREATE DATABASE lynx;
 USE DATABASE lynx;
 
-DROP TABLE IF EXISTS
-	link_category, message, link, user, category, domain;
+-- DROP TABLE IF EXISTS
+-- 	link_category, message, link, user, category, domain;
 
 CREATE TABLE domain (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -16,7 +17,7 @@ CREATE TABLE category (
 
 CREATE TABLE user (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	fullName VARCHAR(127) NOT NULL,
+	displayName VARCHAR(127) NOT NULL,
 	email VARCHAR(127) NOT NULL,
 	passwordHash CHAR(96) NOT NULL
 );
@@ -25,7 +26,6 @@ CREATE TABLE link (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	domainId INT UNSIGNED NOT NULL,
 	url VARCHAR(2083) NOT NULL,
-	note VARCHAR(511),
 	title VARCHAR(127),
 	description VARCHAR(255),
 	imgUrl VARCHAR(2083),
@@ -41,6 +41,7 @@ CREATE TABLE message (
 	linkId INT UNSIGNED NOT NULL,
 	senderId INT UNSIGNED NOT NULL,
 	recipientId INT UNSIGNED NOT NULL,
+	note VARCHAR(511),
 	timeSent TIMESTAMP,
 	isRead BOOLEAN NOT NULL DEFAULT 0,
 
