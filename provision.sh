@@ -53,9 +53,10 @@ apt-get install -y redis-server
 # Installing java and solr
 # https://www.vultr.com/docs/how-to-install-and-configure-solr-on-ubuntu-14-04
 apt-get install python-software-properties
-add-apt-repository ppa:webupd8team/java
-apt-get update
-apt-get install oracle-java8-installer
+add-apt-repository ppa:webupd8team/java -y
+apt-get update -y
+apt-get install oracle-java8-installer -y
+apt-get install ant -y
 wget http://apache.mirror1.spango.com/lucene/solr/5.2.1/solr-5.2.1.tgz
 tar xzf solr-5.2.1.tgz solr-5.2.1/bin/install_solr_service.sh --strip-components=2
 ./install_solr_service.sh solr-5.2.1.tgz
@@ -64,4 +65,4 @@ tar xzf solr-5.2.1.tgz solr-5.2.1/bin/install_solr_service.sh --strip-components
 npm config set loglevel error -g
 
 # create database
-mysql -u root < schema.sql
+mysql -u root < /vagrant/database/schema.sql
