@@ -36,17 +36,9 @@ app.use(session({
 	store: new RedisStore()
 }));
 
-passport.use(new LocalStrategy(function (username, password, done) {
-	console.log(username, password);
-	//check if the username is in the database - get all the info back
-	//if user name is not in db
-	//	done(null, false)
-	//check password against hash in db, if no match
-	//must use bcrypt to hash the password
-	//	done(null, false)
-	//if matches
-	//	done(null, info from db)
-	Database.getUserByUsername(username)
+passport.use(new LocalStrategy(function (email, password, done) {
+	console.log(email, password);
+	Database.getUserByEmail(email)
 		.then(function (dbUser) {		
 
 			if (!dbUser) return done(null, false, {message: 'Incorrect credentials.'});
@@ -62,13 +54,7 @@ passport.use(new LocalStrategy(function (username, password, done) {
 }));
 
 passport.serializeUser(function (user, done) {
-	// store only the primary key for the user in the user object ?
-	// or store all data?
-	// which is more important, speed or consistency?
-	// 	speed might be better... user information stored in db includes:
-	// 		id, displayname, email, and passwordhash
-	// 	these are things that are not likely to change.
-	return done(null, user.id); //does "done" set the req.session object?
+	return done(null, user.id); 
 });
 
 passport.deserializeUser(function (id, done) {
@@ -111,31 +97,33 @@ app.post('/login', passport.authenticate('local'), function (req, res) {
 });
 
 // public
-app.get('/logout', function (req, res) {
-	// if (!req.isAuthenticated()) {
-		req.logout();		
-	// }
+app.get('/logout', function (req, res) {	
+	req.logout();			
 	res.redirect('/');
 });
 
 // public
 app.post('/signup', function (req, res, next) {
-	//might want to do error 
+	//might want to do error checking
 	//posts new username and new password and other info -> new user obj
-	//must validate these fields (like password)
-	//check if username is already in the db
-	//signal did something wrong: 
-	// 	var err = new Error('error'); <- captures stack trace
-	// 	err.status = 400
-	//	next(err);
-	
-	//insert new record into db
-	//get back new id value
-	//req.body = new data
-	//req.login(req.body)
-	//res.json({message: 'signed up'});
+	//field validation will be done on the client.
+
+	bcrypt.hash(req.body.password, 10, function (err, passwordHash) {
+		if (err) return next(err);
+		// if username is already in db, returns error
+		// if not, adds new user to db, returns user information
+		Database.addUser(req.body.displayname, req.body.username, passwordHash)
+			.then(user => {
+				// user contains id, displayname, email, passwordhash 
+				req.body = user; //? are ^ fields okay?
+				req.login(req.body); //does req.login() look for 'username' & 'password'?
+				res.json({message: 'signed up'});
+			})
+			.catch(next);
+	});
 });
 
+// Ensures that only authenticated users can reach the api calls after this point
 app.use(function (req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
@@ -149,16 +137,131 @@ app.get('/api/users/me', function (req, res) {
 	res.json(req.user);
 });
 
-//the session secret for express
-console.log(cookieSigSecret);
-
 app.use(function (err, req, res, next) {
 	console.error(err.stack);
 	// always have json coming back? send back json
 	res.status(err.status || 500).send({message: err.message});
 });
 
+// populate the display
+app.get('api/categories', function (req, res) {
+	Database.getCategories(req.user.id)
+		.then(rows => res.json(rows))
+		.catch(next);
+});
+
+app.get('api/domains', function (req, res) {
+	Database.getDomains(req.user.id)
+		.then(rows => res.json(rows))
+		.catch(next);
+});
+
+app.get('api/friends', function (req, res) {
+	Database.getFriends(req.user.id)
+		.then(rows => res.json(rows))
+		.catch(next);
+});
+
+app.get('api/recievedMessages', function (req, res) {
+	Database.getRecievedMessages(req.user.id)
+		.then(rows => res.json(rows))
+		.catch(next);
+});
+
+app.get('api/sentMessages', function (req, res) {
+	Database.getSentMessages(req.user.id)
+		.then(rows => res.json(rows))
+		.catch(next);
+});
+
+// new message
+app.post('api/newMessage', function (req, res) {
+	//into is in req.body
+});
+
 var server = app.listen(80, function () {
 	console.log('listening at http://localhost:80');
 });
+
+
+// testing the Database object
+// Database.getUserByEmail('enagmail.com')
+// 	.then(rows => {
+// 		console.log('testing getUserByEmail w/ valid email : ');
+// 		console.log(rows);
+// 	});
+
+// Database.getUserByEmail('notValidemail')
+// 	.then(rows => {
+// 		console.log('testing getUserByEmail w/ invalid email :');
+// 		console.log(rows);
+// 	});
+
+// Database.getUserById(1)
+// 	.then(rows => {
+// 		console.log('testing getUserById w/ valid id :');
+// 		console.log(rows);
+// 	});
+
+// Database.getUserById(-1)
+// 	.then(rows => {
+// 		console.log('testing getUserById w/ invalid id :');
+// 		console.log(rows);
+// 	});
+
+// Database.getCategories(1)
+// 	.then(rows => {
+// 		console.log('testing getCategories w/ valid userId');
+// 		console.log(rows);
+// 	})
+// 	.catch(err => console.log(err));
+
+// Database.getCategories(-1)
+// 	.then(rows => {
+// 		console.log('testing getCategories w/ invalid userId');
+// 		console.log(rows);
+// 	});
+
+// Database.getDomains(-1)
+// 	.then(rows => {
+// 		console.log(rows)
+// 	});
+
+// Database.getFriends(1)
+// 	.then(rows => {
+// 		console.log(rows);
+// 	});
+
+// Database.getSentMessages(1)
+// 	.then(rows => console.log(rows));
+
+//user already exists
+// Database.addUser('enamark', 'enagmail.com', 'dskhfkjdsh')
+// 	.then(rows => console.log(row))
+// 	.catch(err => console.log(err));
+
+// Database.addUser('ena3', 'ena2@gmail.com', 'sdkhjgkjdfhgkdf')
+// 	.then(rows => console.log(rows))
+// 	.catch(err => console.log(err));
+
+// adding domain that already exists
+// Database.addDomain('facebook')
+// 	.then(rows => console.log(rows))
+// 	.catch(err => console.log(err));
+
+// //Adding new domain
+// Database.addDomain('google')
+// 	.then(rows => console.log(rows))
+// 	.catch(err => console.log(err));
+
+// adding category that already exists
+// should return the id 
+Database.addCategory('funny')
+	.then(rows => console.log(rows))
+	.catch(err => console.log(err));
+
+Database.addCategory('cute')
+	.then(rows => console.log(rows))
+	.catch(err => console.log(err));
+
 

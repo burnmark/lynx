@@ -38,7 +38,6 @@ CREATE TABLE message (
 	linkId INT UNSIGNED NOT NULL,
 	senderId INT UNSIGNED NOT NULL,
 	recipientId INT UNSIGNED NOT NULL,
-	categoryId INT UNSIGNED NOT NULL,
 	note VARCHAR(511),
 	timeSent TIMESTAMP,
 	isRead BOOLEAN NOT NULL DEFAULT 0
@@ -47,7 +46,6 @@ CREATE TABLE message (
 ALTER TABLE message ADD CONSTRAINT `fk_message_link` FOREIGN KEY (linkId) REFERENCES link (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 ALTER TABLE message ADD CONSTRAINT `fk_message_sender` FOREIGN KEY (senderId) REFERENCES user (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 ALTER TABLE message ADD CONSTRAINT `fk_message_recipient` FOREIGN KEY (recipientId) REFERENCES user (id) ON DELETE CASCADE ON UPDATE RESTRICT;
-ALTER TABLE message ADD CONSTRAINT `fk_message_category` FOREIGN KEY (categoryId) REFERENCES category (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 CREATE TABLE message_category (
 	messageId INT UNSIGNED NOT NULL,
@@ -57,3 +55,13 @@ CREATE TABLE message_category (
 
 ALTER TABLE message_category ADD CONSTRAINT `fk_mc_message` FOREIGN KEY (messageId) REFERENCES  message (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 ALTER TABLE message_category ADD CONSTRAINT `fk_mc_category` FOREIGN KEY (categoryId) REFERENCES  category (id) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+-- Stored procedure for adding new messages, message_categories, and links
+
+DELIMITER //
+CREATE PROCEDURE new_message (
+	linkId INT,
+	senderId INT,
+	recipientEmail VARCHAR(127),
+	note
+)
