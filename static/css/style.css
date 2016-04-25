@@ -1,0 +1,36 @@
+.filter-btn {				
+	border: 1px rgba(0, 0, 0, 0.2) solid;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin-right: 3px;
+	margin-bottom: 5px;
+	display: inline-block;				
+}
+
+.filter-btn:hover {
+	border: 1px #333 solid;
+	color: #333;
+	cursor: pointer;
+}
+
+.avatar {
+   background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
+   background-size: cover;
+   border-radius: 500px;
+   height: 50px;
+   margin-top: 5px;
+   width: 50px;   
+}
+
+.fa-search {
+	float: right;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.title-bar {
+	border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+	color: rgba(0, 0, 0, 0.8);
+	font-size: 20px;
+}

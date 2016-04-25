@@ -90,6 +90,8 @@ VALUES
 	('jeff', 'jeffgmail.com', 'skdjghfksdjhfjks'),
 	('stearns', 'stearnsgmail.com', 'kjsdhfkjdhsghkds');
 
+	
+
 CALL insert_link (
 	'facebook', 
 	'www.facebook.com', 
