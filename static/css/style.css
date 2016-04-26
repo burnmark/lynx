@@ -1,3 +1,22 @@
+/*General styles*/
+.selected {
+	border-bottom: 3px solid black;
+}
+
+.content-wrap {
+	padding-left: 1%;
+	padding-right: 1%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+	padding: 20px;
+}
+
+/*Filter button styles*/
 .filter-btn {				
 	border: 1px rgba(0, 0, 0, 0.2) solid;
 	padding-left: 6px;
@@ -9,28 +28,107 @@
 	display: inline-block;				
 }
 
-.filter-btn:hover {
+.filter-btn:hover, .avatar-btn:hover {
 	border: 1px #333 solid;
 	color: #333;
 	cursor: pointer;
 }
 
+/*avatar icon styles*/
 .avatar {
-   background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
-   background-size: cover;
+   /*background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
+   background-size: cover;*/
    border-radius: 500px;
    height: 50px;
    margin-top: 5px;
    width: 50px;   
+   display: inline-block;
+   margin-right: 4px;
 }
 
+.avatar-btn:hover {
+	height: 48px;
+   	margin-top: 5px;
+   	width: 48px;  
+}
+
+/*search icon style*/
 .fa-search {
 	float: right;
 	color: rgba(0, 0, 0, 0.6);
 }
 
+/*title bar style*/
 .title-bar {
 	border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
 	color: rgba(0, 0, 0, 0.8);
-	font-size: 20px;
+	font-size: 20px;	
+}
+
+.title-bar span {
+	margin-right: 5%;
+}
+
+.title-bar span:hover {
+	border-bottom: 3px solid black;
+	cursor: pointer;
+}
+
+/*link detail styles*/
+.link-detail {
+    background-color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.15);
+    height: 120px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.link-detail .text {
+    height: 100%;
+    margin-right: 120px; /* same as .image width */
+    padding: 5px 8px;
+    position: relative;
+}
+
+.link-detail .text .title {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.link-detail .text .body {
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.link-detail .text .url {
+    background-color: #FFF;
+    bottom: 0;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    height: 20px;
+    left: 0;
+    line-height: 15px;
+    overflow: hidden;
+    padding: 0 8px 5px;
+    position: absolute;
+    right: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.link-detail .image {
+   /* background: url(../img/cat1.jpg) center center;
+    background-size: cover;*/
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 120px;
 }
