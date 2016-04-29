@@ -71,17 +71,43 @@
 	
 	var _LinkDetail2 = _interopRequireDefault(_LinkDetail);
 	
+	var _Message = __webpack_require__(/*! ./Message.jsx */ 173);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var words = ['this', 'is', 'a', 'comment'],
-	    avatars = ['img/person1.jpg', 'img/person2.jpg', 'img/person3.jpg', 'img/person4.jpg'];
+	    avatars = ['img/person1.jpg', 'img/person2.jpg', 'img/person3.jpg', 'img/person4.jpg'],
+	    messageData = {
+		avatarImgUrl: 'img/person1.jpg',
+		time: Date.now(),
+		note: 'Hey Bob I saw this article and thought of your face because words come out of it.',
+		categories: ['articles', 'studies', 'things'],
+		linkImgUrl: 'img/cat1.jpg',
+		title: 'Studies show things happen',
+		descr: 'A new study shows that things happen when people do stuff and it\'s pretty cool to think about about what but link the who what why when where how',
+		url: 'http://newyorktimes.com/studies-show-that-thing-happen-yo-whaaaaat'
+	};
 	
 	// render(< />, document.getElementById('content'));
 	
 	// render(<TitleBar title="hello"/>, document.getElementById('content'));
 	// render(<TabBar />, document.getElementById('content'));
-	(0, _reactDom.render)(_react2.default.createElement(_FilterCard2.default, { title: 'Categories', words: words, avatars: avatars }), document.getElementById('content'));
-	// render(<LinkDetail />, document.getElementById('content'));
+	
+	/*
+	filter card needs: 
+	type (either filterbtns or avatars)
+		words or avatars
+	btnclass (true or false/undefined)
+	title
+	
+	
+	 */
+	// render(<FilterCard title="Categories" words={words} avatars={avatars} />, document.getElementById('content'));
+	
+	// render(<LinkDetail data={messageData} />, document.getElementById('content'));
+	(0, _reactDom.render)(_react2.default.createElement(_Message2.default, { data: messageData }), document.getElementById('content'));
 
 /***/ },
 /* 1 */
@@ -20930,10 +20956,9 @@
 		_createClass(LinkDetail, [{
 			key: 'render',
 			value: function render() {
-				//need: title, description, url, img url
+				//need: title, description, url
 				var styles = {
-					//this.props.img
-					backgroundImage: 'url(img/cat1.jpg)',
+					backgroundImage: 'url(' + this.props.data.linkImgUrl + ')',
 					backgroundPosition: 'center',
 					backgroundAttachment: 'center',
 					backgroundSize: 'cover'
@@ -20947,17 +20972,17 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'title' },
-							'Studies show things happen'
+							this.props.data.title
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'body' },
-							'A new study shows that things happen when people do stuff and it\'s pretty cool to think about about what but link the who what why when where how'
+							this.props.data.descr
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'url' },
-							'http://newyorktimes.com/studies-show-that-thing-happen-yo-whaaaaat'
+							this.props.data.url
 						)
 					),
 					_react2.default.createElement('div', { className: 'image', style: styles })
@@ -20969,6 +20994,106 @@
 	}(_react2.default.Component);
 	
 	exports.default = LinkDetail;
+
+/***/ },
+/* 173 */
+/*!***************************************!*\
+  !*** ./static/components/Message.jsx ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Avatar = __webpack_require__(/*! ./Avatar.jsx */ 171);
+	
+	var _Avatar2 = _interopRequireDefault(_Avatar);
+	
+	var _FilterBtn = __webpack_require__(/*! ./FilterBtn.jsx */ 170);
+	
+	var _FilterBtn2 = _interopRequireDefault(_FilterBtn);
+	
+	var _LinkDetail = __webpack_require__(/*! ./LinkDetail.jsx */ 172);
+	
+	var _LinkDetail2 = _interopRequireDefault(_LinkDetail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Message = function (_React$Component) {
+		_inherits(Message, _React$Component);
+	
+		function Message() {
+			_classCallCheck(this, Message);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Message).apply(this, arguments));
+		}
+	
+		_createClass(Message, [{
+			key: 'render',
+			value: function render() {
+				// needs
+				// datetime, note, and [categories]
+				// avatarImgUrl
+				// linkImgUrl, title, descr, url
+				// word
+				var categories = this.props.data.categories.map(function (category, i) {
+					return _react2.default.createElement(_FilterBtn2.default, { key: i, word: category });
+				});
+				return _react2.default.createElement(
+					'div',
+					{ className: 'message' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'sender' },
+						_react2.default.createElement(_Avatar2.default, { imgUrl: this.props.data.avatarImgUrl }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'time' },
+							'3:30pm',
+							_react2.default.createElement('br', null),
+							'Feb 11',
+							_react2.default.createElement('br', null),
+							'2015'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'content' },
+						_react2.default.createElement(_LinkDetail2.default, { data: this.props.data }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'note' },
+							this.props.data.note
+						),
+						_react2.default.createElement(
+							'div',
+							null,
+							categories
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Message;
+	}(_react2.default.Component);
+	
+	exports.default = Message;
 
 /***/ }
 /******/ ]);

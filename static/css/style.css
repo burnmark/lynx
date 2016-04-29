@@ -132,3 +132,47 @@ body {
     top: 0;
     width: 120px;
 }
+
+/*message styles*/
+.message {
+    position: relative;
+    background-color: #FAFAFA;
+    color: rgba(0, 0, 0, 0.8);
+    margin: 20px;
+}
+
+.message .sender {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 70px;
+}
+
+.message .sender .avatar {
+    background: url(img/person1.jpg) center center;
+    background-size: cover;
+    border-radius: 500px;
+    height: 50px;
+    margin: auto;
+    margin-top: 5px;
+    width: 50px;
+}
+
+.message .sender .time {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 11px;
+    line-height: 13px;
+    margin-top: 4px;
+}
+
+.message .content {
+    margin-left: 70px; /* same as .sender width */
+    position: relative;
+}
+.message .content .note {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 17px;
+}

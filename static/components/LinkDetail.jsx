@@ -2,10 +2,9 @@ import React from 'react';
 
 export default class LinkDetail extends React.Component {
 	render() {
-		//need: title, description, url, img url
+		//need: title, description, url
 		var styles = {
-									//this.props.img
-				backgroundImage : 'url(img/cat1.jpg)',
+				backgroundImage : 'url(' + this.props.data.linkImgUrl + ')',
 				backgroundPosition: 'center',
 				backgroundAttachment: 'center',
 				backgroundSize: 'cover'
@@ -14,13 +13,13 @@ export default class LinkDetail extends React.Component {
 			 <div className="link-detail">
 	            <div className="text">
 	                <div className="title">	                
-	                    Studies show things happen
+	                    {this.props.data.title}
 	                </div>
 	                <div className="body">
-	                   A new study shows that things happen when people do stuff and it's pretty cool to think about about what but link the who what why when where how
+	                   {this.props.data.descr}
 	                </div>
 	                <div className="url">
-	                    http://newyorktimes.com/studies-show-that-thing-happen-yo-whaaaaat
+	                    {this.props.data.url}
 	                </div>
 	            </div>
 	            <div className="image" style={styles}></div>
