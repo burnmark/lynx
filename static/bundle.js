@@ -55,31 +55,49 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 32);
 	
-	var _TitleBar = __webpack_require__(/*! ./TitleBar.jsx */ 166);
+	var _Page = __webpack_require__(/*! ./Page.jsx */ 166);
 	
-	var _TitleBar2 = _interopRequireDefault(_TitleBar);
-	
-	var _TabBar = __webpack_require__(/*! ./TabBar.jsx */ 168);
-	
-	var _TabBar2 = _interopRequireDefault(_TabBar);
-	
-	var _FilterCard = __webpack_require__(/*! ./FilterCard.jsx */ 169);
-	
-	var _FilterCard2 = _interopRequireDefault(_FilterCard);
-	
-	var _LinkDetail = __webpack_require__(/*! ./LinkDetail.jsx */ 172);
-	
-	var _LinkDetail2 = _interopRequireDefault(_LinkDetail);
-	
-	var _Message = __webpack_require__(/*! ./Message.jsx */ 173);
-	
-	var _Message2 = _interopRequireDefault(_Message);
+	var _Page2 = _interopRequireDefault(_Page);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var words = ['this', 'is', 'a', 'comment'],
-	    avatars = ['img/person1.jpg', 'img/person2.jpg', 'img/person3.jpg', 'img/person4.jpg'],
-	    messageData = {
+	function getUserDomains() {
+		$.getJSON('/api/domain/', function (data, err) {
+			console.log(data);
+		}).fail(function (err) {
+			console.log(err);
+		});
+	} // eye trackers!
+	
+	$.ajax({
+		type: 'POST',
+		url: '/api/signin',
+		data: JSON.stringify({
+			email: 'enagmail.com',
+			password: 'ena'
+		}),
+		success: function success(data) {
+			console.log(data);
+			getUserDomains();
+		},
+		error: function error(xhr, status, _error) {
+			console.log(_error.message);
+		},
+		dataType: 'json',
+		contentType: 'application/json'
+	});
+	
+	var messageData = [{
+		avatarImgUrl: 'img/person1.jpg',
+		time: Date.now(),
+		note: 'Hey Bob I saw this article and thought of your face because words come out of it.',
+		categories: ['articles', 'studies', 'things'],
+		linkImgUrl: 'img/cat1.jpg',
+		title: 'Studies show things happen',
+		descr: 'A new study shows that things happen when people do stuff and it\'s pretty cool to think about about what but link the who what why when where how',
+		url: 'http://newyorktimes.com/studies-show-that-thing-happen-yo-whaaaaat',
+		first: true
+	}, {
 		avatarImgUrl: 'img/person1.jpg',
 		time: Date.now(),
 		note: 'Hey Bob I saw this article and thought of your face because words come out of it.',
@@ -88,26 +106,24 @@
 		title: 'Studies show things happen',
 		descr: 'A new study shows that things happen when people do stuff and it\'s pretty cool to think about about what but link the who what why when where how',
 		url: 'http://newyorktimes.com/studies-show-that-thing-happen-yo-whaaaaat'
+	}],
+	    sidebarData = {
+		catData: {
+			words: ['dog', 'cat', 'people', 'music', 'science', 'animals', 'aww', 'blah'],
+			title: 'Categories'
+		},
+		domainData: {
+			words: ['reddit', 'buzzfeed', 'twitter', 'yahoo', 'google'],
+			title: 'Domains'
+		},
+		pplData: {
+			avatars: ['img/person1.jpg', 'img/person2.jpg', 'img/person3.jpg', 'img/person4.jpg'],
+			btnClass: true,
+			title: 'People'
+		}
 	};
 	
-	// render(< />, document.getElementById('content'));
-	
-	// render(<TitleBar title="hello"/>, document.getElementById('content'));
-	// render(<TabBar />, document.getElementById('content'));
-	
-	/*
-	filter card needs: 
-	type (either filterbtns or avatars)
-		words or avatars
-	btnclass (true or false/undefined)
-	title
-	
-	
-	 */
-	// render(<FilterCard title="Categories" words={words} avatars={avatars} />, document.getElementById('content'));
-	
-	// render(<LinkDetail data={messageData} />, document.getElementById('content'));
-	(0, _reactDom.render)(_react2.default.createElement(_Message2.default, { data: messageData }), document.getElementById('content'));
+	(0, _reactDom.render)(_react2.default.createElement(_Page2.default, { sidebarData: sidebarData, messages: messageData }), document.getElementById('content1'));
 
 /***/ },
 /* 1 */
@@ -20561,9 +20577,9 @@
 
 /***/ },
 /* 166 */
-/*!****************************************!*\
-  !*** ./static/components/TitleBar.jsx ***!
-  \****************************************/
+/*!************************************!*\
+  !*** ./static/components/Page.jsx ***!
+  \************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20578,9 +20594,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SearchBtn = __webpack_require__(/*! ./SearchBtn.jsx */ 167);
+	var _Sidebar = __webpack_require__(/*! ./Sidebar.jsx */ 167);
 	
-	var _SearchBtn2 = _interopRequireDefault(_SearchBtn);
+	var _Sidebar2 = _interopRequireDefault(_Sidebar);
+	
+	var _Content = __webpack_require__(/*! ./Content.jsx */ 173);
+	
+	var _Content2 = _interopRequireDefault(_Content);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20590,85 +20610,37 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TitleBar = function (_React$Component) {
-		_inherits(TitleBar, _React$Component);
+	var Page = function (_React$Component) {
+		_inherits(Page, _React$Component);
 	
-		function TitleBar() {
-			_classCallCheck(this, TitleBar);
+		function Page() {
+			_classCallCheck(this, Page);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(TitleBar).apply(this, arguments));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Page).apply(this, arguments));
 		}
 	
-		_createClass(TitleBar, [{
+		_createClass(Page, [{
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'h3',
-					{ className: 'title-bar content-wrap' },
-					this.props.title,
-					_react2.default.createElement(_SearchBtn2.default, null)
+					'div',
+					{ className: 'page' },
+					_react2.default.createElement(_Sidebar2.default, { data: this.props.sidebarData }),
+					_react2.default.createElement(_Content2.default, { messages: this.props.messages })
 				);
 			}
 		}]);
 	
-		return TitleBar;
+		return Page;
 	}(_react2.default.Component);
 	
-	exports.default = TitleBar;
+	exports.default = Page;
 
 /***/ },
 /* 167 */
-/*!*****************************************!*\
-  !*** ./static/components/SearchBtn.jsx ***!
-  \*****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SearchBtn = function (_React$Component) {
-		_inherits(SearchBtn, _React$Component);
-	
-		function SearchBtn() {
-			_classCallCheck(this, SearchBtn);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(SearchBtn).apply(this, arguments));
-		}
-	
-		_createClass(SearchBtn, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement("i", { className: "fa fa-search" });
-			}
-		}]);
-	
-		return SearchBtn;
-	}(_react2.default.Component);
-	
-	exports.default = SearchBtn;
-
-/***/ },
-/* 168 */
-/*!**************************************!*\
-  !*** ./static/components/TabBar.jsx ***!
-  \**************************************/
+/*!***************************************!*\
+  !*** ./static/components/Sidebar.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20683,9 +20655,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SearchBtn = __webpack_require__(/*! ./SearchBtn.jsx */ 167);
+	var _FilterCard = __webpack_require__(/*! ./FilterCard.jsx */ 168);
 	
-	var _SearchBtn2 = _interopRequireDefault(_SearchBtn);
+	var _FilterCard2 = _interopRequireDefault(_FilterCard);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20695,43 +20667,35 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TabBar = function (_React$Component) {
-		_inherits(TabBar, _React$Component);
+	var Sidebar = function (_React$Component) {
+		_inherits(Sidebar, _React$Component);
 	
-		function TabBar() {
-			_classCallCheck(this, TabBar);
+		function Sidebar() {
+			_classCallCheck(this, Sidebar);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(TabBar).apply(this, arguments));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).apply(this, arguments));
 		}
 	
-		_createClass(TabBar, [{
+		_createClass(Sidebar, [{
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'h3',
-					{ className: 'title-bar' },
-					_react2.default.createElement(
-						'span',
-						{ className: 'selected' },
-						'To'
-					),
-					_react2.default.createElement(
-						'span',
-						null,
-						'From'
-					),
-					_react2.default.createElement(_SearchBtn2.default, null)
+					'div',
+					{ className: 'sidebar' },
+					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.domainData }),
+					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.pplData }),
+					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.catData })
 				);
 			}
 		}]);
 	
-		return TabBar;
+		return Sidebar;
 	}(_react2.default.Component);
 	
-	exports.default = TabBar;
+	exports.default = Sidebar;
 
 /***/ },
-/* 169 */
+/* 168 */
 /*!******************************************!*\
   !*** ./static/components/FilterCard.jsx ***!
   \******************************************/
@@ -20749,15 +20713,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _FilterBtn = __webpack_require__(/*! ./FilterBtn.jsx */ 170);
+	var _FilterBtn = __webpack_require__(/*! ./FilterBtn.jsx */ 169);
 	
 	var _FilterBtn2 = _interopRequireDefault(_FilterBtn);
 	
-	var _Avatar = __webpack_require__(/*! ./Avatar.jsx */ 171);
+	var _Avatar = __webpack_require__(/*! ./Avatar.jsx */ 170);
 	
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 	
-	var _TitleBar = __webpack_require__(/*! ./TitleBar.jsx */ 166);
+	var _TitleBar = __webpack_require__(/*! ./TitleBar.jsx */ 171);
 	
 	var _TitleBar2 = _interopRequireDefault(_TitleBar);
 	
@@ -20781,24 +20745,27 @@
 		_createClass(FilterCard, [{
 			key: 'render',
 			value: function render() {
-				var words = this.props.words.map(function (word, i) {
-					return _react2.default.createElement(_FilterBtn2.default, { key: i, word: word });
-				});
-				var avatars = this.props.avatars.map(function (avatar, i) {
-					console.log(avatar);
-					return _react2.default.createElement(_Avatar2.default, { key: i, btnClass: true, imgUrl: avatar });
-				});
+				var _this2 = this;
+	
+				var content;
+				if (this.props.data.words) {
+					content = this.props.data.words.map(function (word, i) {
+						return _react2.default.createElement(_FilterBtn2.default, { key: i, word: word });
+					});
+				} else if (this.props.data.avatars) {
+					content = this.props.data.avatars.map(function (avatar, i) {
+						return _react2.default.createElement(_Avatar2.default, { key: i, btnClass: _this2.props.data.btnClass, imgUrl: avatar });
+					});
+				}
 	
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement(_TitleBar2.default, { title: this.props.title }),
+					{ className: 'filter-card' },
+					_react2.default.createElement(_TitleBar2.default, { title: this.props.data.title }),
 					_react2.default.createElement(
 						'div',
-						{ className: 'content-wrap' },
-						words,
-						_react2.default.createElement('br', null),
-						avatars
+						{ className: 'content-wrap content-area' },
+						content
 					)
 				);
 			}
@@ -20810,7 +20777,7 @@
 	exports.default = FilterCard;
 
 /***/ },
-/* 170 */
+/* 169 */
 /*!*****************************************!*\
   !*** ./static/components/FilterBtn.jsx ***!
   \*****************************************/
@@ -20862,7 +20829,7 @@
 	exports.default = FilterBtn;
 
 /***/ },
-/* 171 */
+/* 170 */
 /*!**************************************!*\
   !*** ./static/components/Avatar.jsx ***!
   \**************************************/
@@ -20918,7 +20885,278 @@
 	exports.default = Avatar;
 
 /***/ },
+/* 171 */
+/*!****************************************!*\
+  !*** ./static/components/TitleBar.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _SearchBtn = __webpack_require__(/*! ./SearchBtn.jsx */ 172);
+	
+	var _SearchBtn2 = _interopRequireDefault(_SearchBtn);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TitleBar = function (_React$Component) {
+		_inherits(TitleBar, _React$Component);
+	
+		function TitleBar() {
+			_classCallCheck(this, TitleBar);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TitleBar).apply(this, arguments));
+		}
+	
+		_createClass(TitleBar, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'h3',
+					{ className: 'title-bar content-wrap' },
+					this.props.title,
+					_react2.default.createElement(_SearchBtn2.default, null)
+				);
+			}
+		}]);
+	
+		return TitleBar;
+	}(_react2.default.Component);
+	
+	exports.default = TitleBar;
+
+/***/ },
 /* 172 */
+/*!*****************************************!*\
+  !*** ./static/components/SearchBtn.jsx ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SearchBtn = function (_React$Component) {
+		_inherits(SearchBtn, _React$Component);
+	
+		function SearchBtn() {
+			_classCallCheck(this, SearchBtn);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(SearchBtn).apply(this, arguments));
+		}
+	
+		_createClass(SearchBtn, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement("i", { className: "fa fa-search" });
+			}
+		}]);
+	
+		return SearchBtn;
+	}(_react2.default.Component);
+	
+	exports.default = SearchBtn;
+
+/***/ },
+/* 173 */
+/*!***************************************!*\
+  !*** ./static/components/Content.jsx ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Message = __webpack_require__(/*! ./Message.jsx */ 174);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
+	var _TabBar = __webpack_require__(/*! ./TabBar.jsx */ 176);
+	
+	var _TabBar2 = _interopRequireDefault(_TabBar);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// content will recieve an array of messageData objects
+	
+	var Content = function (_React$Component) {
+		_inherits(Content, _React$Component);
+	
+		function Content() {
+			_classCallCheck(this, Content);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Content).apply(this, arguments));
+		}
+	
+		_createClass(Content, [{
+			key: 'render',
+			value: function render() {
+				var messages = this.props.messages.map(function (messageData, i) {
+					return _react2.default.createElement(_Message2.default, { key: i, data: messageData });
+				});
+				return _react2.default.createElement(
+					'div',
+					{ className: 'content' },
+					_react2.default.createElement(_TabBar2.default, null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'content-area' },
+						messages
+					)
+				);
+			}
+		}]);
+	
+		return Content;
+	}(_react2.default.Component);
+	
+	exports.default = Content;
+
+/***/ },
+/* 174 */
+/*!***************************************!*\
+  !*** ./static/components/Message.jsx ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Avatar = __webpack_require__(/*! ./Avatar.jsx */ 170);
+	
+	var _Avatar2 = _interopRequireDefault(_Avatar);
+	
+	var _FilterBtn = __webpack_require__(/*! ./FilterBtn.jsx */ 169);
+	
+	var _FilterBtn2 = _interopRequireDefault(_FilterBtn);
+	
+	var _LinkDetail = __webpack_require__(/*! ./LinkDetail.jsx */ 175);
+	
+	var _LinkDetail2 = _interopRequireDefault(_LinkDetail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Message = function (_React$Component) {
+		_inherits(Message, _React$Component);
+	
+		function Message() {
+			_classCallCheck(this, Message);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Message).apply(this, arguments));
+		}
+	
+		_createClass(Message, [{
+			key: 'render',
+			value: function render() {
+				var categories = this.props.data.categories.map(function (category, i) {
+					return _react2.default.createElement(_FilterBtn2.default, { key: i, word: category });
+				}),
+				    classes = this.props.data.first ? 'message first' : 'message';
+				return _react2.default.createElement(
+					'div',
+					{ className: classes },
+					_react2.default.createElement(
+						'div',
+						{ className: 'sender' },
+						_react2.default.createElement(_Avatar2.default, { imgUrl: this.props.data.avatarImgUrl }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'time' },
+							'3:30pm',
+							_react2.default.createElement('br', null),
+							'Feb 11',
+							_react2.default.createElement('br', null),
+							'2015'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'link-content' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'note' },
+							this.props.data.note
+						),
+						_react2.default.createElement(_LinkDetail2.default, { data: this.props.data }),
+						_react2.default.createElement(
+							'div',
+							null,
+							categories
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Message;
+	}(_react2.default.Component);
+	
+	exports.default = Message;
+
+/***/ },
+/* 175 */
 /*!******************************************!*\
   !*** ./static/components/LinkDetail.jsx ***!
   \******************************************/
@@ -20996,10 +21234,10 @@
 	exports.default = LinkDetail;
 
 /***/ },
-/* 173 */
-/*!***************************************!*\
-  !*** ./static/components/Message.jsx ***!
-  \***************************************/
+/* 176 */
+/*!**************************************!*\
+  !*** ./static/components/TabBar.jsx ***!
+  \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21014,17 +21252,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Avatar = __webpack_require__(/*! ./Avatar.jsx */ 171);
+	var _SearchBtn = __webpack_require__(/*! ./SearchBtn.jsx */ 172);
 	
-	var _Avatar2 = _interopRequireDefault(_Avatar);
-	
-	var _FilterBtn = __webpack_require__(/*! ./FilterBtn.jsx */ 170);
-	
-	var _FilterBtn2 = _interopRequireDefault(_FilterBtn);
-	
-	var _LinkDetail = __webpack_require__(/*! ./LinkDetail.jsx */ 172);
-	
-	var _LinkDetail2 = _interopRequireDefault(_LinkDetail);
+	var _SearchBtn2 = _interopRequireDefault(_SearchBtn);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21034,66 +21264,40 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Message = function (_React$Component) {
-		_inherits(Message, _React$Component);
+	var TabBar = function (_React$Component) {
+		_inherits(TabBar, _React$Component);
 	
-		function Message() {
-			_classCallCheck(this, Message);
+		function TabBar() {
+			_classCallCheck(this, TabBar);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Message).apply(this, arguments));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TabBar).apply(this, arguments));
 		}
 	
-		_createClass(Message, [{
+		_createClass(TabBar, [{
 			key: 'render',
 			value: function render() {
-				// needs
-				// datetime, note, and [categories]
-				// avatarImgUrl
-				// linkImgUrl, title, descr, url
-				// word
-				var categories = this.props.data.categories.map(function (category, i) {
-					return _react2.default.createElement(_FilterBtn2.default, { key: i, word: category });
-				});
 				return _react2.default.createElement(
-					'div',
-					{ className: 'message' },
+					'h3',
+					{ className: 'title-bar' },
 					_react2.default.createElement(
-						'div',
-						{ className: 'sender' },
-						_react2.default.createElement(_Avatar2.default, { imgUrl: this.props.data.avatarImgUrl }),
-						_react2.default.createElement(
-							'div',
-							{ className: 'time' },
-							'3:30pm',
-							_react2.default.createElement('br', null),
-							'Feb 11',
-							_react2.default.createElement('br', null),
-							'2015'
-						)
+						'span',
+						{ className: 'selected' },
+						'To'
 					),
 					_react2.default.createElement(
-						'div',
-						{ className: 'content' },
-						_react2.default.createElement(_LinkDetail2.default, { data: this.props.data }),
-						_react2.default.createElement(
-							'div',
-							{ className: 'note' },
-							this.props.data.note
-						),
-						_react2.default.createElement(
-							'div',
-							null,
-							categories
-						)
-					)
+						'span',
+						null,
+						'From'
+					),
+					_react2.default.createElement(_SearchBtn2.default, null)
 				);
 			}
 		}]);
 	
-		return Message;
+		return TabBar;
 	}(_react2.default.Component);
 	
-	exports.default = Message;
+	exports.default = TabBar;
 
 /***/ }
 /******/ ]);

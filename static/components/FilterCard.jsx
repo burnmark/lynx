@@ -6,21 +6,22 @@ import TitleBar from './TitleBar.jsx';
 
 export default class FilterCard extends React.Component {	
 	render() {
-		var words = this.props.words.map(function (word, i) {
+		var content;			
+		if (this.props.data.words) {
+			content = this.props.data.words.map((word, i) => {
 				return <FilterBtn key={i} word={word} />;
-		});
-		var avatars = this.props.avatars.map(function (avatar, i) {
-				console.log(avatar);
-				return <Avatar key={i} btnClass={true} imgUrl={avatar} />;
-		});
+			});
+		} else if (this.props.data.avatars) {
+			content = this.props.data.avatars.map((avatar, i) => {
+				return <Avatar key={i} btnClass={this.props.data.btnClass} imgUrl={avatar} />;
+			});
+		}
 
 		return (
-			<div>
-				<TitleBar title={this.props.title} />
-				<div className="content-wrap">
-					{words}
-					<br />
-					{avatars}
+			<div className="filter-card">
+				<TitleBar title={this.props.data.title} />
+				<div className="content-wrap content-area">
+					{content}
 				</div>
 			</div>
 		);

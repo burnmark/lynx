@@ -140,15 +140,9 @@ var Database = {
 							return _this.getUserById(_this._connection.lastInsertId())
 								.then(rows => {		
 									return rows ? rows : new Error('AHHHHHHH!');
-								})
-								.catch(err => {
-									return err;
 								});
 						});							
 				}
-			})
-			.catch(err => {
-				return err;
 			});
 	},
 
@@ -185,14 +179,8 @@ var Database = {
 						)
 						.then(() => {
 							return _this._connection.lastInsertId()
-						})
-						.catch(err => {
-							return err;
 						});
 				}
-			})
-			.catch(err => {
-				return err;
 			});	
 	},
 
@@ -226,14 +214,8 @@ var Database = {
 						)
 						.then(() => {
 							return _this._connection.lastInsertId();
-						})
-						.catch(err => {
-							return err;
-						})
+						});
 				}
-			})
-			.catch(err => {
-				return err;
 			});
 
 	},
@@ -245,8 +227,7 @@ var Database = {
 			.queryAsync(query, {id: params.id || '', email: params.email || ''})
 			.then(rows => {
 				return rows && rows.length > 0 ? rows[0] : null;
-			})
-			.catch(err => {return err;});
+			});
 	},
 
 	_getObjects(query, params) {
@@ -254,8 +235,7 @@ var Database = {
 			.queryAsync(query, {id: params.id})
 			.then(rows => {
 				return rows && rows.length > 0 ? rows : null;
-			})
-			.catch(err => {return err});
+			});
 	}
 }
 

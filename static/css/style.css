@@ -1,19 +1,26 @@
 /*General styles*/
-.selected {
-	border-bottom: 3px solid black;
-}
-
-.content-wrap {
-	padding-left: 1%;
-	padding-right: 1%;
-}
-
 * {
     box-sizing: border-box;
 }
 
 body {
 	padding: 20px;
+    background-color: #FAFAFA;
+}
+
+.selected {
+    border-bottom: 3px solid black;
+}
+
+.content-wrap {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.content-area {
+    padding-top: 5px;
+    padding-bottom: 20px;
+    /*background-color: #FAFAFA;*/
 }
 
 /*Filter button styles*/
@@ -26,9 +33,10 @@ body {
 	margin-right: 3px;
 	margin-bottom: 5px;
 	display: inline-block;				
+    background-color: #fff;
 }
 
-.filter-btn:hover, .avatar-btn:hover {
+.filter-btn:hover {
 	border: 1px #333 solid;
 	color: #333;
 	cursor: pointer;
@@ -44,12 +52,22 @@ body {
    width: 50px;   
    display: inline-block;
    margin-right: 4px;
+
+    opacity: 0.75;
+   transition: all 500ms;
 }
 
 .avatar-btn:hover {
-	height: 48px;
+	/*height: 48px;
    	margin-top: 5px;
-   	width: 48px;  
+   	width: 48px; */ 
+
+    opacity: 1;
+    cursor: pointer;
+
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .45);
+    transform: translate(-3px, -3px);
+
 }
 
 /*search icon style*/
@@ -63,6 +81,7 @@ body {
 	border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
 	color: rgba(0, 0, 0, 0.8);
 	font-size: 20px;	
+    margin-bottom: 0;
 }
 
 .title-bar span {
@@ -74,6 +93,11 @@ body {
 	cursor: pointer;
 }
 
+/*filter card styles*/
+.filter-card {
+    margin: 20px;
+}
+
 /*link detail styles*/
 .link-detail {
     background-color: #FFF;
@@ -83,6 +107,7 @@ body {
     margin-bottom: 8px;
     overflow: hidden;
     position: relative;
+    margin-right: 10px;
 }
 
 .link-detail .text {
@@ -136,9 +161,15 @@ body {
 /*message styles*/
 .message {
     position: relative;
-    background-color: #FAFAFA;
     color: rgba(0, 0, 0, 0.8);
-    margin: 20px;
+    
+    margin: 5px;
+    margin-top: 20px;
+
+}
+
+.first {
+    margin-top: 10px;
 }
 
 .message .sender {
@@ -167,12 +198,32 @@ body {
     margin-top: 4px;
 }
 
-.message .content {
+.message .link-content {
     margin-left: 70px; /* same as .sender width */
     position: relative;
 }
-.message .content .note {
+.message .link-content .note {
     margin-bottom: 4px;
     font-size: 16px;
     line-height: 17px;
 }
+
+/*sidebar styles*/
+.sidebar {
+    width: 30%;
+    float: left;
+}
+
+/*content styles*/
+.content {
+    width: calc(70% - 40px);
+    float: left;
+    
+    margin: 20px;
+}
+
+/*Page styles*/
+.page {    
+    overflow: auto;
+}
+

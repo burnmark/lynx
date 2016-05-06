@@ -88,7 +88,6 @@ app.post('/api/signin', passport.authenticate('local'), function (req, res) {
 app.get('/api/signout', function (req, res) {	
 	req.logout();		
 	res.json({message: 'You have been logged out.'});
-	// res.redirect('/');
 });
 
 // public
@@ -116,6 +115,7 @@ app.post('/api/signup', function (req, res, next) {
 // Ensures that only authenticated users can reach the api calls after this point
 app.use(function (req, res, next) {
 	if (req.isAuthenticated()) {
+		console.log('is authenticated, going to next');
 		return next();
 	} else {
 		res.status(401).json({message: 'Must sign in.'});		
@@ -130,8 +130,15 @@ var usersApi = require(__base + 'routes/user-api.js'),
 
 
 app.use('/api/user', usersApi.Router(Database));
-app.use('/api/category', categoryApi.Router(Database));
+app.use('/api/categories', categoryApi.Router(Database));
+
 app.use('/api/domain', domainApi.Router(Database));
+// app.get('/api/domain/', function (req, res, next) {
+// 	Database.getDomains(req.user.id)
+// 		.then(rows => res.json(rows))
+// 		.catch(next);
+// });
+
 app.use('/api/message', messageApi.Router(Database));
 
 
