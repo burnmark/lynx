@@ -61,14 +61,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function getUserDomains() {
-		$.getJSON('/api/domain/', function (data, err) {
-			console.log(data);
-		}).fail(function (err) {
-			console.log(err);
-		});
-	} // eye trackers!
-	
 	$.ajax({
 		type: 'POST',
 		url: '/api/signin',
@@ -78,14 +70,13 @@
 		}),
 		success: function success(data) {
 			console.log(data);
-			getUserDomains();
 		},
 		error: function error(xhr, status, _error) {
 			console.log(_error.message);
 		},
 		dataType: 'json',
 		contentType: 'application/json'
-	});
+	}); // eye trackers!
 	
 	var messageData = [{
 		avatarImgUrl: 'img/person1.jpg',
@@ -20670,27 +20661,71 @@
 	var Sidebar = function (_React$Component) {
 		_inherits(Sidebar, _React$Component);
 	
-		function Sidebar() {
+		function Sidebar(props) {
 			_classCallCheck(this, Sidebar);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).call(this, props));
+	
+			_this.state = {
+				domains: {
+					values: [],
+					title: 'Domains'
+				},
+				people: {
+					avatars: ['img/person1.jpg', 'img/person2.jpg', 'img/person3.jpg', 'img/person4.jpg'],
+					btnClass: true,
+					title: 'People'
+				},
+				categories: {
+					values: [],
+					title: 'Domains'
+				}
+			};
+			return _this;
 		}
 	
 		_createClass(Sidebar, [{
+			key: 'getFiltersFromServer',
+			value: function getFiltersFromServer() {
+				var _this2 = this;
+	
+				Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')]).then(function (values) {
+					return _this2.setState({
+						domains: {
+							values: values[0],
+							title: 'Domains'
+						},
+						categories: {
+							values: values[1],
+							title: 'Categories'
+						}
+					});
+				});
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.getFiltersFromServer();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'sidebar' },
-					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.domainData }),
-					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.pplData }),
-					_react2.default.createElement(_FilterCard2.default, { data: this.props.data.catData })
+					_react2.default.createElement(_FilterCard2.default, { data: this.state.domains }),
+					_react2.default.createElement(_FilterCard2.default, { data: this.state.people }),
+					_react2.default.createElement(_FilterCard2.default, { data: this.state.categories })
 				);
 			}
 		}]);
 	
 		return Sidebar;
 	}(_react2.default.Component);
+	
+	// <FilterCard data={this.state.domains}/>
+	// <FilterCard data={this.state.categories}/>
+	
 	
 	exports.default = Sidebar;
 
@@ -20748,9 +20783,9 @@
 				var _this2 = this;
 	
 				var content;
-				if (this.props.data.words) {
-					content = this.props.data.words.map(function (word, i) {
-						return _react2.default.createElement(_FilterBtn2.default, { key: i, word: word });
+				if (this.props.data.values) {
+					content = this.props.data.values.map(function (value, i) {
+						return _react2.default.createElement(_FilterBtn2.default, { key: i, word: value });
 					});
 				} else if (this.props.data.avatars) {
 					content = this.props.data.avatars.map(function (avatar, i) {

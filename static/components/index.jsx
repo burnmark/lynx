@@ -5,15 +5,6 @@ import {render} from 'react-dom';
 
 import Page from './Page.jsx';
 
-function getUserDomains() {
-	$.getJSON('/api/domain/', function (data, err) {
-		console.log(data);
-	})
-	.fail(function (err) {
-		console.log(err)
-	})
-}
-
 $.ajax({
 	type: 'POST',
 	url: '/api/signin',
@@ -23,7 +14,6 @@ $.ajax({
 	}),
 	success: function (data) {
 		console.log(data);
-		getUserDomains();
 	},
 	error: function (xhr, status, error) {
 		console.log(error.message);		

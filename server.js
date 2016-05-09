@@ -130,7 +130,7 @@ var usersApi = require(__base + 'routes/user-api.js'),
 
 
 app.use('/api/user', usersApi.Router(Database));
-app.use('/api/categories', categoryApi.Router(Database));
+app.use('/api/category', categoryApi.Router(Database));
 
 app.use('/api/domain', domainApi.Router(Database));
 // app.get('/api/domain/', function (req, res, next) {
