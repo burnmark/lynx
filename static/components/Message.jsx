@@ -18,14 +18,11 @@ export default class Message extends React.Component {
 
 			        <div className="time">3:30pm<br />Feb 11<br />2015</div>
 			    </div>
-			    <div className="link-content">
-
-			    	 <div className="note">
-			            {this.props.data.note}
-			        </div>
-			        
+			    <div className="link-content">			    				       
 			    	<LinkDetail data={this.props.data} />
-			      
+				    <div className="note">
+				        {this.props.data.note}
+				    </div>
 
 			        <div>
 			        	{categories}			            
@@ -36,3 +33,12 @@ export default class Message extends React.Component {
 	}
 }
 
+/*
+openopa
+ena
+
+penut
+popenoput
+
+add op is the sylabol starts with a consonant 
+*/
