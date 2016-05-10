@@ -5,32 +5,22 @@ import {render} from 'react-dom';
 
 import Page from './Page.jsx';
 
-function getUserDomains() {
-	$.getJSON('/api/domain/', function (data, err) {
-		console.log(data);
-	})
-	.fail(function (err) {
-		console.log(err)
-	})
-}
-
-$.ajax({
-	type: 'POST',
-	url: '/api/signin',
-	data: JSON.stringify({
-		email: 'enagmail.com',
-		password: 'ena'
-	}),
-	success: function (data) {
-		console.log(data);
-		getUserDomains();
-	},
-	error: function (xhr, status, error) {
-		console.log(error.message);		
-	},
-	dataType: 'json',
-  	contentType: 'application/json'
-});
+// $.ajax({
+// 	type: 'POST',
+// 	url: '/api/signin',
+// 	data: JSON.stringify({
+// 		email: 'enagmail.com',
+// 		password: 'ena'
+// 	}),
+// 	success: function (data) {
+// 		console.log(data);
+// 	},
+// 	error: function (xhr, status, error) {
+// 		console.log(error.message);		
+// 	},
+// 	dataType: 'json',
+//   	contentType: 'application/json'
+// });
 
 
 

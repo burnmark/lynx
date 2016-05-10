@@ -45,6 +45,22 @@ var Database = {
 		);
 	},
 
+	// Given a messageId, returns a promise containing the categories that 
+	// belong to a message with that message id. 
+	getCategoriesByMessageId(messageId) {
+		return this._getObjects(
+			(
+				'SELECT DISTINCT c.name FROM message m ' + 
+				'JOIN message_category mc ON m.id = mc.messageId ' + 
+				'JOIN category c ON mc.categoryId = c.id ' + 
+				'WHERE m.id = :id'
+			),
+			{
+				id: messageId
+			}
+		)
+	},
+
 	// Given a userId, returns a promise containing the domains that have
 	// appeared in messages that user has sent/received
 	// If userId does not exist in db or no domains have been found in relation
@@ -87,8 +103,11 @@ var Database = {
 	getRecievedMessages(userId) {
 		return this._getObjects(
 			(
-				'SELECT * from message ' + 
-				'WHERE recipientId = :id'
+				'SELECT m.id, m.linkId, m.note, UNIX_TIMESTAMP(m.timeSent) AS timeSent, m.isRead, l.url, l.title, l.description, l.imgUrl, u.displayName ' + 
+				'FROM message m ' + 
+				'JOIN link l on m.linkId = l.id ' + 
+				'JOIN user u on m.senderId = u.id ' + 
+				'WHERE m.recipientId = :id' 
 			),
 			{
 				id: userId
@@ -102,7 +121,10 @@ var Database = {
 	getSentMessages(userId) {
 		return this._getObjects(
 			(
-				'SELECT * from message ' + 
+				'SELECT m.id, m.linkId, m.note, UNIX_TIMESTAMP(m.timeSent), m.isRead, l.url, l.title, l.description, l.imgUrl, u.email ' + 
+				'FROM message m ' + 
+				'JOIN link l on m.linkId = l.id ' + 
+				'JOIN user u on m.recipientId = u.id ' + 
 				'WHERE senderId = :id'	
 			),
 			{

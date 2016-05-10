@@ -5,18 +5,37 @@ import FilterBtn from './FilterBtn.jsx';
 import LinkDetail from './LinkDetail.jsx';
 
 export default class Message extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			categories: []
+		}
+	}
+
+	componentWillMount() {
+		this.getMessageCategories();
+	}
+
+	getMessageCategories() {
+		$.getJSON('/api/category/' + this.props.data.id)
+			.then(data => this.setState({categories: data}))
+	}
+
 	render() {
-		var categories = this.props.data.categories.map(function (category, i) {
-			return <FilterBtn key={i} word={category} />;
-		}),
-			classes = this.props.data.first ? 'message first' : 'message';
+		var categories;
+		if (this.state.categories) {
+			categories = this.state.categories.map(function (category, i) {
+				return <FilterBtn key={i} word={category} />;
+			});
+		}
+		var date = new Date(this.props.data.timeSent * 1000);
 		return (
-			<div className={classes}>
+			<div className="message">
 			    <div className="sender">			        
 
 			        <Avatar imgUrl={this.props.data.avatarImgUrl} />
 
-			        <div className="time">3:30pm<br />Feb 11<br />2015</div>
+			        <div className="time">{date.getHours() + ':' + date.getMinutes()}<br />{date.getMonth() + '/' + date.getDate()}<br />{date.getFullYear()}</div>
 			    </div>
 			    <div className="link-content">			    				       
 			    	<LinkDetail data={this.props.data} />
@@ -32,13 +51,3 @@ export default class Message extends React.Component {
 		)
 	}
 }
-
-/*
-openopa
-ena
-
-penut
-popenoput
-
-add op is the sylabol starts with a consonant 
-*/
