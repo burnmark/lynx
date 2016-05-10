@@ -61,22 +61,22 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	$.ajax({
-		type: 'POST',
-		url: '/api/signin',
-		data: JSON.stringify({
-			email: 'enagmail.com',
-			password: 'ena'
-		}),
-		success: function success(data) {
-			console.log(data);
-		},
-		error: function error(xhr, status, _error) {
-			console.log(_error.message);
-		},
-		dataType: 'json',
-		contentType: 'application/json'
-	}); // eye trackers!
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: '/api/signin',
+	// 	data: JSON.stringify({
+	// 		email: 'enagmail.com',
+	// 		password: 'ena'
+	// 	}),
+	// 	success: function (data) {
+	// 		console.log(data);
+	// 	},
+	// 	error: function (xhr, status, error) {
+	// 		console.log(error.message);		
+	// 	},
+	// 	dataType: 'json',
+	//   	contentType: 'application/json'
+	// });
 	
 	var messageData = [{
 		avatarImgUrl: 'img/person1.jpg',
@@ -112,7 +112,7 @@
 			btnClass: true,
 			title: 'People'
 		}
-	};
+	}; // eye trackers!
 	
 	(0, _reactDom.render)(_react2.default.createElement(_Page2.default, { sidebarData: sidebarData, messages: messageData }), document.getElementById('content1'));
 
@@ -20723,10 +20723,6 @@
 		return Sidebar;
 	}(_react2.default.Component);
 	
-	// <FilterCard data={this.state.domains}/>
-	// <FilterCard data={this.state.categories}/>
-	
-	
 	exports.default = Sidebar;
 
 /***/ },
@@ -21064,18 +21060,57 @@
 	var Content = function (_React$Component) {
 		_inherits(Content, _React$Component);
 	
-		function Content() {
+		function Content(props) {
 			_classCallCheck(this, Content);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Content).apply(this, arguments));
+			// currently not being sorted by sent/received
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Content).call(this, props));
+	
+			_this.state = {
+				sent: [],
+				received: []
+			};
+			return _this;
 		}
 	
 		_createClass(Content, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.getMessagesFromServer();
+			}
+		}, {
+			key: 'getMessagesFromServer',
+			value: function getMessagesFromServer() {
+				var _this2 = this;
+	
+				Promise.all([$.getJSON('/api/message/received'), $.getJSON('/api/message/sent')]).then(function (values) {
+					return _this2.setState({
+						sent: values[0],
+						received: values[1]
+					});
+				});
+			}
+	
+			// componentDidMount() {
+			// 	this.getMessagesFromServer();
+			// }
+	
+		}, {
 			key: 'render',
 			value: function render() {
-				var messages = this.props.messages.map(function (messageData, i) {
-					return _react2.default.createElement(_Message2.default, { key: i, data: messageData });
-				});
+				// var messages = this.props.messages.map((messageData, i) => {
+				// 	return <Message key={i} data={messageData} />;
+				// });
+	
+				console.log(this.state);
+				var messages = 'No messages yet.';
+				if (this.state.sent) {
+					messages = this.state.sent.map(function (messageData, i) {
+						return _react2.default.createElement(_Message2.default, { key: i, data: messageData });
+					});
+				}
+	
 				return _react2.default.createElement(
 					'div',
 					{ className: 'content' },
@@ -21136,22 +21171,44 @@
 	var Message = function (_React$Component) {
 		_inherits(Message, _React$Component);
 	
-		function Message() {
+		function Message(props) {
 			_classCallCheck(this, Message);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Message).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Message).call(this, props));
+	
+			_this.state = {
+				categories: []
+			};
+			return _this;
 		}
 	
 		_createClass(Message, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.getMessageCategories();
+			}
+		}, {
+			key: 'getMessageCategories',
+			value: function getMessageCategories() {
+				var _this2 = this;
+	
+				$.getJSON('/api/category/' + this.props.data.id).then(function (data) {
+					return _this2.setState({ categories: data });
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				var categories = this.props.data.categories.map(function (category, i) {
-					return _react2.default.createElement(_FilterBtn2.default, { key: i, word: category });
-				}),
-				    classes = this.props.data.first ? 'message first' : 'message';
+				var categories;
+				if (this.state.categories) {
+					categories = this.state.categories.map(function (category, i) {
+						return _react2.default.createElement(_FilterBtn2.default, { key: i, word: category });
+					});
+				}
+				var date = new Date(this.props.data.timeSent * 1000);
 				return _react2.default.createElement(
 					'div',
-					{ className: classes },
+					{ className: 'message' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'sender' },
@@ -21159,11 +21216,11 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'time' },
-							'3:30pm',
+							date.getHours() + ':' + date.getMinutes(),
 							_react2.default.createElement('br', null),
-							'Feb 11',
+							date.getMonth() + '/' + date.getDate(),
 							_react2.default.createElement('br', null),
-							'2015'
+							date.getFullYear()
 						)
 					),
 					_react2.default.createElement(
@@ -21187,17 +21244,6 @@
 	
 		return Message;
 	}(_react2.default.Component);
-	
-	/*
-	openopa
-	ena
-	
-	penut
-	popenoput
-	
-	add op is the sylabol starts with a consonant 
-	*/
-	
 	
 	exports.default = Message;
 
@@ -21242,7 +21288,7 @@
 			value: function render() {
 				//need: title, description, url
 				var styles = {
-					backgroundImage: 'url(' + this.props.data.linkImgUrl + ')',
+					backgroundImage: 'url(' + this.props.data.imgUrl + ')',
 					backgroundPosition: 'center',
 					backgroundAttachment: 'center',
 					backgroundSize: 'cover'
@@ -21261,7 +21307,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'body' },
-							this.props.data.descr
+							this.props.data.description
 						),
 						_react2.default.createElement(
 							'div',

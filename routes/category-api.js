@@ -28,5 +28,12 @@ module.exports.Router = function (Database) {
 			.catch(next);
 	});	
 
+	router.get('/:messageId', (req, res, next) => {
+		console.log(req.params.messageId);
+		Database.getCategoriesByMessageId(req.params.messageId)
+		.then(rows => res.json(_.map(rows, 'name')))
+		.catch(next);
+	});
+
 	return router;
 }

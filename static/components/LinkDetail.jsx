@@ -4,7 +4,7 @@ export default class LinkDetail extends React.Component {
 	render() {
 		//need: title, description, url
 		var styles = {
-				backgroundImage : 'url(' + this.props.data.linkImgUrl + ')',
+				backgroundImage : 'url(' + this.props.data.imgUrl + ')',
 				backgroundPosition: 'center',
 				backgroundAttachment: 'center',
 				backgroundSize: 'cover'
@@ -16,7 +16,7 @@ export default class LinkDetail extends React.Component {
 	                    {this.props.data.title}
 	                </div>
 	                <div className="body">
-	                   {this.props.data.descr}
+	                   {this.props.data.description}
 	                </div>
 	                <div className="url">
 	                    {this.props.data.url}

@@ -55,6 +55,3 @@ export default class Sidebar extends React.Component {
 		);
 	}
 }
-
-// <FilterCard data={this.state.domains}/>
-// <FilterCard data={this.state.categories}/>

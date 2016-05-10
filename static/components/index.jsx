@@ -5,22 +5,22 @@ import {render} from 'react-dom';
 
 import Page from './Page.jsx';
 
-$.ajax({
-	type: 'POST',
-	url: '/api/signin',
-	data: JSON.stringify({
-		email: 'enagmail.com',
-		password: 'ena'
-	}),
-	success: function (data) {
-		console.log(data);
-	},
-	error: function (xhr, status, error) {
-		console.log(error.message);		
-	},
-	dataType: 'json',
-  	contentType: 'application/json'
-});
+// $.ajax({
+// 	type: 'POST',
+// 	url: '/api/signin',
+// 	data: JSON.stringify({
+// 		email: 'enagmail.com',
+// 		password: 'ena'
+// 	}),
+// 	success: function (data) {
+// 		console.log(data);
+// 	},
+// 	error: function (xhr, status, error) {
+// 		console.log(error.message);		
+// 	},
+// 	dataType: 'json',
+//   	contentType: 'application/json'
+// });
 
 
 
