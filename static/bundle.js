@@ -21091,18 +21091,9 @@
 					});
 				});
 			}
-	
-			// componentDidMount() {
-			// 	this.getMessagesFromServer();
-			// }
-	
 		}, {
 			key: 'render',
 			value: function render() {
-				// var messages = this.props.messages.map((messageData, i) => {
-				// 	return <Message key={i} data={messageData} />;
-				// });
-	
 				console.log(this.state);
 				var messages = 'No messages yet.';
 				if (this.state.sent) {

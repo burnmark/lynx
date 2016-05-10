@@ -26,17 +26,8 @@ export default class Content extends React.Component {
 				received: values[1]
 			}));
 	}
-
-	// componentDidMount() {
-	// 	this.getMessagesFromServer();
-	// }
-
+	
 	render() {
-		// var messages = this.props.messages.map((messageData, i) => {
-		// 	return <Message key={i} data={messageData} />;
-		// });
-
-
 		console.log(this.state);
 		var messages = 'No messages yet.';
 		if (this.state.sent) {
