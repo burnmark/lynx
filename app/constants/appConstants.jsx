@@ -1,4 +1,4 @@
-const appConstants = {
+const AppConstants = {
 	FILTER_PEOPLE: 'FILTER_PEOPLE',
 	FILTER_CATEGORIES: 'FILTER_CATEGORIES',
 	FILTER_DOMAINS: 'FILTER_DOMAINS',
@@ -16,4 +16,4 @@ const appConstants = {
 	LOGIN_FAILED: 'LOGIN_FAILED'
 };
 
-export default appConstants;
+export default AppConstants;

@@ -21108,6 +21108,14 @@
 	
 	var _TabBar2 = _interopRequireDefault(_TabBar);
 	
+	var _MessageActionCreators = __webpack_require__(/*! ../actions/MessageActionCreators.jsx */ 189);
+	
+	var _MessageActionCreators2 = _interopRequireDefault(_MessageActionCreators);
+	
+	var _MessageStore = __webpack_require__(/*! ../stores/MessageStore.jsx */ 190);
+	
+	var _MessageStore2 = _interopRequireDefault(_MessageStore);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21115,8 +21123,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// content will recieve an array of messageData objects
 	
 	var Content = function (_React$Component) {
 		_inherits(Content, _React$Component);
@@ -21129,37 +21135,43 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Content).call(this, props));
 	
 			_this.state = {
-				sent: [],
-				received: []
+				messages: []
 			};
+	
+			_this._onChange = _this._onChange.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Content, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				this.getMessagesFromServer();
+				_MessageActionCreators2.default.getAllMessages();
 			}
 		}, {
-			key: 'getMessagesFromServer',
-			value: function getMessagesFromServer() {
-				var _this2 = this;
-	
-				Promise.all([$.getJSON('/api/message/received'), $.getJSON('/api/message/sent')]).then(function (values) {
-					return _this2.setState({
-						sent: values[0],
-						received: values[1]
-					});
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				_MessageStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_MessageStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				this.setState({
+					messages: _MessageStore2.default.getSent()
 				});
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				// console.log(this.state);
+				console.log(this.state);
 				var messages = 'No messages yet.';
-				if (this.state.sent) {
-					messages = this.state.sent.map(function (messageData, i) {
-						return _react2.default.createElement(_Message2.default, { key: i, data: messageData });
+				if (this.state.messages) {
+					messages = this.state.messages.map(function (message, i) {
+						return _react2.default.createElement(_Message2.default, { key: i, data: message });
 					});
 				}
 	
@@ -21476,9 +21488,7 @@
 		},
 	
 		logout: function logout() {}
-	}; // import AppDispatcher from '../dispatcher/AppDispatcher.jsx';
-	// import AppConstants from '../constants/AppConstants.jsx';
-	
+	};
 	
 	exports.default = AuthActions;
 
@@ -21956,7 +21966,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var appConstants = {
+	var AppConstants = {
 		FILTER_PEOPLE: 'FILTER_PEOPLE',
 		FILTER_CATEGORIES: 'FILTER_CATEGORIES',
 		FILTER_DOMAINS: 'FILTER_DOMAINS',
@@ -21974,7 +21984,7 @@
 		LOGIN_FAILED: 'LOGIN_FAILED'
 	};
 	
-	exports.default = appConstants;
+	exports.default = AppConstants;
 
 /***/ },
 /* 184 */
@@ -22306,7 +22316,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Auth = {
+	var AuthApi = {
 		login: function login() {
 			$.ajax({
 				type: 'POST',
@@ -22332,7 +22342,7 @@
 		}
 	};
 	
-	exports.default = Auth;
+	exports.default = AuthApi;
 
 /***/ },
 /* 186 */
@@ -22384,7 +22394,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Filter = {
+	var FilterApi = {
 		fetchFilters: function fetchFilters() {
 			Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')]).then(function (values) {
 				_AppDispatcher2.default.handleAction({
@@ -22400,7 +22410,7 @@
 		}
 	};
 	
-	exports.default = Filter;
+	exports.default = FilterApi;
 
 /***/ },
 /* 188 */
@@ -22506,6 +22516,180 @@
 	});
 	
 	exports.default = FilterStore;
+
+/***/ },
+/* 189 */
+/*!***********************************************!*\
+  !*** ./app/actions/MessageActionCreators.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _MessageWebApiUtils = __webpack_require__(/*! ../util/MessageWebApiUtils.jsx */ 192);
+	
+	var _MessageWebApiUtils2 = _interopRequireDefault(_MessageWebApiUtils);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MessageActions = {
+		getAllMessages: function getAllMessages() {
+			_MessageWebApiUtils2.default.fetchMessages();
+		}
+	};
+	
+	exports.default = MessageActions;
+
+/***/ },
+/* 190 */
+/*!*************************************!*\
+  !*** ./app/stores/MessageStore.jsx ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher.jsx */ 179);
+	
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+	
+	var _AppConstants = __webpack_require__(/*! ../constants/AppConstants.jsx */ 183);
+	
+	var _AppConstants2 = _interopRequireDefault(_AppConstants);
+	
+	var _events = __webpack_require__(/*! events */ 184);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CHANGE_EVENT = 'change';
+	var _store = {};
+	
+	var MessageStoreClass = function (_EventEmitter) {
+		_inherits(MessageStoreClass, _EventEmitter);
+	
+		function MessageStoreClass() {
+			_classCallCheck(this, MessageStoreClass);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(MessageStoreClass).call(this));
+		}
+	
+		_createClass(MessageStoreClass, [{
+			key: 'getSent',
+			value: function getSent() {
+				return _store.sent;
+			}
+		}, {
+			key: 'getReceived',
+			value: function getReceived() {
+				return _store.received;
+			}
+		}, {
+			key: 'getAll',
+			value: function getAll() {
+				return _store.all;
+			}
+		}, {
+			key: 'addChangeListener',
+			value: function addChangeListener(callback) {
+				this.on(CHANGE_EVENT, callback);
+			}
+		}, {
+			key: 'removeChangeListenr',
+			value: function removeChangeListenr(callback) {
+				this.removeListener(CHANGE_EVENT, callback);
+			}
+		}]);
+	
+		return MessageStoreClass;
+	}(_events.EventEmitter);
+	
+	var MessageStore = new MessageStoreClass();
+	
+	MessageStore.dispatchToken = _AppDispatcher2.default.register(function (payload) {
+		var action = payload.action;
+		switch (action.actionType) {
+			case _AppConstants2.default.FETCH_MESSAGES:
+				var data = action.data;
+				if (data) {
+					_store = {
+						sent: data[0],
+						received: data[1],
+						all: data[2]
+					};
+				} else {
+					_store = {
+						sent: [],
+						received: [],
+						all: []
+					};
+				}
+				MessageStore.emit(CHANGE_EVENT);
+				break;
+	
+			default:
+				return true;
+		}
+	});
+	
+	exports.default = MessageStore;
+
+/***/ },
+/* 191 */,
+/* 192 */
+/*!*****************************************!*\
+  !*** ./app/util/MessageWebApiUtils.jsx ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher.jsx */ 179);
+	
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+	
+	var _AppConstants = __webpack_require__(/*! ../constants/AppConstants.jsx */ 183);
+	
+	var _AppConstants2 = _interopRequireDefault(_AppConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MessageApi = {
+		fetchMessages: function fetchMessages() {
+			Promise.all([$.getJSON('/api/message/sent'), $.getJSON('/api/message/received'), $.getJSON('/api/message/')]).then(function (values) {
+				_AppDispatcher2.default.handleAction({
+					actionType: _AppConstants2.default.FETCH_MESSAGES,
+					data: values
+				});
+			}).catch(function () {
+				_AppDispatcher2.default.handleAction({
+					actionType: _AppConstants2.default.FETCH_MESSAGES,
+					data: null
+				});
+			});
+		}
+	};
+	
+	exports.default = MessageApi;
 
 /***/ }
 /******/ ]);

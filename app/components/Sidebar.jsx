@@ -2,7 +2,7 @@ import React from 'react';
 
 import FilterCard from './FilterCard.jsx';
 
-import FilterActionCreators from '../actions/FilterActionCreators.jsx';
+import FilterAction from '../actions/FilterActionCreators.jsx';
 import FilterStore from '../stores/FilterStore.jsx';
 
 export default class Sidebar extends React.Component {	
@@ -32,7 +32,7 @@ export default class Sidebar extends React.Component {
 	}
 
 	componentWillMount() {
-		FilterActionCreators.getAllFilters();
+		FilterAction.getAllFilters();
 	}
 
 	componentDidMount() {

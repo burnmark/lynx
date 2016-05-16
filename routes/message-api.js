@@ -5,7 +5,7 @@ module.exports.Router = function (Database) {
 
 	router.get('/', (req, res, next) => {
 		Database.getMessages(req.user.id) 
-			.then(rows => res.json.rows)
+			.then(rows => res.json(rows))
 			.catch(next);
 	});
 

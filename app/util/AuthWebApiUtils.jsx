@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher.jsx';
 import AppConstants from '../constants/AppConstants.jsx';
 
 
-var Auth = {
+var AuthApi = {
 	login: function () {
 		$.ajax({
 			type: 'POST',
@@ -28,4 +28,4 @@ var Auth = {
 	}
 }
 
-export default Auth;
+export default AuthApi;

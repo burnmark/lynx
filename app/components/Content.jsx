@@ -3,36 +3,46 @@ import React from 'react';
 import Message from './Message.jsx';
 import TabBar from './TabBar.jsx';
 
-// content will recieve an array of messageData objects
+import MessageActions from '../actions/MessageActionCreators.jsx';
+import MessageStore from '../stores/MessageStore.jsx';
+
 export default class Content extends React.Component {
 	constructor(props) {
 		super(props);
 
 		// currently not being sorted by sent/received
 		this.state = {
-			sent: [],
-			received: []
+			messages: []
 		};
+
+		this._onChange = this._onChange.bind(this);
 	}
 
 	componentWillMount() {
-		this.getMessagesFromServer();
+		MessageActions.getAllMessages();
 	}
 
-	getMessagesFromServer() {
-		Promise.all([$.getJSON('/api/message/received'), $.getJSON('/api/message/sent')])
-			.then(values => this.setState({
-				sent: values[0],
-				received: values[1]
-			}));
+	componentDidMount() {
+		MessageStore.addChangeListener(this._onChange);
 	}
+
+	componentWillUnmount() {
+		MessageStore.removeChangeListener(this._onChange);		
+	}
+
+	_onChange() {
+		this.setState({
+			messages: MessageStore.getSent()
+		})
+	}
+
 	
 	render() {
-		// console.log(this.state);
+		console.log(this.state);
 		var messages = 'No messages yet.';
-		if (this.state.sent) {
-			messages = this.state.sent.map((messageData, i) => {
-				return <Message key={i} data={messageData} />;
+		if (this.state.messages) {
+			messages = this.state.messages.map((message, i) => {
+				return <Message key={i} data={message} />;
 			});
 		}
 

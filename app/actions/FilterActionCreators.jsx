@@ -1,8 +1,8 @@
-import FilterWebApiUtils from '../util/FilterWebApiUtils.jsx';
+import FilterApi from '../util/FilterWebApiUtils.jsx';
 
 var FilterActions = {
 	getAllFilters: function () {
-		FilterWebApiUtils.fetchFilters();
+		FilterApi.fetchFilters();
 	}
 }
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Sidebar from './Sidebar.jsx';
 import Content from './Content.jsx';
 
-import AuthActionCreators from '../actions/AuthActionCreators.jsx';
+import AuthAction from '../actions/AuthActionCreators.jsx';
 import AuthStore from '../stores/AuthStore.jsx';
 
 export default class Page extends React.Component {
@@ -16,7 +16,7 @@ export default class Page extends React.Component {
 	}
 
 	componentWillMount() {
-		AuthActionCreators.login();
+		AuthAction.login();
 	}
 
 	componentDidMount() {

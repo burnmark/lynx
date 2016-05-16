@@ -1,7 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher.jsx';
 import AppConstants from '../constants/AppConstants.jsx';
 
-var Filter = {
+var FilterApi = {
 	fetchFilters: function () {
 		Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')])
 			.then(values => {
@@ -19,4 +19,4 @@ var Filter = {
 	}
 }
 
-export default Filter;
+export default FilterApi;
