@@ -47,7 +47,7 @@ var filterAll = function () {
 		.then(() => console.log(_store))
 }
 
-export default class messageStore {
+export default class messageStore extends EventEmitter{
 	constructor() {
 		super();
 	}

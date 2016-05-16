@@ -148,7 +148,7 @@ var Database = {
 				id: userId
 			}
 		);
-	}
+	},
 
 	// Given a userId, returns a promise containing all messages the user has received
 	// If userId does not exist in db or no messages have been found in relation

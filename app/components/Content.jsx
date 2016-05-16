@@ -28,7 +28,7 @@ export default class Content extends React.Component {
 	}
 	
 	render() {
-		console.log(this.state);
+		// console.log(this.state);
 		var messages = 'No messages yet.';
 		if (this.state.sent) {
 			messages = this.state.sent.map((messageData, i) => {
