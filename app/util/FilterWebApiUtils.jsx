@@ -18,3 +18,5 @@ var Filter = {
 			})
 	}
 }
+
+export default Filter;

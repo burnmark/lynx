@@ -20647,7 +20647,6 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				console.log(this.state);
 				if (this.state.loggedIn) {
 					return _react2.default.createElement(
 						'div',
@@ -20697,6 +20696,14 @@
 	
 	var _FilterCard2 = _interopRequireDefault(_FilterCard);
 	
+	var _FilterActionCreators = __webpack_require__(/*! ../actions/FilterActionCreators.jsx */ 186);
+	
+	var _FilterActionCreators2 = _interopRequireDefault(_FilterActionCreators);
+	
+	var _FilterStore = __webpack_require__(/*! ../stores/FilterStore.jsx */ 188);
+	
+	var _FilterStore2 = _interopRequireDefault(_FilterStore);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20725,34 +20732,41 @@
 				},
 				categories: {
 					values: [],
-					title: 'Domains'
+					title: 'Categories'
 				}
 			};
+			_this._onChange = _this._onChange.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Sidebar, [{
-			key: 'getFiltersFromServer',
-			value: function getFiltersFromServer() {
-				var _this2 = this;
-	
-				Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')]).then(function (values) {
-					return _this2.setState({
-						domains: {
-							values: values[0],
-							title: 'Domains'
-						},
-						categories: {
-							values: values[1],
-							title: 'Categories'
-						}
-					});
-				});
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_FilterActionCreators2.default.getAllFilters();
 			}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.getFiltersFromServer();
+				_FilterStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_FilterStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				this.setState({
+					domains: {
+						values: _FilterStore2.default.getDomains(),
+						title: 'Domains'
+					},
+					categories: {
+						values: _FilterStore2.default.getCategories(),
+						title: 'Categories'
+					}
+				});
 			}
 		}, {
 			key: 'render',
@@ -21545,7 +21559,7 @@
 				AuthStore.emit(CHANGE_EVENT);
 				break;
 	
-			case appConstants.LOGIN_FAILED:
+			case _AppConstants2.default.LOGIN_FAILED:
 				_store = {
 					loggedIn: false,
 					error: action.data
@@ -22319,6 +22333,179 @@
 	};
 	
 	exports.default = Auth;
+
+/***/ },
+/* 186 */
+/*!**********************************************!*\
+  !*** ./app/actions/FilterActionCreators.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _FilterWebApiUtils = __webpack_require__(/*! ../util/FilterWebApiUtils.jsx */ 187);
+	
+	var _FilterWebApiUtils2 = _interopRequireDefault(_FilterWebApiUtils);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var FilterActions = {
+		getAllFilters: function getAllFilters() {
+			_FilterWebApiUtils2.default.fetchFilters();
+		}
+	};
+	
+	exports.default = FilterActions;
+
+/***/ },
+/* 187 */
+/*!****************************************!*\
+  !*** ./app/util/FilterWebApiUtils.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher.jsx */ 179);
+	
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+	
+	var _AppConstants = __webpack_require__(/*! ../constants/AppConstants.jsx */ 183);
+	
+	var _AppConstants2 = _interopRequireDefault(_AppConstants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Filter = {
+		fetchFilters: function fetchFilters() {
+			Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')]).then(function (values) {
+				_AppDispatcher2.default.handleAction({
+					actionType: _AppConstants2.default.FETCH_FILTERS,
+					data: values
+				});
+			}).catch(function () {
+				_AppDispatcher2.default.handleAction({
+					actionType: _AppConstants2.default.FETCH_FILTERS,
+					data: null
+				});
+			});
+		}
+	};
+	
+	exports.default = Filter;
+
+/***/ },
+/* 188 */
+/*!************************************!*\
+  !*** ./app/stores/FilterStore.jsx ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher.jsx */ 179);
+	
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+	
+	var _AppConstants = __webpack_require__(/*! ../constants/AppConstants.jsx */ 183);
+	
+	var _AppConstants2 = _interopRequireDefault(_AppConstants);
+	
+	var _events = __webpack_require__(/*! events */ 184);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CHANGE_EVENT = 'change';
+	var _store = {};
+	
+	var FilterStoreClass = function (_EventEmitter) {
+		_inherits(FilterStoreClass, _EventEmitter);
+	
+		function FilterStoreClass() {
+			_classCallCheck(this, FilterStoreClass);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(FilterStoreClass).call(this));
+		}
+	
+		_createClass(FilterStoreClass, [{
+			key: 'getDomains',
+			value: function getDomains() {
+				return _store.domains;
+			}
+		}, {
+			key: 'getPeople',
+			value: function getPeople() {
+				return _store.people;
+			}
+		}, {
+			key: 'getCategories',
+			value: function getCategories() {
+				return _store.categories;
+			}
+		}, {
+			key: 'addChangeListener',
+			value: function addChangeListener(callback) {
+				this.on(CHANGE_EVENT, callback);
+			}
+		}, {
+			key: 'removeChangeListenr',
+			value: function removeChangeListenr(callback) {
+				this.removeListener(CHANGE_EVENT, callback);
+			}
+		}]);
+	
+		return FilterStoreClass;
+	}(_events.EventEmitter);
+	
+	var FilterStore = new FilterStoreClass();
+	
+	FilterStore.dispatchToken = _AppDispatcher2.default.register(function (payload) {
+		var action = payload.action;
+		switch (action.actionType) {
+			case _AppConstants2.default.FETCH_FILTERS:
+				if (action.data) {
+					// 0 is domain, 1 is category
+					_store = {
+						domains: action.data[0],
+						// add people later, db isnt ready
+						categories: action.data[1]
+					};
+				} else {
+					_store = {
+						domains: [],
+						//add people later, db isnt ready yet
+						categories: []
+					};
+				}
+				FilterStore.emit(CHANGE_EVENT);
+				break;
+	
+			default:
+				return true;
+		}
+	});
+	
+	exports.default = FilterStore;
 
 /***/ }
 /******/ ]);

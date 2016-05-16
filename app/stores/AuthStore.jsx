@@ -36,7 +36,7 @@ AuthStore.dispatchToken = AppDispatcher.register(payload => {
 			AuthStore.emit(CHANGE_EVENT);
 			break;
 
-		case appConstants.LOGIN_FAILED:
+		case AppConstants.LOGIN_FAILED:
 			_store = {
 				loggedIn: false,
 				error: action.data

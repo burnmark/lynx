@@ -5,3 +5,5 @@ var FilterActions = {
 		FilterWebApiUtils.fetchFilters();
 	}
 }
+
+export default FilterActions;

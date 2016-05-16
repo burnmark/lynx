@@ -32,7 +32,6 @@ export default class Page extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
 		if (this.state.loggedIn) {
 			return (
 				<div className="page">
