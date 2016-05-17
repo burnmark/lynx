@@ -284,8 +284,10 @@ body {
 
 /*sidebar styles*/
 .sidebar {
-    width: 30%;
     float: left;
+    padding-top: 3px; /* for main content tab underlines */
+    width: 30%;
+    height: 100%;
 }
 
 /*content styles*/

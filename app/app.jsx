@@ -3,7 +3,7 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import Page from './components/Page.jsx';
-import FilterCard from './components/FilterCard.jsx';
+import SideBar from './components/Sidebar.jsx';
 
 // render(<Page sidebarData={sidebarData} messages={messageData} />, document.getElementById('content1'));
 
@@ -13,4 +13,4 @@ var data = {
 	title: 'filter card'
 }
 
-render(<FilterCard data={data} />, document.getElementById('content1'))
+render(<SideBar />, document.getElementById('content1'))
