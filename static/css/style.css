@@ -24,32 +24,30 @@ body {
 }
 
 /*Filter button styles*/
-.filter-btn {				
-	border: 1px rgba(0, 0, 0, 0.2) solid;
-	padding-left: 6px;
-	padding-right: 6px;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	margin-right: 3px;
-	margin-bottom: 5px;
-	display: inline-block;				
+.filter-btn {
     background-color: #fff;
+    border: 1px rgba(0, 0, 0, 0.15) solid;
+    border-radius: 2px;
+    float: left;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .filter-btn:hover {
-	border: 1px #333 solid;
-	color: #333;
-	cursor: pointer;
+    border: 1px #777 solid;
+    color: #000;
+    cursor: pointer;
 }
 
 /*avatar icon styles*/
 .avatar {
-   /*background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
-   background-size: cover;*/
    border-radius: 500px;
-   height: 50px;
-   margin-top: 5px;
-   width: 50px;   
+   height: 40px;
+   width: 40px;
    display: inline-block;
    margin-right: 4px;
 
@@ -58,16 +56,8 @@ body {
 }
 
 .avatar-btn:hover {
-	/*height: 48px;
-   	margin-top: 5px;
-   	width: 48px; */ 
-
     opacity: 1;
     cursor: pointer;
-/*
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, .45);
-    transform: translate(-3px, -3px);*/
-
 }
 
 /*search icon style*/
