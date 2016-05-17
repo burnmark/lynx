@@ -4,11 +4,34 @@
 }
 
 body {
-	padding: 20px;
+    padding: 40px;
+    padding-top: 100px; /* for .header */
     background-color: #FAFAFA;
 }
 
-.selected {
+/*utility*/
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.overlay {
+    position: fixed;
+    background: black;
+    bottom: 0;
+    left: 0;
+    opacity: 0.4;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+
+    display: none;
+}
+
+/*.selected {
     border-bottom: 3px solid black;
 }
 
@@ -20,8 +43,8 @@ body {
 .content-area {
     padding-top: 5px;
     padding-bottom: 20px;
-    /*background-color: #FAFAFA;*/
-}
+    /*background-color: #FAFAFA;
+}*/
 
 /*Filter button styles*/
 .filter-btn {
@@ -88,18 +111,65 @@ body {
     padding-right: 3px;
 }
 
-.title-bar span {
+/* title bar tabs */
+.title-bar .tab.selected {
+    border-bottom: 3px solid black;
+}
+
+.title-bar .tab:not(.selected):hover {
+    border-bottom: 3px solid #888;
+    cursor: pointer;
+}
+
+/* title bar search icon */
+.title-bar .fa-search {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    right: 0;
+    top: 2px;
+}
+
+/*.title-bar span {
 	margin-right: 5%;
 }
 
 .title-bar span:hover {
 	border-bottom: 3px solid black;
 	cursor: pointer;
+}*/
+
+/*Panels*/
+.panel {
+    overflow: hidden;
 }
 
-/*filter card styles*/
-.filter-card {
-    margin: 20px;
+.panel-content {
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #EEE;
+    border-top: none;
+}
+
+.panel-main {
+    float: left;
+    height: calc(90% + 40px);
+    margin-left: 20px;
+    width: calc(70% - 30px);
+}
+.panel-main .panel-content {
+    padding: 4% 2%;
+    height: calc(100% - 28px);
+}
+
+.panel-filter {
+    height: 30%;
+    margin-bottom: 20px;
+}
+.panel-filter .panel-content{
+    padding: 8px;
+    height: calc(100% - 25px);
 }
 
 /*link detail styles*/

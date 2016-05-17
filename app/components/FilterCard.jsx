@@ -18,9 +18,9 @@ export default class FilterCard extends React.Component {
 		}
 
 		return (
-			<div className="filter-card">
+			<div className="panel panel-filter">
 				<TitleBar title={this.props.data.title} />
-				<div className="content-wrap content-area">
+				<div className="panel-content clearfix">
 					{content}
 				</div>
 			</div>
