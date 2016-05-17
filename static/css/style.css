@@ -9,7 +9,8 @@ body {
     background-color: #FAFAFA;
 }
 
-/*utility*/
+/* utility */
+
 .clearfix:after {
     content: ".";
     display: block;
@@ -31,20 +32,120 @@ body {
     display: none;
 }
 
-/*.selected {
-    border-bottom: 3px solid black;
+/* page */
+.page {
+    overflow: auto;
 }
 
-.content-wrap {
-    padding-left: 1%;
-    padding-right: 1%;
+
+/* header */
+.header {
+    height: 65px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    
+    box-shadow:  0 -1px 10px rgba(0,0,0,0.26);
 }
 
-.content-area {
-    padding-top: 5px;
-    padding-bottom: 20px;
-    /*background-color: #FAFAFA;
-}*/
+.header .logo {
+    color: #444;
+    font-size: 32px;
+    left: 40px;
+    line-height: 60px;
+    position: absolute;
+}
+
+.header .account {
+    padding: 12px 0;
+    position: absolute;
+    right: 40px;
+}
+
+.header .share {
+    position: absolute;
+    left: 120px;
+    right: 105px;
+    top: 10px;
+}
+
+.header .share-closed {
+    background: white;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    color: #999;
+    font-size: 16px;
+    height: 45px;
+    line-height: 43px;
+    padding: 0 17px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.header .share-closed:hover {
+    cursor: pointer;
+    color: #444;
+    border-color: #BBB;
+}
+
+.header .share-open {
+    background: white;
+    border: 1px solid #BBB;
+    border-radius: 5px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15), 0 0 8px rgba(0, 0, 0, 0.15);
+    color: #444;
+    height: 296px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 10000;
+
+    display: none;
+}
+
+.header .share-open .title {
+    color: #555;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 6px;
+}
+
+.header .share-open .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.header .share-open .close:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+.header .share-open input,
+.header .share-open textarea {
+    margin-bottom: 10px;
+}
+
+.header .share-open textarea {
+    height: 100px;
+}
+
+
+/* sidebar */
+.sidebar {
+    float: left;
+    padding-top: 3px; /* for main content tab underlines */
+    width: 30%;
+    height: 100%;
+}
+
+/**
+ * components
+ */
 
 /*Filter button styles*/
 .filter-btn {
@@ -68,6 +169,8 @@ body {
 
 /*avatar icon styles*/
 .avatar {
+   /*background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
+   background-size: cover;*/
    border-radius: 500px;
    height: 40px;
    width: 40px;
@@ -83,13 +186,49 @@ body {
     cursor: pointer;
 }
 
-/*search icon style*/
-.fa-search {
-	float: right;
-	color: rgba(0, 0, 0, 0.6);
+
+/**
+ * panels
+ */
+
+.panel {
+    overflow: hidden;
 }
 
-/*title bar style*/
+.panel-content {
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #EEE;
+    border-top: none;
+}
+
+.panel-main {
+    float: left;
+    height: calc(90% + 40px);
+    margin-left: 20px;
+    width: calc(70% - 30px);
+}
+.panel-main .panel-content {
+    padding: 4% 2%;
+    height: calc(100% - 28px);
+}
+
+
+.panel-filter {
+    height: 30%;
+    margin-bottom: 20px;
+}
+.panel-filter .panel-content{
+    padding: 8px;
+    height: calc(100% - 25px);
+}
+
+
+/**
+ * panel title bars
+ */
+
 .title-bar {
     border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
     color: rgba(0, 0, 0, 0.8);
@@ -130,53 +269,61 @@ body {
     top: 2px;
 }
 
-/*.title-bar span {
-	margin-right: 5%;
+
+/**
+ * message
+ */
+
+/*message styles*/
+.message {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 30px;
+    position: relative;
 }
 
-.title-bar span:hover {
-	border-bottom: 3px solid black;
-	cursor: pointer;
-}*/
-
-/*Panels*/
-.panel {
-    overflow: hidden;
+.message .sender {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 70px;
 }
 
-.panel-content {
-    background: white;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid #EEE;
-    border-top: none;
+.message .sender .avatar {
+    background: url(img/person1.jpg) center center;
+    background-size: cover;
+
+    margin: auto;
+    margin-top: 5px;
 }
 
-.panel-main {
-    float: left;
-    height: calc(90% + 40px);
-    margin-left: 20px;
-    width: calc(70% - 30px);
-}
-.panel-main .panel-content {
-    padding: 4% 2%;
-    height: calc(100% - 28px);
+.message .sender .time {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 11px;
+    line-height: 13px;
+    margin-top: 4px;
 }
 
-.panel-filter {
-    height: 30%;
-    margin-bottom: 20px;
+.message .link-content {
+    margin-left: 70px; /* same as .sender width */
+    position: relative;
 }
-.panel-filter .panel-content{
-    padding: 8px;
-    height: calc(100% - 25px);
+.message .link-content .note {
+    margin-bottom: 6px;
+    font-size: 16px;
+    line-height: 17px;
 }
 
-/*link detail styles*/
+
+/**
+ * link detail
+ */
+
 .link-detail {
     background-color: #FFF;
     border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15);
     height: 120px;
     margin-bottom: 8px;
     overflow: hidden;
@@ -232,74 +379,5 @@ body {
     width: 120px;
 }
 
-/*message styles*/
-.message {
-    position: relative;
-    color: rgba(0, 0, 0, 0.8);
-    
-    margin: 5px;
-    margin-top: 20px;
 
-}
-
-.first {
-    margin-top: 10px;
-}
-
-.message .sender {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 70px;
-}
-
-.message .sender .avatar {
-    background: url(img/person1.jpg) center center;
-    background-size: cover;
-    border-radius: 500px;
-    height: 50px;
-    margin: auto;
-    margin-top: 5px;
-    width: 50px;
-}
-
-.message .sender .time {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 11px;
-    line-height: 13px;
-    margin-top: 4px;
-}
-
-.message .link-content {
-    margin-left: 70px; /* same as .sender width */
-    position: relative;
-}
-.message .link-content .note {
-    margin-bottom: 4px;
-    font-size: 16px;
-    line-height: 17px;
-}
-
-/*sidebar styles*/
-.sidebar {
-    float: left;
-    padding-top: 3px; /* for main content tab underlines */
-    width: 30%;
-    height: 100%;
-}
-
-/*content styles*/
-.content {
-    width: calc(70% - 40px);
-    float: left;
-    
-    margin: 20px;
-}
-
-/*Page styles*/
-.page {    
-    overflow: auto;
-}
 
