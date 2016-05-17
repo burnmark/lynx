@@ -3,9 +3,9 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import Page from './components/Page.jsx';
-import SideBar from './components/Sidebar.jsx';
+import Content from './components/Content.jsx';
 
-// render(<Page sidebarData={sidebarData} messages={messageData} />, document.getElementById('content1'));
+render(<Page />, document.getElementById('content1'));
 
 var data = {
 	// values: ['hi', 'hello', 'wow'],
@@ -13,4 +13,4 @@ var data = {
 	title: 'filter card'
 }
 
-render(<SideBar />, document.getElementById('content1'))
+// render(<Content />, document.getElementById('content1'))

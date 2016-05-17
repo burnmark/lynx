@@ -14,8 +14,9 @@ export default class TabBar extends React.Component {
 	render() {
 		return (
 			<div className="title-bar title-bar-main" onClick={this._handleClick.bind(this)}>
-				<span className={this.state.toClicked ? 'title tab selected' : 'title tab'}>To</span>				
-				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>From</span>
+				<span className={this.state.toClicked ? 'title tab selected' : 'title tab'}>Sent</span>				
+				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>Received</span>
+				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>All</span>
 				<SearchBtn />
 			</div>
 		);

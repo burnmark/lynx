@@ -4,8 +4,8 @@
 }
 
 body {
-    padding: 40px;
-    padding-top: 100px; /* for .header */
+    width: 100%;
+    height: 100%;
     background-color: #FAFAFA;
 }
 
@@ -135,14 +135,6 @@ body {
 }
 
 
-/* sidebar */
-.sidebar {
-    float: left;
-    padding-top: 3px; /* for main content tab underlines */
-    width: 30%;
-    height: 100%;
-}
-
 /**
  * components
  */
@@ -187,6 +179,20 @@ body {
 }
 
 
+/* sidebar */
+.sidebar {
+    /*float: left;*/
+    padding-top: 3px; /* for main content tab underlines */
+    /*width: 30%;*/
+    /*height: 100%;*/
+
+    position: fixed;
+    top: 20px;
+    bottom: 20px;
+    left: 20px;
+    right: calc(70% + 10px);
+}
+
 /**
  * panels
  */
@@ -204,10 +210,17 @@ body {
 }
 
 .panel-main {
-    float: left;
-    height: calc(90% + 40px);
-    margin-left: 20px;
-    width: calc(70% - 30px);
+    /*float: left;*/
+    /*height: calc(90% + 40px);*/
+    /*margin-left: 20px;*/
+    /*margin-left: calc(30% + 50px);*/
+    /*width: calc(70% - 30px);*/
+
+    position: fixed;
+    top: 20px;
+    bottom: 20px;
+    left: calc(30% + 10px);
+    right: 20px;
 }
 .panel-main .panel-content {
     padding: 4% 2%;
@@ -216,8 +229,11 @@ body {
 
 
 .panel-filter {
-    height: 30%;
+    height: calc(33.33% - 13.33px);
     margin-bottom: 20px;
+}
+.panel-filter:last-child {
+    margin-bottom: 0;
 }
 .panel-filter .panel-content{
     padding: 8px;
