@@ -47,9 +47,9 @@ export default class Content extends React.Component {
 		}
 
 		return (
-			<div className="content">
+			<div className="panel panel-main">
 				<TabBar />
-				<div className="content-area">
+				<div className="panel-content">
 					{messages}
 				</div>
 			</div>

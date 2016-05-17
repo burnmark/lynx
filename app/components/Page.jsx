@@ -34,7 +34,9 @@ export default class Page extends React.Component {
 	render() {
 		if (this.state.loggedIn) {
 			return (
+
 				<div className="page">
+					<div class="overlay" id="overlay"></div>
 					<Sidebar data={this.props.sidebarData} />
 					<Content messages={this.props.messages} />
 				</div>

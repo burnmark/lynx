@@ -43,7 +43,7 @@ export default class Message extends React.Component {
 				        {this.props.data.note}
 				    </div>
 
-			        <div>
+			        <div className="clearfix">
 			        	{categories}			            
 			        </div>
 			    </div>

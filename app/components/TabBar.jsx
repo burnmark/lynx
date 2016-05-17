@@ -13,11 +13,12 @@ export default class TabBar extends React.Component {
 
 	render() {
 		return (
-			<h3 className="title-bar" onClick={this._handleClick.bind(this)}>
-				<span className={this.state.toClicked ? 'selected' : ''}>To</span>				
-				<span className={this.state.toClicked ? '' : 'selected'}>From</span>
+			<div className="title-bar title-bar-main" onClick={this._handleClick.bind(this)}>
+				<span className={this.state.toClicked ? 'title tab selected' : 'title tab'}>Sent</span>				
+				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>Received</span>
+				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>All</span>
 				<SearchBtn />
-			</h3>
+			</div>
 		);
 	}
 }

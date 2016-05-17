@@ -5,8 +5,7 @@ export default class Avatar extends React.Component {
 		var classes = this.props.btnClass ? 'avatar avatar-btn' : 'avatar',
 			styles = {
 				backgroundImage : 'url(' + this.props.imgUrl + ')',
-				backgroundPosition: 'center',
-				backgroundAttachment: 'center',
+				backgroundPosition: '50% 50%',
 				backgroundSize: 'cover'
 			}
 		
