@@ -68,10 +68,24 @@ body {
 
 /*title bar style*/
 .title-bar {
-	border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
-	color: rgba(0, 0, 0, 0.8);
-	font-size: 20px;	
-    margin-bottom: 0;
+    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: default;
+    font-size: 18px;
+    line-height: normal;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+}
+
+/*title bar text */
+.title-bar .title {
+    display: inline-block;
+    margin-right: 10px;
+    padding-bottom: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .title-bar span {
