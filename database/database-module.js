@@ -103,11 +103,46 @@ var Database = {
 	getRecievedMessages(userId) {
 		return this._getObjects(
 			(
-				'SELECT m.id, m.linkId, m.note, UNIX_TIMESTAMP(m.timeSent) AS timeSent, m.isRead, l.url, l.title, l.description, l.imgUrl, u.displayName ' + 
+				'SELECT ' + 
+					'm.id, ' +
+					'm.linkId, ' +
+					'm.note, ' +
+					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'm.isRead, ' + 
+					'l.url, ' + 
+					'l.title, ' + 
+					'l.description, ' + 
+					'l.imgUrl, ' + 
+					'u.email ' + 
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
 				'JOIN user u on m.senderId = u.id ' + 
 				'WHERE m.recipientId = :id' 
+			),
+			{
+				id: userId
+			}
+		);
+	},
+
+	getMessages(userId) {
+		return this._getObjects(
+			(
+				'SELECT ' + 
+					'm.id, ' +
+					'm.linkId, ' +
+					'm.note, ' +
+					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'm.isRead, ' + 
+					'l.url, ' + 
+					'l.title, ' + 
+					'l.description, ' + 
+					'l.imgUrl, ' + 
+					'sender.email AS senderEmail ' + 
+				'FROM message m ' + 
+				'JOIN link l on m.linkId = l.id ' + 
+				'JOIN user sender on m.senderId = sender.id ' + 
+				'WHERE m.senderId = :id OR m.recipientId = :id'
 			),
 			{
 				id: userId
@@ -121,7 +156,17 @@ var Database = {
 	getSentMessages(userId) {
 		return this._getObjects(
 			(
-				'SELECT m.id, m.linkId, m.note, UNIX_TIMESTAMP(m.timeSent), m.isRead, l.url, l.title, l.description, l.imgUrl, u.email ' + 
+				'SELECT ' + 
+					'm.id, ' +
+					'm.linkId, ' +
+					'm.note, ' +
+					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'm.isRead, ' + 
+					'l.url, ' + 
+					'l.title, ' + 
+					'l.description, ' + 
+					'l.imgUrl, ' + 
+					'u.email ' + 
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
 				'JOIN user u on m.recipientId = u.id ' + 
@@ -132,6 +177,7 @@ var Database = {
 			}
 		);
 	},
+
 
 	// if user already exists -> promise resolves with null
 	// if not

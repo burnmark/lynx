@@ -2,9 +2,12 @@ import React from 'react';
 
 import FilterCard from './FilterCard.jsx';
 
+import FilterAction from '../actions/FilterActionCreators.jsx';
+import FilterStore from '../stores/FilterStore.jsx';
+
 export default class Sidebar extends React.Component {	
 	constructor(props) {
-		super(props);
+		super(props);		
 		this.state = {
 			domains: {
 				values: [],
@@ -22,27 +25,35 @@ export default class Sidebar extends React.Component {
 			},
 			categories: {
 				values: [],
-				title: 'Domains'
+				title: 'Categories'
 			}
-		}
+		};
+		this._onChange = this._onChange.bind(this);
 	}
 
-	getFiltersFromServer() {
-		Promise.all([$.getJSON('/api/domain/'), $.getJSON('/api/category/')])
-			.then(values => this.setState({
-				domains: {
-					values: values[0],
-					title: 'Domains'
-				},
-				categories: {
-					values: values[1],
-					title: 'Categories'
-				}
-			}));
+	componentWillMount() {
+		FilterAction.getAllFilters();
 	}
 
 	componentDidMount() {
-		this.getFiltersFromServer();
+		FilterStore.addChangeListener(this._onChange);		
+	}
+
+	componentWillUnmount() {
+		FilterStore.removeChangeListener(this._onChange);
+	}
+
+	_onChange() {
+		this.setState({
+			domains: {
+				values: FilterStore.getDomains(),
+				title: 'Domains'
+			},
+			categories: {
+				values: FilterStore.getCategories(),
+				title: 'Categories'
+			}
+		});
 	}
 
 	render() {	

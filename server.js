@@ -15,7 +15,7 @@ var bcrypt = require('bcrypt'),
 var Maria = require('mariasql'),
 	bluebird = require('bluebird'),
 	connection = bluebird.promisifyAll(new Maria(dbConfig)),
-	Database = require(__base + 'database-module')(connection);
+	Database = require(__base + '/database/database-module')(connection);
 
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy;

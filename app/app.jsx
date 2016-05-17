@@ -1,9 +1,8 @@
-// eye trackers!
 
 import React from 'react';
 import {render} from 'react-dom';
 
-import Page from './Page.jsx';
+import Page from './components/Page.jsx';
 
 // $.ajax({
 // 	type: 'POST',
