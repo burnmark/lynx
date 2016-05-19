@@ -79,6 +79,8 @@ app.use(passport.session());
 
 app.use(express.static(__base + 'static'));
 
+app.get('/undefined', function (req, res) {});
+
 // public
 app.post('/api/signin', passport.authenticate('local'), function (req, res) {
 	res.json({message: 'Authenticated'});
@@ -111,6 +113,8 @@ app.post('/api/signup', function (req, res, next) {
 			.catch(next);
 	});
 });
+
+
 
 // Ensures that only authenticated users can reach the api calls after this point
 app.use(function (req, res, next) {
