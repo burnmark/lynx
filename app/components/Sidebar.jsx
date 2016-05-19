@@ -22,11 +22,11 @@ export default class Sidebar extends React.Component {
 				],
 				btnClass: true,
 				title: 'People'
-			},
-			categories: {
-				values: [],
-				title: 'Categories'
 			}
+			// categories: {
+			// 	values: [],
+			// 	title: 'Categories'
+			// }
 		};
 		this._onChange = this._onChange.bind(this);
 	}
@@ -48,11 +48,11 @@ export default class Sidebar extends React.Component {
 			domains: {
 				values: FilterStore.getDomains(),
 				title: 'Domains'
-			},
-			categories: {
-				values: FilterStore.getCategories(),
-				title: 'Categories'
 			}
+			// categories: {
+			// 	values: FilterStore.getCategories(),
+			// 	title: 'Categories'
+			// }
 		});
 	}
 
@@ -61,8 +61,9 @@ export default class Sidebar extends React.Component {
 			<div className="sidebar">				
 				<FilterCard data={this.state.domains} />
 				<FilterCard data={this.state.people} />
-				<FilterCard data={this.state.categories} />
+				
 			</div>
 		);
 	}
 }
+// <FilterCard data={this.state.categories} />

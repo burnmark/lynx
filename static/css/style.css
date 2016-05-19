@@ -228,7 +228,8 @@ body {
 
 
 .panel-filter {
-    height: calc(33.33% - 13.33px);
+    /*height: calc(33.33% - 13.33px);*/
+    height: calc(50% - 10px);
     margin-bottom: 20px;
 }
 .panel-filter:last-child {

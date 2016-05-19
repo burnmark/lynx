@@ -11,7 +11,6 @@ export default class Message extends React.Component {
 		this.state = {
 			categories: []
 		}
-		console.log(this.props)
 	}
 
 	componentWillMount() {

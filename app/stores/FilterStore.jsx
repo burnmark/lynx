@@ -42,15 +42,15 @@ FilterStore.dispatchToken = AppDispatcher.register(payload => {
 			if (action.data) {
 				// 0 is domain, 1 is category
 				_store = {
-					domains: action.data[0],
+					domains: action.data,
 					// add people later, db isnt ready
-					categories: action.data[1]
+					// categories: action.data[1]
 				}
 			} else {
 				_store = {
-					domains: [],
+					domains: []
 					//add people later, db isnt ready yet
-					categories: []
+					// categories: []
 				}
 			}
 			FilterStore.emit(CHANGE_EVENT);
