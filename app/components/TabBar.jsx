@@ -1,22 +1,51 @@
 import React from 'react';
 import SearchBtn from './SearchBtn.jsx';
 
+import AppConstants from '../constants/AppConstants.jsx';
+import MessageActions from '../actions/MessageActionCreators.jsx';
+
 export default class TabBar extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {toClicked: true}
+		this.state = {
+			clicked: AppConstants.tabNames.RECEIVED
+		}
 	}
 
 	_handleClick(event) {
-		this.setState({toClicked: !this.state.toClicked});
+		var clickedTab = event.target.getAttribute("data-tab-name");
+
+		this.setState({clicked: clickedTab});
 	}
 
+
 	render() {
-		return (
+		
+		return (			
 			<div className="title-bar title-bar-main" onClick={this._handleClick.bind(this)}>
-				<span className={this.state.toClicked ? 'title tab selected' : 'title tab'}>Sent</span>				
-				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>Received</span>
-				<span className={this.state.toClicked ? 'title tab' : 'title tab selected'}>All</span>
+				<span 
+					data-tab-name={AppConstants.tabNames.ALL} 
+					className={this.state.clicked ===  AppConstants.tabNames.ALL ? 'title tab selected' : 'title tab'}
+					onClick={this.props.allClicked}
+				>All</span>	
+
+				<span 
+					data-tab-name={AppConstants.tabNames.SENT} 
+					className={this.state.clicked ===  AppConstants.tabNames.SENT ? 'title tab selected' : 'title tab'}
+					onClick={this.props.sentClicked}
+				>Sent</span>	
+
+				<span 
+					data-tab-name={AppConstants.tabNames.RECEIVED} 
+					className={this.state.clicked ===  AppConstants.tabNames.RECEIVED ? 'title tab selected' : 'title tab'}
+					onClick={this.props.receivedClicked}
+				>Received</span>
+
+				<span 
+					data-tab-name={AppConstants.tabNames.STARRED} 
+					className={this.state.clicked ===  AppConstants.tabNames.STARRED ? 'title tab selected' : 'title tab'}
+				>Starred</span>
+
 				<SearchBtn />
 			</div>
 		);

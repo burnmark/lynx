@@ -6,13 +6,16 @@ import TabBar from './TabBar.jsx';
 import MessageActions from '../actions/MessageActionCreators.jsx';
 import MessageStore from '../stores/MessageStore.jsx';
 
+import AppConstants from '../constants/AppConstants.jsx';
+
 export default class Content extends React.Component {
 	constructor(props) {
 		super(props);
 
 		// currently not being sorted by sent/received
 		this.state = {
-			messages: []
+			messages: [],
+			clickedTab: AppConstants.tabNames.RECEIVED
 		};
 
 		this._onChange = this._onChange.bind(this);
@@ -30,15 +33,42 @@ export default class Content extends React.Component {
 		MessageStore.removeChangeListener(this._onChange);		
 	}
 
-	_onChange() {
+	_onChange() {		
 		this.setState({
-			messages: MessageStore.getSent()
+			messages: MessageStore.getReceived()
 		})
 	}
 
+	_sentClicked() {
+		console.log(this)
+		
+		this.setState({
+			messages: MessageStore.getSent()
+		})
+		console.log('sent clicked');
+		console.log(this.state);
+	}
+
+	_receivedClicked() {
+		this.setState({
+			messages: MessageStore.getReceived()
+		})
+		console.log('received clicked');
+		console.log(this.state);
+	}
+
+	_allClicked() {
+		console.log('all clicked');
+		this.setState({
+			messages: MessageStore.getAll()
+		})
+		console.log('all clicked');
+		console.log(this.state);
+	}
+
+// tbd: starred clicked
 	
 	render() {
-		console.log(this.state);
 		var messages = 'No messages yet.';
 		if (this.state.messages) {
 			messages = this.state.messages.map((message, i) => {
@@ -48,7 +78,11 @@ export default class Content extends React.Component {
 
 		return (
 			<div className="panel panel-main">
-				<TabBar />
+				<TabBar 
+					sentClicked={this._sentClicked.bind(this)}
+					receivedClicked={this._receivedClicked.bind(this)}
+					allClicked={this._allClicked.bind(this)}
+				/>
 				<div className="panel-content">
 					{messages}
 				</div>
