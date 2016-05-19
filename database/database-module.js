@@ -97,6 +97,32 @@ var Database = {
 		);
 	},
 
+	getMessages(userId) {
+		return this._getObjects(
+			(
+				'SELECT ' + 
+					'm.id, ' +
+					'm.linkId, ' +
+					'm.note, ' +
+					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
+					'm.isRead, ' + 
+					'l.url, ' + 
+					'l.title, ' + 
+					'l.description, ' + 
+					'l.imgUrl, ' + 
+					'sender.email AS senderEmail, ' + 
+					'sender.displayName AS senderName ' +
+				'FROM message m ' + 
+				'JOIN link l on m.linkId = l.id ' + 
+				'JOIN user sender on m.senderId = sender.id ' + 
+				'WHERE m.senderId = :id OR m.recipientId = :id'
+			),
+			{
+				id: userId
+			}
+		);
+	},
+
 	// Given a userId, returns a promise containing all messages the user has received
 	// If userId does not exist in db or no messages have been found in relation
 	// to the user, returns a promise containing null
@@ -113,10 +139,11 @@ var Database = {
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
-					'u.email ' + 
+					'sender.email AS senderEmail, ' + 
+					'sender.displayName AS senderName ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
-				'JOIN user u on m.senderId = u.id ' + 
+				'JOIN user sender on m.senderId = sender.id ' + 
 				'WHERE m.recipientId = :id' 
 			),
 			{
@@ -125,30 +152,6 @@ var Database = {
 		);
 	},
 
-	getMessages(userId) {
-		return this._getObjects(
-			(
-				'SELECT ' + 
-					'm.id, ' +
-					'm.linkId, ' +
-					'm.note, ' +
-					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
-					'm.isRead, ' + 
-					'l.url, ' + 
-					'l.title, ' + 
-					'l.description, ' + 
-					'l.imgUrl, ' + 
-					'sender.email AS senderEmail ' + 
-				'FROM message m ' + 
-				'JOIN link l on m.linkId = l.id ' + 
-				'JOIN user sender on m.senderId = sender.id ' + 
-				'WHERE m.senderId = :id OR m.recipientId = :id'
-			),
-			{
-				id: userId
-			}
-		);
-	},
 
 	// Given a userId, returns a promise containing all messages the user has received
 	// If userId does not exist in db or no messages have been found in relation
@@ -166,10 +169,11 @@ var Database = {
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
-					'u.email ' + 
+					'sender.email AS senderEmail, ' + 
+					'sender.displayName AS senderName ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
-				'JOIN user u on m.recipientId = u.id ' + 
+				'JOIN user sender on m.recipientId = sender.id ' + 
 				'WHERE senderId = :id'	
 			),
 			{

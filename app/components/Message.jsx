@@ -11,6 +11,7 @@ export default class Message extends React.Component {
 		this.state = {
 			categories: []
 		}
+		console.log(this.props)
 	}
 
 	componentWillMount() {
@@ -30,26 +31,26 @@ export default class Message extends React.Component {
 			});
 		}
 		var timeSent = moment(parseInt(this.props.data.timeSent) * 1000);
-		var time = timeSent.format("h:mm a");
-		var date = timeSent.format("ddd, MMM D");
+		var dateString = timeSent.format("ddd, MMM D h:mm a");
 		return (
 			<div className="message">
 			    <div className="sender">			        
 
 			        <Avatar imgUrl={this.props.data.avatarImgUrl} />
 
-			        <div className="time">
-			        	{time}
-			        	<br />
-			        	{date}
+			        <div className="info">
+			        	<span className="name">{this.props.data.senderName}</span>
+			        	
+			        	<span className="dateString">{dateString}</span>
 			        </div>
-
 			    </div>
+
+			    <div className="note">
+				    {this.props.data.note}
+				</div>
+
 			    <div className="link-content">			    				       
-			    	<LinkDetail data={this.props.data} />
-				    <div className="note">
-				        {this.props.data.note}
-				    </div>
+			    	<LinkDetail data={this.props.data} />				    
 
 			        <div className="clearfix">
 			        	{categories}			            

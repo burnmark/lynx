@@ -4,6 +4,8 @@
 }
 
 body {
+    padding: 50px;
+
     width: 100%;
     height: 100%;
     background-color: #FAFAFA;
@@ -161,16 +163,14 @@ body {
 
 /*avatar icon styles*/
 .avatar {
-   /*background: url(http://getuikit.com/docs/images/placeholder_600x400.svg) center center;
-   background-size: cover;*/
-   border-radius: 500px;
-   height: 40px;
-   width: 40px;
-   display: inline-block;
-   margin-right: 4px;
+    border-radius: 500px;
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    margin-right: 4px;
 
     opacity: 0.75;
-   transition: all 300ms;
+    transition: all 300ms;
 }
 
 .avatar-btn:hover {
@@ -210,12 +210,6 @@ body {
 }
 
 .panel-main {
-    /*float: left;*/
-    /*height: calc(90% + 40px);*/
-    /*margin-left: 20px;*/
-    /*margin-left: calc(30% + 50px);*/
-    /*width: calc(70% - 30px);*/
-
     position: fixed;
     top: 20px;
     bottom: 20px;
@@ -298,39 +292,47 @@ body {
 }
 
 .message .sender {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 70px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .message .sender .avatar {
     background: url(img/person1.jpg) center center;
     background-size: cover;
 
-    margin: auto;
-    margin-top: 5px;
+    margin-right: 10px;
+    float: left;
 }
 
-.message .sender .time {
-    color: rgba(0, 0, 0, 0.5);
+.message .sender .info {
     font-size: 11px;
     line-height: 13px;
     margin-top: 4px;
+
+    float: left;
 }
 
-.message .link-content {
-    margin-left: 70px; /* same as .sender width */
-    position: relative;
+.message .sender .info .name {
+    font-size: 25px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    display: block;
 }
-.message .link-content .note {
-    margin-bottom: 6px;
+
+.message .sender .info .dateString {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.message .note {    
+    margin-bottom: 10px;
     font-size: 16px;
     line-height: 17px;
 }
 
+.message .link-content {
+    position: relative;
+}
 
 /**
  * link detail
@@ -345,6 +347,8 @@ body {
     overflow: hidden;
     position: relative;
     margin-right: 10px;
+
+    clear: both;
 }
 
 .link-detail .text {
