@@ -7,7 +7,7 @@ import Content from './components/Content.jsx';
 
 import Message from './components/Message.jsx';
 
-// render(<Page />, document.getElementById('content1'));
+render(<Page />, document.getElementById('content1'));
 
 var data = {
 	avatarImgUrl: 'img/person1.jpg',
@@ -26,4 +26,4 @@ var data = {
 }
 
 
-render(<Message data={data} />, document.getElementById('content1'));
+// render(<Message data={data} />, document.getElementById('content1'));

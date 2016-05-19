@@ -36,7 +36,7 @@ export default class Message extends React.Component {
 			<div className="message">
 			    <div className="sender">			        
 
-			        <Avatar imgUrl={this.props.data.avatarImgUrl} />
+			        <Avatar imgUrl="img/person1.jpg" />
 
 			        <div className="info">
 			        	<span className="name">{this.props.data.senderName}</span>
@@ -56,7 +56,10 @@ export default class Message extends React.Component {
 			        	{categories}			            
 			        </div>
 			    </div>
+
+			    <hr />
 			</div>			
 		)
 	}
 }
+// <Avatar imgUrl={this.props.data.avatarImgUrl} />

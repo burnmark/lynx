@@ -207,6 +207,9 @@ body {
     border-bottom-right-radius: 5px;
     border: 1px solid #EEE;
     border-top: none;
+
+    padding-top: 30px;
+    overflow-y: scroll;
 }
 
 .panel-main {
@@ -217,7 +220,9 @@ body {
     right: 20px;
 }
 .panel-main .panel-content {
-    padding: 4% 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    /*padding: 4% 2%;*/
     height: calc(100% - 28px);
 }
 
@@ -332,6 +337,10 @@ body {
 
 .message .link-content {
     position: relative;
+}
+
+.message:last-child hr{
+    display: none;
 }
 
 /**
