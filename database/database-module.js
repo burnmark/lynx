@@ -107,7 +107,7 @@ var Database = {
 					'm.id, ' +
 					'm.linkId, ' +
 					'm.note, ' +
-					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
 					'l.url, ' + 
 					'l.title, ' + 
@@ -132,7 +132,7 @@ var Database = {
 					'm.id, ' +
 					'm.linkId, ' +
 					'm.note, ' +
-					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
 					'l.url, ' + 
 					'l.title, ' + 
@@ -160,7 +160,7 @@ var Database = {
 					'm.id, ' +
 					'm.linkId, ' +
 					'm.note, ' +
-					'UNIX_TIMESTAMP(m.timeSent), ' +
+					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
 					'l.url, ' + 
 					'l.title, ' + 

@@ -79,7 +79,10 @@ app.use(passport.session());
 
 app.use(express.static(__base + 'static'));
 
-app.get('/undefined', function (req, res) {});
+app.get('/undefined', function (req, res) {
+	// console.log('from line 83')
+	// console.log(req)
+});
 
 // public
 app.post('/api/signin', passport.authenticate('local'), function (req, res) {
