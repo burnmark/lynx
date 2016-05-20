@@ -2,6 +2,7 @@ import React from 'react';
 
 import Sidebar from './Sidebar.jsx';
 import Content from './Content.jsx';
+import Navbar from './Navbar.jsx';
 
 import AuthAction from '../actions/AuthActionCreators.jsx';
 import AuthStore from '../stores/AuthStore.jsx';
@@ -36,7 +37,8 @@ export default class Page extends React.Component {
 			return (
 
 				<div className="page">
-					<div class="overlay" id="overlay"></div>
+					<div className="overlay hidden" id="overlay"></div>
+					<Navbar />
 					<Sidebar data={this.props.sidebarData} />
 					<Content messages={this.props.messages} />
 				</div>

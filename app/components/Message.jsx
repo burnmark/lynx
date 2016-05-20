@@ -9,7 +9,9 @@ export default class Message extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			categories: []
+			categories: [],
+			// this property will be filled in with props data in the future
+			favorited: false
 		}
 	}
 
@@ -22,6 +24,13 @@ export default class Message extends React.Component {
 			.then(data => this.setState({categories: data}))
 	}
 
+	_favoriteClick() {
+		// todo: send request to db
+		this.setState({
+			favorited: !this.state.favorited
+		})
+	}
+
 	render() {
 		var categories;
 		if (this.state.categories) {
@@ -31,6 +40,8 @@ export default class Message extends React.Component {
 		}
 		var timeSent = moment(parseInt(this.props.data.timeSent) * 1000);
 		var dateString = timeSent.format("ddd, MMM D h:mm a");
+
+
 		return (
 			<div className="message">
 			    <div className="sender">			        
@@ -38,10 +49,23 @@ export default class Message extends React.Component {
 			        <Avatar imgUrl="img/person1.jpg" />
 
 			        <div className="info">
-			        	<span className="name">{this.props.data.senderName}</span>
-			        	
+			        	<span className="name">{this.props.data.senderName}</span>			     
 			        	<span className="dateString">{dateString}</span>
 			        </div>
+
+			        <i className="fa fa-trash-o" aria-hidden="true"></i>
+
+			        <i 
+			        	onClick={this._favoriteClick.bind(this)} 
+			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
+			        	aria-hidden="true"></i>
+			        <i 
+			        	onClick={this._favoriteClick.bind(this)} 
+			        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
+			        	aria-hidden="true"></i>
+
+
+
 			    </div>
 
 			    <div className="note">

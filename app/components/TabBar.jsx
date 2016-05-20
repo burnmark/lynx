@@ -14,8 +14,9 @@ export default class TabBar extends React.Component {
 
 	_handleClick(event) {
 		var clickedTab = event.target.getAttribute("data-tab-name");
-
-		this.setState({clicked: clickedTab});
+		if (clickedTab) {
+			this.setState({clicked: clickedTab});
+		}		
 	}
 
 

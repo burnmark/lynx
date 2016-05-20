@@ -40,30 +40,21 @@ export default class Content extends React.Component {
 	}
 
 	_sentClicked() {
-		console.log(this)
-		
 		this.setState({
 			messages: MessageStore.getSent()
-		})
-		console.log('sent clicked');
-		console.log(this.state);
+		});
 	}
 
 	_receivedClicked() {
 		this.setState({
 			messages: MessageStore.getReceived()
 		})
-		console.log('received clicked');
-		console.log(this.state);
 	}
 
 	_allClicked() {
-		console.log('all clicked');
 		this.setState({
 			messages: MessageStore.getAll()
-		})
-		console.log('all clicked');
-		console.log(this.state);
+		});
 	}
 
 // tbd: starred clicked
@@ -71,8 +62,8 @@ export default class Content extends React.Component {
 	render() {
 		var messages = 'No messages yet.';
 		if (this.state.messages) {
-			messages = this.state.messages.map((message, i) => {
-				return <Message key={i} data={message} />;
+			messages = this.state.messages.map((message) => {
+				return <Message key={message.id} data={message} />;
 			});
 		}
 

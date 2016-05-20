@@ -3,9 +3,8 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import Page from './components/Page.jsx';
-import Content from './components/Content.jsx';
 
-import Message from './components/Message.jsx';
+import Navbar from './components/Navbar.jsx';
 
 render(<Page />, document.getElementById('content1'));
 
@@ -26,4 +25,3 @@ var data = {
 }
 
 
-// render(<Message data={data} />, document.getElementById('content1'));
