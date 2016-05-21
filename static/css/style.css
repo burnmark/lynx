@@ -66,6 +66,11 @@ body {
     right: 40px;
 }
 
+.header .account .avatar {
+    height: 40px;
+    width: 40px;
+}
+
 .header .share {
     font-size: 16px;
     position: absolute;
@@ -101,7 +106,7 @@ body {
     left: -11px;
     z-index: 10000;
 
-    display: none;
+    /*display: none;*/
 }
 
 .header .share-open .title {
