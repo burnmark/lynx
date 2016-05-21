@@ -21,6 +21,19 @@ var MessageApi = {
 					data: null
 				});
 			});
+	},
+
+	fetchCategories: function (messageId) {
+		$.getJSON('/api/category/' + messageId)
+			.then(data => {
+				AppDispatcher.handleAction({
+					actionType: AppConstants.FETCH_CATEGORIES,
+					data: {
+						id: messageId,
+						categories: data
+					}
+				});
+			});
 	}
 }
 

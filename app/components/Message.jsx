@@ -5,6 +5,9 @@ import Avatar from './Avatar.jsx';
 import FilterBtn from './FilterBtn.jsx';
 import LinkDetail from './LinkDetail.jsx';
 
+import MessageActions from '../actions/MessageActionCreators.jsx';
+import MessageStore from '../stores/MessageStore.jsx';
+
 export default class Message extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,18 +19,28 @@ export default class Message extends React.Component {
 	}
 
 	componentWillMount() {
-		this.getMessageCategories();
+		console.log(this.props)
+		MessageActions.getCategories(this.props.data.id);
 	}
 
-	getMessageCategories() {
-		$.getJSON('/api/category/' + this.props.data.id)
-			.then(data => this.setState({categories: data}))
+	componentDidMount() {
+		MessageStore.addChangeListener(this._onChange.bind(this));
 	}
 
+	componentWillUnmount() {
+		MessageStore.removeChangeListener(this._onChange.bind(this));
+	}
+	
 	_favoriteClick() {
 		// todo: send request to db
 		this.setState({
 			favorited: !this.state.favorited
+		})
+	}
+
+	_onChange() {
+		this.setState({
+			categories: MessageStore.getCategories(this.props.data.id)
 		})
 	}
 
