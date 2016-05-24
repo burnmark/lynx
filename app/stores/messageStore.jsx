@@ -22,6 +22,10 @@ class MessageStoreClass extends EventEmitter {
 		return _store.all;
 	}
 
+	getCategories(messageId) {
+		return _store[messageId];
+	}
+
 	addChangeListener(callback) {
 		this.on(CHANGE_EVENT, callback);
 	}
@@ -52,6 +56,17 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 				}
 			}
 			MessageStore.emit(CHANGE_EVENT);
+			break;
+
+		case AppConstants.FETCH_CATEGORIES:
+			if (data) {
+				_store[data.id] = data.categories;
+			}
+			MessageStore.emit(CHANGE_EVENT);
+			break;
+
+		case AppConstants.REMOVE_MESSAGE:
+			// need to find the message in all states and remove
 			break;
 
 		default:
