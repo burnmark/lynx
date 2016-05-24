@@ -9,6 +9,14 @@ var MessageActions = {
 
 	getCategories: function (messageId) {
 		MessageApi.fetchCategories(messageId);
+	},
+
+	deleteMessage: function (messageId) {
+		MessageApi.deleteMessage(messageId);
+	},
+
+	favoriteMessage: function (messageId) {		
+		MessageApi.favoriteMessage(messageId);
 	}
 }
 

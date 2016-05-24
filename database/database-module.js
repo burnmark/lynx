@@ -86,7 +86,7 @@ var Database = {
 	getFriends(userId) {
 		return this._getObjects(
 			(
-				'SELECT DISTINCT u.id, u.displayName FROM user u ' + 
+				'SELECT DISTINCT u.id, u.displayName, u.imgUrl FROM user u ' + 
 				'JOIN message m1 ON u.id = m1.recipientId ' + 
 				'JOIN message m2 ON u.id = m2.senderId ' +
 				'WHERE m1.senderId = :id AND m2.recipientId = :id'
@@ -106,12 +106,14 @@ var Database = {
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
+					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName ' +
+					'sender.displayName AS senderName, ' +
+					'sender.imgUrl AS senderImg ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
 				'JOIN user sender on m.senderId = sender.id ' + 
@@ -135,12 +137,14 @@ var Database = {
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
+					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName ' +
+					'sender.displayName AS senderName, ' +
+					'sender.imgUrl AS senderImg ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
 				'JOIN user sender on m.senderId = sender.id ' + 
@@ -165,12 +169,14 @@ var Database = {
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
 					'm.isRead, ' + 
+					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName ' +
+					'sender.displayName AS senderName, ' +
+					'sender.imgUrl AS senderImg ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
 				'JOIN user sender on m.recipientId = sender.id ' + 
@@ -180,6 +186,14 @@ var Database = {
 				id: userId
 			}
 		);
+	},
+
+	favoriteMessage(messageId) {
+		return this._connection
+			.queryAsync(
+				'UPDATE message SET favorited = NOT favorited WHERE id = :id', 
+				{id: messageId}
+			);
 	},
 
 
@@ -291,6 +305,8 @@ var Database = {
 			});
 
 	},
+
+
 
 	// Given connection, query and params, returns a promise containing query contents
 	// If query returns no results, returns a promise containing null

@@ -13,13 +13,12 @@ export default class Message extends React.Component {
 		super(props);
 		this.state = {
 			categories: [],
-			// this property will be filled in with props data in the future
-			favorited: false
-		}
+			// this property will be filled in with props data in the future		
+			favorited: parseInt(this.props.data.favorited)	
+		}		
 	}
 
 	componentWillMount() {
-		console.log(this.props)
 		MessageActions.getCategories(this.props.data.id);
 	}
 
@@ -31,11 +30,13 @@ export default class Message extends React.Component {
 		MessageStore.removeChangeListener(this._onChange.bind(this));
 	}
 	
-	_favoriteClick() {
-		// todo: send request to db
+	_favoriteClick() {		
+		console.log('favorited clicked in component');
 		this.setState({
 			favorited: !this.state.favorited
-		})
+		});
+		MessageActions.favoriteMessage(this.props.data.id);
+
 	}
 
 	_onChange() {
@@ -54,12 +55,12 @@ export default class Message extends React.Component {
 		var timeSent = moment(parseInt(this.props.data.timeSent) * 1000);
 		var dateString = timeSent.format("ddd, MMM D h:mm a");
 
-
+		var favorited = parseInt(this.props.data.favorited);
 		return (
 			<div className="message">
 			    <div className="sender">			        
 
-			        <Avatar imgUrl="img/person1.jpg" />
+			        <Avatar imgUrl={this.props.data.senderImg} />
 
 			        <div className="info">
 			        	<span className="name">{this.props.data.senderName}</span>			     

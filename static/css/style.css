@@ -141,6 +141,10 @@ body {
     margin-bottom: 5px
 }
 
+.header .share-open .button, .header .share-open .button-primary {
+    margin-right: 10px;
+}
+
 
 /**
  * components

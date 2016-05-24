@@ -30,7 +30,7 @@ class MessageStoreClass extends EventEmitter {
 		this.on(CHANGE_EVENT, callback);
 	}
 
-	removeChangeListenr(callback) {
+	removeChangeListener(callback) {
 		this.removeListener(CHANGE_EVENT, callback);
 	}
 }
@@ -39,9 +39,9 @@ const MessageStore = new MessageStoreClass();
 
 MessageStore.dispatchToken = AppDispatcher.register(payload => {
 	var action = payload.action;
+	var data = action.data;
 	switch (action.actionType) {
 		case AppConstants.FETCH_MESSAGES:
-			var data = action.data;
 			if (data) {
 				_store = {
 					sent: data[0],
@@ -59,11 +59,14 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 			break;
 
 		case AppConstants.FETCH_CATEGORIES:
-			var data = action.data;
 			if (data) {
 				_store[data.id] = data.categories;
 			}
 			MessageStore.emit(CHANGE_EVENT);
+			break;
+
+		case AppConstants.REMOVE_MESSAGE:
+			// need to find the message in all states and remove
 			break;
 
 		default:

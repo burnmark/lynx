@@ -34,6 +34,30 @@ var MessageApi = {
 					}
 				});
 			});
+	},
+
+	deleteMessage: function (messageId) {
+		$.getJSON('/api/message/delete/' + messageId)
+			.then(() => {
+				AppDispatcher.handleAction({
+					actionType: AppConstants.REMOVE_MESSAGE,
+					data: {
+						id: messageId
+					}
+				});
+			});
+	},
+
+	favoriteMessage: function (messageId) {
+		$.getJSON('/api/message/favorite/' + messageId) 
+			.then(() => {
+				AppDispatcher.handleAction({
+					actionType: AppConstants.FAVORITE_MESSAGE,
+					data: {
+						id: messageId
+					}
+				})
+			})
 	}
 }
 
