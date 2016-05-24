@@ -16,6 +16,7 @@ export default class Message extends React.Component {
 			// this property will be filled in with props data in the future		
 			favorited: parseInt(this.props.data.favorited)	
 		}		
+		
 	}
 
 	componentWillMount() {
@@ -30,14 +31,14 @@ export default class Message extends React.Component {
 		MessageStore.removeChangeListener(this._onChange.bind(this));
 	}
 	
-	_favoriteClick() {		
-		console.log('favorited clicked in component');
-		this.setState({
-			favorited: !this.state.favorited
-		});
-		MessageActions.favoriteMessage(this.props.data.id);
+	// _favoriteClick() {		
+	// 	console.log('favorited clicked in component');
+	// 	this.setState({
+	// 		favorited: !this.state.favorited
+	// 	});
+	// 	MessageActions.favoriteMessage(this.props.data.id);
 
-	}
+	// }
 
 	_onChange() {
 		this.setState({
@@ -70,11 +71,11 @@ export default class Message extends React.Component {
 			        <i className="fa fa-trash-o" aria-hidden="true"></i>
 
 			        <i 
-			        	onClick={this._favoriteClick.bind(this)} 
+			        	
 			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
 			        	aria-hidden="true"></i>
 			        <i 
-			        	onClick={this._favoriteClick.bind(this)} 
+			        	
 			        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
 			        	aria-hidden="true"></i>
 
@@ -99,4 +100,12 @@ export default class Message extends React.Component {
 		)
 	}
 }
-// <Avatar imgUrl={this.props.data.avatarImgUrl} />
+
+ // <i 
+	// 		        	onClick={this._favoriteClick.bind(this)} 
+	// 		        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
+	// 		        	aria-hidden="true"></i>
+	// 		        <i 
+	// 		        	onClick={this._favoriteClick.bind(this)} 
+	// 		        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
+	// 		        	aria-hidden="true"></i>

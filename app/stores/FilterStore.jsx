@@ -39,7 +39,6 @@ FilterStore.dispatchToken = AppDispatcher.register(payload => {
 	var action = payload.action;
 	switch(action.actionType) {
 		case AppConstants.FETCH_FILTERS:
-			console.log(data);
 			if (action.data) {
 				// 0 is domain, 1 is category
 				_store = {
