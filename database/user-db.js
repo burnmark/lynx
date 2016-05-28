@@ -27,6 +27,24 @@ var UserDB = {
 		);
 	},
 
+	// Given a userId, returns a promise containing all users that have send
+	// or received a message from the authenticated user
+	// If userId does not exist in db or no 'friends' have been found, returns
+	// a promise containing null
+	getFriends(userId) {
+		return this._getObjects(
+			(
+				'SELECT DISTINCT u.id, u.displayName, u.imgUrl FROM user u ' + 
+				'JOIN message m1 ON u.id = m1.recipientId ' + 
+				'JOIN message m2 ON u.id = m2.senderId ' +
+				'WHERE m1.senderId = :id AND m2.recipientId = :id'
+			),
+			{
+				id: userId
+			}
+		);
+	},	
+
 	// if user already exists -> promise resolves with null
 	// if not
 	addUser(displayName, email, passwordHash) {	

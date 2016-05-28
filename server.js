@@ -18,7 +18,7 @@ var Maria = require('mariasql'),
 	UserDB = require(__base + '/database/user-db')(connection),
 	CategoryDB = require(__base + '/database/category-db')(connection),
 	DomainDB = require(__base + '/database/domain-db')(connection),
-
+	MessageDB = require(__base + '/database/message-db')(connection),
 	Database = require(__base + '/database/database-module')(connection);
 
 var passport = require('passport'),
@@ -145,7 +145,7 @@ app.use('/api/category', categoryApi.Router(CategoryDB));
 
 app.use('/api/domain', domainApi.Router(DomainDB));
 
-app.use('/api/message', messageApi.Router(Database));
+app.use('/api/message', messageApi.Router(MessageDB));
 
 
 app.use(function (err, req, res, next) {
