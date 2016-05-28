@@ -4,7 +4,7 @@ import AppConstants from '../constants/AppConstants.jsx';
 
 var MessageApi = {
 	fetchMessages: function () {
-		Promise.all([
+		return Promise.all([
 			$.getJSON('/api/message/sent'),
 			$.getJSON('/api/message/received'), 		
 			$.getJSON('/api/message/')
