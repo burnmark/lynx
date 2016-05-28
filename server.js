@@ -17,6 +17,8 @@ var Maria = require('mariasql'),
 	connection = bluebird.promisifyAll(new Maria(dbConfig)),
 	UserDB = require(__base + '/database/user-db')(connection),
 	CategoryDB = require(__base + '/database/category-db')(connection),
+	DomainDB = require(__base + '/database/domain-db')(connection),
+
 	Database = require(__base + '/database/database-module')(connection);
 
 var passport = require('passport'),
@@ -141,7 +143,7 @@ var usersApi = require(__base + 'routes/user-api.js'),
 app.use('/api/user', usersApi.Router(UserDB));
 app.use('/api/category', categoryApi.Router(CategoryDB));
 
-app.use('/api/domain', domainApi.Router(Database));
+app.use('/api/domain', domainApi.Router(DomainDB));
 
 app.use('/api/message', messageApi.Router(Database));
 

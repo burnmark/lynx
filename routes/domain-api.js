@@ -1,11 +1,11 @@
 var express = require('express');
 var _ = require('lodash');
 
-module.exports.Router = function (Database) {
+module.exports.Router = function (DomainDB) {
 	var router = express.Router();
 
 	router.get('/', (req, res, next) => {
-		Database.getDomains(req.user.id)
+		DomainDB.getDomains(req.user.id)
 			.then(rows => res.json(_.map(rows, 'name')))
 			.catch(next);
 	});
