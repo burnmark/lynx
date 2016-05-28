@@ -15,6 +15,7 @@ var bcrypt = require('bcrypt'),
 var Maria = require('mariasql'),
 	bluebird = require('bluebird'),
 	connection = bluebird.promisifyAll(new Maria(dbConfig)),
+	UserDB = require(__base + '/database/user-db')(connection),
 	Database = require(__base + '/database/database-module')(connection);
 
 var passport = require('passport'),
@@ -136,47 +137,19 @@ var usersApi = require(__base + 'routes/user-api.js'),
 
 
 
-app.use('/api/user', usersApi.Router(Database));
+app.use('/api/user', usersApi.Router(UserDB));
 app.use('/api/category', categoryApi.Router(Database));
 
 app.use('/api/domain', domainApi.Router(Database));
-// app.get('/api/domain/', function (req, res, next) {
-// 	Database.getDomains(req.user.id)
-// 		.then(rows => res.json(rows))
-// 		.catch(next);
-// });
 
 app.use('/api/message', messageApi.Router(Database));
 
 
 app.use(function (err, req, res, next) {
 	console.error(err.stack);
-	// always have json coming back? send back json
 	res.status(err.status || 500).send({message: err.message});
 });
 
 var server = app.listen(80, function () {
 	console.log('listening at http://localhost:80');
 });
-
-
-
-// bcrypt.hash('ena', 10, function (err, passwordHash) {
-// 	console.log('ena -> ' + passwordHash);
-// });	
-
-// bcrypt.hash('alex', 10, function (err, passwordHash) {
-// 	console.log('alex -> ' + passwordHash);
-// });	
-
-// bcrypt.hash('amy', 10, function (err, passwordHash) {
-// 	console.log('amy -> ' + passwordHash);
-// });	
-
-// bcrypt.hash('jeff', 10, function (err, passwordHash) {
-// 	console.log('jeff -> ' + passwordHash);
-// });	
-
-// bcrypt.hash('stearns', 10, function (err, passwordHash) {
-// 	console.log('stearns -> ' + passwordHash);
-// });	
