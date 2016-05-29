@@ -11,8 +11,6 @@ import AppConstants from '../constants/AppConstants.jsx';
 export default class Content extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// currently not being sorted by sent/received
 		this.state = {
 			messages: [],
 			clickedTab: AppConstants.tabNames.RECEIVED
@@ -33,6 +31,15 @@ export default class Content extends React.Component {
 	componentWillUnmount() {		
 		MessageStore.removeChangeListener(this._onChange);		
 	}
+
+	_handleStarred(event) {
+		var messageId = $(event.target).attr('data-messageId');
+		MessageActions.favoriteMessage(messageId)
+			.then(() => {
+				this._onChange(this.state.clickedTab);
+				console.log(this.state.messages);
+			})
+	}	
 
 	_onChange(tabName) {
 		switch(tabName) {
@@ -71,8 +78,8 @@ export default class Content extends React.Component {
 	render() {		
 		var messages = 'No messages yet.';		
 		if (this.state.messages) {
-			messages = this.state.messages.map((message, i) => {
-				return <Message key={i} data={message} />;
+			messages = this.state.messages.map((message) => {
+				return <Message key={message.id} data={message} handleStarred={this._handleStarred.bind(this)}/>;
 			});
 		}
 

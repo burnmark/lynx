@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import AppDispatcher from '../dispatcher/AppDispatcher.jsx';
 import AppConstants from '../constants/AppConstants.jsx';
 import {EventEmitter} from 'events';
@@ -25,10 +27,6 @@ class MessageStoreClass extends EventEmitter {
 	getStarred() {
 		return _store.starred;
 	}
-
-	// getCategories(messageId) {
-	// 	return _store[messageId];
-	// }
 
 	addChangeListener(callback) {
 		this.on(CHANGE_EVENT, callback);
@@ -61,6 +59,20 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 					starred: []					
 				}
 			}
+			console.log(_store.received);
+			MessageStore.emit(CHANGE_EVENT);
+			break;
+
+		case AppConstants.FAVORITE_MESSAGE:
+			console.log('in store');
+			var id = data.id;
+			_.forEach(_store, (messages, key) => {
+				_.forEach(messages, (message, key) => {
+					if (message.id === id) {
+						message.favorited = !parseInt(message.favorited);
+					}
+				})
+			});
 			MessageStore.emit(CHANGE_EVENT);
 			break;
 

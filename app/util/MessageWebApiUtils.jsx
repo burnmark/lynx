@@ -37,15 +37,27 @@ var MessageApi = {
 	},
 
 	favoriteMessage: function (messageId) {
-		$.getJSON('/api/message/favorite/' + messageId) 
+		console.log('in api')
+		// $.getJSON('/api/message/favorite/' + messageId, function (id) {
+		// 	console.log('in callback');
+		// 	console.log(id);
+		// 	AppDispatcher.handleAction({
+		// 		actionType: AppConstants.FAVORITE_MESSAGE,
+		// 		data: {
+		// 			id: messageId
+		// 		}
+		// 	})
+		// });
+
+		return Promise.all([$.getJSON('/api/message/favorite/' + messageId)])
 			.then(() => {
 				AppDispatcher.handleAction({
 					actionType: AppConstants.FAVORITE_MESSAGE,
 					data: {
 						id: messageId
 					}
-				})
-			})
+				});
+			});
 	}
 }
 

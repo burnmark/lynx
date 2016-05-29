@@ -11,10 +11,10 @@ import MessageStore from '../stores/MessageStore.jsx';
 export default class Message extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			// this property will be filled in with props data in the future		
-			favorited: parseInt(this.props.data.favorited)	
-		}	
+
+		// this.state = {
+		// 	favorited: parseInt(this.props.data.favorited)	
+		// }	
 	}
 
 	componentDidMount() {
@@ -25,13 +25,12 @@ export default class Message extends React.Component {
 		MessageStore.removeChangeListener(this._onChange.bind(this));
 	}
 	
-	_favoriteClick() {		
-		this.setState({
-			favorited: !this.state.favorited
-		});
-		MessageActions.favoriteMessage(this.props.data.id);
-
-	}
+	// _favoriteClick() {		
+	// 	this.setState({
+	// 		favorited: !this.state.favorited
+	// 	});
+	// 	MessageActions.favoriteMessage(this.props.data.id);
+	// }
 
 	_onChange() {
 		// this.setState({
@@ -64,13 +63,14 @@ export default class Message extends React.Component {
 			        <i className="fa fa-trash-o" aria-hidden="true"></i>
 
 			        <i 
-			        	key={this.props.data.id}
-			        	onClick={this._favoriteClick.bind(this)} 
-			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
+			        	onClick={this.props.handleStarred} 
+			        	data-messageId={this.props.data.id}
+			        	className={favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
 			        	aria-hidden="true"></i>
 			        <i 
-			        	onClick={this._favoriteClick.bind(this)} 
-			        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
+			        	onClick={this.props.handleStarred} 
+			        	data-messageId={this.props.data.id}
+			        	className={favorited ? "fa fa-star" : "fa fa-star hidden"} 
 			        	aria-hidden="true"></i>
 
 
@@ -94,3 +94,14 @@ export default class Message extends React.Component {
 		)
 	}
 }
+
+ // <i 
+	// 		        	onClick={this._favoriteClick.bind(this)} 
+	// 		        	data-messageId={this.props.data.id}
+	// 		        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
+	// 		        	aria-hidden="true"></i>
+	// 		        <i 
+	// 		        	onClick={this._favoriteClick.bind(this)} 
+	// 		        	data-messageId={this.props.data.id}
+	// 		        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
+	// 		        	aria-hidden="true"></i>

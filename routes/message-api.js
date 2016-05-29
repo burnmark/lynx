@@ -28,8 +28,6 @@ module.exports.Router = function (MessageDB) {
 	router.get('/', (req, res, next) => {
 		MessageDB.getMessages(req.user.id) 
 			.then(rows => {
-				rows = mergeOnCategory(rows);
-				console.log(rows);
 				res.json(mergeOnCategory(rows))
 			})
 			.catch(next);
@@ -50,8 +48,7 @@ module.exports.Router = function (MessageDB) {
 	router.get('/starred', (req, res, next) => {
 		MessageDB.getStarredMessages(req.user.id)
 			.then(rows => {
-				rows = mergeOnCategory(rows);
-				console.log(rows);
+				
 				res.json(mergeOnCategory(rows))
 			})
 			.catch(next);
@@ -59,7 +56,7 @@ module.exports.Router = function (MessageDB) {
 
 	router.get('/favorite/:messageId', (req, res, next) => {
 		MessageDB.favoriteMessage(req.params.messageId)
-			.then(rows => console.log(rows));
+			.then(() => res.json(req.params.messageId));
 	});
 
 	// tbd
