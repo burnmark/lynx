@@ -13,10 +13,11 @@ export default class Message extends React.Component {
 				return <FilterBtn key={i} word={category} />;
 			});
 		}
-		var timeSent = moment(parseInt(this.props.data.timeSent) * 1000);
-		var dateString = timeSent.format("ddd, MMM D h:mm a");
 
-		var favorited = parseInt(this.props.data.favorited);
+		var timeSent = moment(parseInt(this.props.data.timeSent) * 1000),
+			dateString = timeSent.format("ddd, MMM D h:mm a"),
+			favorited = parseInt(this.props.data.favorited);
+
 		return (
 			<div className="message">
 			    <div className="sender">			        
