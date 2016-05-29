@@ -12,14 +12,13 @@ export default class Message extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			categories: [],
 			// this property will be filled in with props data in the future		
 			favorited: parseInt(this.props.data.favorited)	
 		}		
 	}
 
 	componentWillMount() {
-		MessageActions.getCategories(this.props.data.id);
+		// MessageActions.getCategories(this.props.data.id);
 	}
 
 	componentDidMount() {
@@ -39,15 +38,16 @@ export default class Message extends React.Component {
 	}
 
 	_onChange() {
-		this.setState({
-			categories: MessageStore.getCategories(this.props.data.id)
-		});
+		// this.setState({
+		// 	categories: MessageStore.getCategories(this.props.data.id)
+		// });
 	}
 
 	render() {
+		// console.log(this.props);
 		var categories;
-		if (this.state.categories) {			
-			categories = this.state.categories.map(function (category, i) {
+		if (this.props.data.categoryName) {			
+			categories = this.props.data.categoryName.map(function (category, i) {
 				return <FilterBtn key={i} word={category} />;
 			});
 		}

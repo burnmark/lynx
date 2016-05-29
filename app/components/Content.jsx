@@ -56,41 +56,13 @@ export default class Content extends React.Component {
 					clickedTab: AppConstants.tabNames.ALL
 				});
 				break;
-
-			// default:
-			// 	this.setState({
-			// 		messages: MessageStore.getReceived(),
-			// 		clickedTab: AppConstants.tabNames.RECEIVED
-			// 	});
 		}
 	}
-
-	// _sentClicked() {
-	// 	this.setState({
-	// 		messages: MessageStore.getSent(),
-	// 		clickedTab: AppConstants.tabNames.SENT
-	// 	});
-	// }
-
-	// _receivedClicked() {
-	// 	this.setState({
-	// 		messages: MessageStore.getReceived(),
-	// 		clickedTab: AppConstants.tabNames.RECEIVED
-	// 	})
-	// }
-
-	// _allClicked() {
-	// 	console.log('All clicked triggered');
-	// 	this.setState({
-	// 		messages: MessageStore.getAll(),
-	// 		clickedTab: AppConstants.tabNames.ALL
-	// 	});
-	// }
-
 // tbd: starred clicked
 	
 	render() {
-		var messages = 'No messages yet.';
+		console.log(this.state);
+		var messages = 'No messages yet.';		
 		if (this.state.messages) {
 			messages = this.state.messages.map((message, i) => {
 				return <Message key={i} data={message} />;
