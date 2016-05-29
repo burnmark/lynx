@@ -44,6 +44,7 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 	var data = action.data;
 	switch (action.actionType) {
 		case AppConstants.FETCH_MESSAGES:
+			console.log('in store for fetch messages');
 			if (data) {
 				_store = {
 					all: data[0],
@@ -59,21 +60,20 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 					starred: []					
 				}
 			}
-			console.log(_store.received);
 			MessageStore.emit(CHANGE_EVENT);
 			break;
 
 		case AppConstants.FAVORITE_MESSAGE:
-			console.log('in store');
-			var id = data.id;
-			_.forEach(_store, (messages, key) => {
-				_.forEach(messages, (message, key) => {
-					if (message.id === id) {
-						message.favorited = !parseInt(message.favorited);
-					}
-				})
-			});
-			MessageStore.emit(CHANGE_EVENT);
+			console.log('in store for favorite message');
+			// var id = data.id;
+			// _.forEach(_store, (messages, key) => {
+			// 	_.forEach(messages, (message, key) => {
+			// 		if (message.id === id) {
+			// 			message.favorited = !parseInt(message.favorited);
+			// 		}
+			// 	})
+			// });
+			// MessageStore.emit(CHANGE_EVENT);
 			break;
 
 		case AppConstants.REMOVE_MESSAGE:

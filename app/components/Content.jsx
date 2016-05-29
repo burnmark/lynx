@@ -36,9 +36,11 @@ export default class Content extends React.Component {
 		var messageId = $(event.target).attr('data-messageId');
 		MessageActions.favoriteMessage(messageId)
 			.then(() => {
-				this._onChange(this.state.clickedTab);
-				console.log(this.state.messages);
-			})
+				MessageActions.getAllMessages()
+					.then(() => {
+						this._onChange(this.state.clickedTab);
+					});
+			});
 	}	
 
 	_onChange(tabName) {

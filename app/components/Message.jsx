@@ -5,39 +5,7 @@ import Avatar from './Avatar.jsx';
 import FilterBtn from './FilterBtn.jsx';
 import LinkDetail from './LinkDetail.jsx';
 
-import MessageActions from '../actions/MessageActionCreators.jsx';
-import MessageStore from '../stores/MessageStore.jsx';
-
 export default class Message extends React.Component {
-	constructor(props) {
-		super(props);
-
-		// this.state = {
-		// 	favorited: parseInt(this.props.data.favorited)	
-		// }	
-	}
-
-	componentDidMount() {
-		MessageStore.addChangeListener(this._onChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		MessageStore.removeChangeListener(this._onChange.bind(this));
-	}
-	
-	// _favoriteClick() {		
-	// 	this.setState({
-	// 		favorited: !this.state.favorited
-	// 	});
-	// 	MessageActions.favoriteMessage(this.props.data.id);
-	// }
-
-	_onChange() {
-		// this.setState({
-		// 	categories: MessageStore.getCategories(this.props.data.id)
-		// });
-	}
-
 	render() {
 		var categories;
 		if (this.props.data.categoryName) {			
@@ -73,8 +41,6 @@ export default class Message extends React.Component {
 			        	className={favorited ? "fa fa-star" : "fa fa-star hidden"} 
 			        	aria-hidden="true"></i>
 
-
-
 			    </div>
 
 			    <div className="note">
@@ -94,14 +60,3 @@ export default class Message extends React.Component {
 		)
 	}
 }
-
- // <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	data-messageId={this.props.data.id}
-	// 		        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
-	// 		        	aria-hidden="true"></i>
-	// 		        <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	data-messageId={this.props.data.id}
-	// 		        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
-	// 		        	aria-hidden="true"></i>
