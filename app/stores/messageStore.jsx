@@ -62,10 +62,6 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 			MessageStore.emit(CHANGE_EVENT);
 			break;
 
-		case AppConstants.REMOVE_MESSAGE:
-			// need to find the message in all states and remove
-			break;
-
 		default:
 			return true;
 	}

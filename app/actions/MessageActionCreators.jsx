@@ -8,7 +8,7 @@ var MessageActions = {
 	},
 
 	deleteMessage: function (messageId) {
-		MessageApi.deleteMessage(messageId);
+		return MessageApi.deleteMessage(messageId);
 	},
 
 	favoriteMessage: function (messageId) {		

@@ -43,6 +43,18 @@ export default class Content extends React.Component {
 			});
 	}	
 
+	_handleDelete(event) {
+		var messageId = $(event.target).attr('data-messageId');
+		console.log(messageId);
+		MessageActions.deleteMessage(messageId)
+			.then(() => {
+				MessageActions.getAllMessages()
+					.then(() => {
+						this._onChange(this.state.clickedTab);
+					});
+			});
+	}
+
 	_onChange(tabName) {
 		switch(tabName) {
 			case AppConstants.tabNames.ALL:
@@ -80,7 +92,13 @@ export default class Content extends React.Component {
 		var messages = 'No messages yet.';		
 		if (this.state.messages) {
 			messages = this.state.messages.map((message) => {
-				return <Message key={message.id} data={message} handleStarred={this._handleStarred.bind(this)}/>;
+				return (
+					<Message 
+						key={message.id} 
+						data={message} 
+						handleStarred={this._handleStarred.bind(this)}
+						handleDelete={this._handleDelete.bind(this)}/>
+				);
 			});
 		}
 

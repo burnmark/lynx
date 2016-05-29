@@ -60,6 +60,12 @@ module.exports.Router = function (MessageDB) {
 			.then(() => res.json(messageId));
 	});
 
+	router.get('/delete/:messageId', (req, res, next) => {
+		var messageId = req.params.messageId;
+		MessageDB.markDeleted(messageId)
+			.then(() => res.json(messageId));
+	})
+
 	// tbd
 	// router.get('/new', (req, res, next) {
 

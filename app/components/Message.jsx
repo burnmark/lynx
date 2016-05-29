@@ -29,7 +29,11 @@ export default class Message extends React.Component {
 			        	<span className="dateString">{dateString}</span>
 			        </div>
 
-			        <i className="fa fa-trash-o" aria-hidden="true"></i>
+			        <i 
+			        	onClick={this.props.handleDelete}
+			        	data-messageId={this.props.data.id}
+			        	className="fa fa-trash-o" 
+			        	aria-hidden="true"></i>
 
 			        <i 
 			        	onClick={this.props.handleStarred} 
