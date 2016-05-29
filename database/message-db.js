@@ -22,7 +22,8 @@ var MessageDB = {
 				'JOIN user sender on m.senderId = sender.id ' +
 				'JOIN message_category mc on mc.messageId = m.id ' + 
 				'JOIN category c on mc.categoryId = c.id ' +  
-				'WHERE m.senderId = :id OR m.recipientId = :id ' +
+				'WHERE (m.senderId = :id OR m.recipientId = :id) ' +
+					'AND m.deleted = 0 ' +
 				'ORDER BY timeSent DESC'
 			),
 			{
@@ -57,7 +58,8 @@ var MessageDB = {
 				'JOIN user sender on m.senderId = sender.id ' + 
 				'JOIN message_category mc on mc.messageId = m.id ' + 
 				'JOIN category c on mc.categoryId = c.id ' + 
-				'WHERE senderId = :id '  +
+				'WHERE senderId = :id ' +
+					'AND m.deleted = 0 ' +
 				'ORDER BY timeSent DESC'	
 			),
 			{
@@ -93,6 +95,7 @@ var MessageDB = {
 				'JOIN message_category mc on mc.messageId = m.id ' + 
 				'JOIN category c on mc.categoryId = c.id ' + 
 				'WHERE m.recipientId = :id ' +
+					'AND m.deleted = 0 ' +
 				'ORDER BY timeSent DESC'  
 			),
 			{
@@ -126,6 +129,7 @@ var MessageDB = {
 				'JOIN category c on mc.categoryId = c.id ' +  
 				'WHERE (m.senderId = :id OR m.recipientId = :id) ' + 
 					'AND m.favorited = 1 ' +
+					'AND m.deleted = 0 ' +
 				'ORDER BY timeSent DESC'
 			),
 			{
@@ -140,6 +144,14 @@ var MessageDB = {
 				'UPDATE message SET favorited = NOT favorited WHERE id = :id', 
 				{id: messageId}
 			);
+	},
+
+	markDeleted(messageId) {
+		return this._connection
+			.queryAsync(
+				'UPDATE message SET deleted = 1 WHERE id = :id',
+				{id: messageId}
+			)
 	},
 
 	// Given connection, query and params, returns a promise containing query contents

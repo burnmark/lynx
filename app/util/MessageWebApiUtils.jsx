@@ -25,15 +25,7 @@ var MessageApi = {
 	},
 
 	deleteMessage: function (messageId) {
-		$.getJSON('/api/message/delete/' + messageId)
-			.then(() => {
-				AppDispatcher.handleAction({
-					actionType: AppConstants.REMOVE_MESSAGE,
-					data: {
-						id: messageId
-					}
-				});
-			});
+		return Promise.all([$.getJSON('api/message/delete/' + messageId)]);
 	},
 
 	favoriteMessage: function (messageId) {
