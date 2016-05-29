@@ -55,8 +55,9 @@ module.exports.Router = function (MessageDB) {
 	})
 
 	router.get('/favorite/:messageId', (req, res, next) => {
-		MessageDB.favoriteMessage(req.params.messageId)
-			.then(() => res.json(req.params.messageId));
+		var messageId = req.params.messageId;
+		MessageDB.favoriteMessage(messageId)
+			.then(() => res.json(messageId));
 	});
 
 	// tbd

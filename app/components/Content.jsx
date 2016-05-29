@@ -71,7 +71,6 @@ export default class Content extends React.Component {
 					messages: MessageStore.getStarred(),
 					clickedTab: AppConstants.tabNames.STARRED
 				});
-				console.log(this.state.messages);
 				break;	
 		}
 	}
