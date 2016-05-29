@@ -17,10 +17,6 @@ export default class Message extends React.Component {
 		}		
 	}
 
-	componentWillMount() {
-		// MessageActions.getCategories(this.props.data.id);
-	}
-
 	componentDidMount() {
 		MessageStore.addChangeListener(this._onChange.bind(this));
 	}
@@ -44,7 +40,6 @@ export default class Message extends React.Component {
 	}
 
 	render() {
-		// console.log(this.props);
 		var categories;
 		if (this.props.data.categoryName) {			
 			categories = this.props.data.categoryName.map(function (category, i) {
@@ -98,12 +93,3 @@ export default class Message extends React.Component {
 		)
 	}
 }
-
- // <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
-	// 		        	aria-hidden="true"></i>
-	// 		        <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
-	// 		        	aria-hidden="true"></i>

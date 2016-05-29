@@ -87,7 +87,7 @@ var MessageDB = {
 					'c.name AS categoryName ' +
 				'FROM message m ' + 
 				'JOIN link l on m.linkId = l.id ' + 
-				'JOIN user sender on m.recipientId = sender.id ' + 
+				'JOIN user sender on m.senderId = sender.id ' + 
 				'JOIN message_category mc on mc.messageId = m.id ' + 
 				'JOIN category c on mc.categoryId = c.id ' + 
 				'WHERE senderId = :id'	
