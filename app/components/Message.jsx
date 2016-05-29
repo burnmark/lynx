@@ -14,7 +14,7 @@ export default class Message extends React.Component {
 		this.state = {
 			// this property will be filled in with props data in the future		
 			favorited: parseInt(this.props.data.favorited)	
-		}		
+		}	
 	}
 
 	componentDidMount() {
@@ -64,6 +64,7 @@ export default class Message extends React.Component {
 			        <i className="fa fa-trash-o" aria-hidden="true"></i>
 
 			        <i 
+			        	key={this.props.data.id}
 			        	onClick={this._favoriteClick.bind(this)} 
 			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
 			        	aria-hidden="true"></i>

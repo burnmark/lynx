@@ -45,6 +45,7 @@ export default class TabBar extends React.Component {
 				<span 
 					data-tab-name={AppConstants.tabNames.STARRED} 
 					className={this.state.clicked ===  AppConstants.tabNames.STARRED ? 'title tab selected' : 'title tab'}
+					onClick={this.props.starredClicked}
 				>Starred</span>				
 			</div>
 		);

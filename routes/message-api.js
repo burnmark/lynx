@@ -18,7 +18,7 @@ function mergeOnCategory(rows) {
 		arr[obj[row.id]].categoryName.push(category);
 
 	});
-
+	
 	return arr;
 }
 
@@ -27,21 +27,35 @@ module.exports.Router = function (MessageDB) {
 
 	router.get('/', (req, res, next) => {
 		MessageDB.getMessages(req.user.id) 
-			.then(rows => res.json(mergeOnCategory(rows)))
+			.then(rows => {
+				rows = mergeOnCategory(rows);
+				console.log(rows);
+				res.json(mergeOnCategory(rows))
+			})
 			.catch(next);
 	});
 
-	router.get('/received', (req, res, next) => {
-		MessageDB.getRecievedMessages(req.user.id)
-			.then(rows => res.json(mergeOnCategory(rows)))
-			.catch(next);
-	});
-	
 	router.get('/sent', (req, res, next) => {
 		MessageDB.getSentMessages(req.user.id)
 			.then(rows => res.json(mergeOnCategory(rows)))
 			.catch(next);
 	});	
+
+	router.get('/received', (req, res, next) => {
+		MessageDB.getRecievedMessages(req.user.id)
+			.then(rows => res.json(mergeOnCategory(rows)))
+			.catch(next);
+	});	
+
+	router.get('/starred', (req, res, next) => {
+		MessageDB.getStarredMessages(req.user.id)
+			.then(rows => {
+				rows = mergeOnCategory(rows);
+				console.log(rows);
+				res.json(mergeOnCategory(rows))
+			})
+			.catch(next);
+	})
 
 	router.get('/favorite/:messageId', (req, res, next) => {
 		MessageDB.favoriteMessage(req.params.messageId)

@@ -30,37 +30,45 @@ export default class Content extends React.Component {
 		MessageStore.addChangeListener(this._onChange);
 	}
 
-	componentWillUnmount() {
+	componentWillUnmount() {		
 		MessageStore.removeChangeListener(this._onChange);		
 	}
 
 	_onChange(tabName) {
 		switch(tabName) {
-			case AppConstants.tabNames.RECEIVED:
-				this.setState({
-					messages: MessageStore.getReceived(),
-					clickedTab: AppConstants.tabNames.RECEIVED
-				});
-				break;
-
-			case AppConstants.tabNames.SENT:
-				this.setState({
-					messages: MessageStore.getSent(),
-					clickedTab: AppConstants.tabNames.SENT
-				});
-				break;
-
 			case AppConstants.tabNames.ALL:
 				this.setState({
 					messages: MessageStore.getAll(),
 					clickedTab: AppConstants.tabNames.ALL
 				});
 				break;
+			
+			case AppConstants.tabNames.SENT:
+				this.setState({
+					messages: MessageStore.getSent(),
+					clickedTab: AppConstants.tabNames.SENT
+				});
+				break;	
+
+			case AppConstants.tabNames.RECEIVED:
+				this.setState({
+					messages: MessageStore.getReceived(),
+					clickedTab: AppConstants.tabNames.RECEIVED
+				});
+				break;	
+
+			case AppConstants.tabNames.STARRED:
+				this.setState({
+					messages: MessageStore.getStarred(),
+					clickedTab: AppConstants.tabNames.STARRED
+				});
+				console.log(this.state.messages);
+				break;	
 		}
 	}
 // tbd: starred clicked
 	
-	render() {
+	render() {		
 		var messages = 'No messages yet.';		
 		if (this.state.messages) {
 			messages = this.state.messages.map((message, i) => {
@@ -71,9 +79,10 @@ export default class Content extends React.Component {
 		return (
 			<div className="panel panel-main">
 				<TabBar 
+					allClicked={this._onChange.bind(this, AppConstants.tabNames.ALL)}
 					sentClicked={this._onChange.bind(this, AppConstants.tabNames.SENT)}
 					receivedClicked={this._onChange.bind(this, AppConstants.tabNames.RECEIVED)}
-					allClicked={this._onChange.bind(this, AppConstants.tabNames.ALL)}
+					starredClicked={this._onChange.bind(this, AppConstants.tabNames.STARRED)}					
 				/>
 				<div className="panel-content">
 					{messages}
