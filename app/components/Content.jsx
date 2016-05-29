@@ -61,7 +61,6 @@ export default class Content extends React.Component {
 // tbd: starred clicked
 	
 	render() {
-		console.log(this.state);
 		var messages = 'No messages yet.';		
 		if (this.state.messages) {
 			messages = this.state.messages.map((message, i) => {

@@ -7,10 +7,6 @@ var MessageActions = {
 		return MessageApi.fetchMessages();
 	},
 
-	getCategories: function (messageId) {
-		MessageApi.fetchCategories(messageId);
-	},
-
 	deleteMessage: function (messageId) {
 		MessageApi.deleteMessage(messageId);
 	},
