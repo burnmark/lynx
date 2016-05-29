@@ -4,11 +4,7 @@ import AppConstants from '../constants/AppConstants.jsx'
 
 var MessageActions = {
 	getAllMessages: function () {
-		MessageApi.fetchMessages();
-	},
-
-	getCategories: function (messageId) {
-		MessageApi.fetchCategories(messageId);
+		return MessageApi.fetchMessages();
 	},
 
 	deleteMessage: function (messageId) {

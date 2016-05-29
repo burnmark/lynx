@@ -17,12 +17,13 @@ export default class Content extends React.Component {
 			messages: [],
 			clickedTab: AppConstants.tabNames.RECEIVED
 		};
-
-		this._onChange = this._onChange.bind(this);
 	}
 
 	componentWillMount() {
-		MessageActions.getAllMessages();
+		MessageActions.getAllMessages()
+			.then(() => this.setState({
+				messages: MessageStore.getReceived()
+			}));
 	}
 
 	componentDidMount() {
@@ -33,46 +34,46 @@ export default class Content extends React.Component {
 		MessageStore.removeChangeListener(this._onChange);		
 	}
 
-	_onChange() {		
-		this.setState({
-			messages: MessageStore.getReceived()
-		})
-	}
+	_onChange(tabName) {
+		switch(tabName) {
+			case AppConstants.tabNames.RECEIVED:
+				this.setState({
+					messages: MessageStore.getReceived(),
+					clickedTab: AppConstants.tabNames.RECEIVED
+				});
+				break;
 
-	_sentClicked() {
-		this.setState({
-			messages: MessageStore.getSent()
-		});
-	}
+			case AppConstants.tabNames.SENT:
+				this.setState({
+					messages: MessageStore.getSent(),
+					clickedTab: AppConstants.tabNames.SENT
+				});
+				break;
 
-	_receivedClicked() {
-		this.setState({
-			messages: MessageStore.getReceived()
-		})
+			case AppConstants.tabNames.ALL:
+				this.setState({
+					messages: MessageStore.getAll(),
+					clickedTab: AppConstants.tabNames.ALL
+				});
+				break;
+		}
 	}
-
-	_allClicked() {
-		this.setState({
-			messages: MessageStore.getAll()
-		});
-	}
-
 // tbd: starred clicked
 	
 	render() {
-		var messages = 'No messages yet.';
+		var messages = 'No messages yet.';		
 		if (this.state.messages) {
-			messages = this.state.messages.map((message) => {
-				return <Message key={message.id} data={message} />;
+			messages = this.state.messages.map((message, i) => {
+				return <Message key={i} data={message} />;
 			});
 		}
 
 		return (
 			<div className="panel panel-main">
 				<TabBar 
-					sentClicked={this._sentClicked.bind(this)}
-					receivedClicked={this._receivedClicked.bind(this)}
-					allClicked={this._allClicked.bind(this)}
+					sentClicked={this._onChange.bind(this, AppConstants.tabNames.SENT)}
+					receivedClicked={this._onChange.bind(this, AppConstants.tabNames.RECEIVED)}
+					allClicked={this._onChange.bind(this, AppConstants.tabNames.ALL)}
 				/>
 				<div className="panel-content">
 					{messages}

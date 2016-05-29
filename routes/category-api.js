@@ -1,7 +1,7 @@
 var express = require('express');
 var _ = require('lodash');
 
-module.exports.Router = function (Database) {
+module.exports.Router = function (CategoryDB) {
 	var router = express.Router();
 
 	/*
@@ -23,14 +23,14 @@ module.exports.Router = function (Database) {
 
 
 	router.get('/', (req, res, next) => {
-		Database.getCategories(req.user.id)
+		CategoryDB.getCategories(req.user.id)
 			.then(rows => res.json(_.map(rows, 'name')))
 			.catch(next);
 	});	
 
 	router.get('/:messageId', (req, res, next) => {
 		console.log(req.params.messageId);
-		Database.getCategoriesByMessageId(req.params.messageId)
+		CategoryDB.getCategoriesByMessageId(req.params.messageId)
 		.then(rows => res.json(_.map(rows, 'name')))
 		.catch(next);
 	});

@@ -1,30 +1,50 @@
 var express = require('express');
 var _ = require('lodash');
 
-module.exports.Router = function (Database) {
+function mergeOnCategory(rows) {
+	var arr = [],
+		obj = {},					
+		category;
+
+	_.forEach(rows, (row, i) => {
+		category = row.categoryName;
+		
+		if (_.isNil(obj[row.id])) {	
+			row.categoryName = [];
+			arr.push(row);
+			obj[row.id] = arr.length - 1;
+		}
+		
+		arr[obj[row.id]].categoryName.push(category);
+
+	});
+
+	return arr;
+}
+
+module.exports.Router = function (MessageDB) {
 	var router = express.Router();
 
 	router.get('/', (req, res, next) => {
-		Database.getMessages(req.user.id) 
-			.then(rows => res.json(rows))
+		MessageDB.getMessages(req.user.id) 
+			.then(rows => res.json(mergeOnCategory(rows)))
 			.catch(next);
 	});
 
 	router.get('/received', (req, res, next) => {
-		Database.getRecievedMessages(req.user.id)
-			.then(rows => res.json(rows))
+		MessageDB.getRecievedMessages(req.user.id)
+			.then(rows => res.json(mergeOnCategory(rows)))
 			.catch(next);
 	});
 	
 	router.get('/sent', (req, res, next) => {
-		Database.getSentMessages(req.user.id)
-			.then(rows => res.json(rows))
+		MessageDB.getSentMessages(req.user.id)
+			.then(rows => res.json(mergeOnCategory(rows)))
 			.catch(next);
 	});	
 
 	router.get('/favorite/:messageId', (req, res, next) => {
-		console.log('favorite clicked made it to router');
-		Database.favoriteMessage(req.params.messageId)
+		MessageDB.favoriteMessage(req.params.messageId)
 			.then(rows => console.log(rows));
 	});
 

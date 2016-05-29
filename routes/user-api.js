@@ -1,6 +1,6 @@
 var express = require('express');
 
-module.exports.Router = function (Database) {
+module.exports.Router = function (UserDB) {
 	var router = express.Router();
 
 	router.get('/me', (req, res) => {
@@ -8,7 +8,7 @@ module.exports.Router = function (Database) {
 	});
 	
 	router.get('/friends', (req, res, next) => {
-		Database.getFriends(req.user.id)
+		UserDB.getFriends(req.user.id)
 			.then(rows => res.json(rows))
 			.catch(next);
 	});

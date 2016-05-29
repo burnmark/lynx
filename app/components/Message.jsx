@@ -12,15 +12,9 @@ export default class Message extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			categories: [],
 			// this property will be filled in with props data in the future		
 			favorited: parseInt(this.props.data.favorited)	
 		}		
-		
-	}
-
-	componentWillMount() {
-		MessageActions.getCategories(this.props.data.id);
 	}
 
 	componentDidMount() {
@@ -31,25 +25,24 @@ export default class Message extends React.Component {
 		MessageStore.removeChangeListener(this._onChange.bind(this));
 	}
 	
-	// _favoriteClick() {		
-	// 	console.log('favorited clicked in component');
-	// 	this.setState({
-	// 		favorited: !this.state.favorited
-	// 	});
-	// 	MessageActions.favoriteMessage(this.props.data.id);
+	_favoriteClick() {		
+		this.setState({
+			favorited: !this.state.favorited
+		});
+		MessageActions.favoriteMessage(this.props.data.id);
 
-	// }
+	}
 
 	_onChange() {
-		this.setState({
-			categories: MessageStore.getCategories(this.props.data.id)
-		})
+		// this.setState({
+		// 	categories: MessageStore.getCategories(this.props.data.id)
+		// });
 	}
 
 	render() {
 		var categories;
-		if (this.state.categories) {
-			categories = this.state.categories.map(function (category, i) {
+		if (this.props.data.categoryName) {			
+			categories = this.props.data.categoryName.map(function (category, i) {
 				return <FilterBtn key={i} word={category} />;
 			});
 		}
@@ -71,11 +64,11 @@ export default class Message extends React.Component {
 			        <i className="fa fa-trash-o" aria-hidden="true"></i>
 
 			        <i 
-			        	
+			        	onClick={this._favoriteClick.bind(this)} 
 			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
 			        	aria-hidden="true"></i>
 			        <i 
-			        	
+			        	onClick={this._favoriteClick.bind(this)} 
 			        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
 			        	aria-hidden="true"></i>
 
@@ -100,12 +93,3 @@ export default class Message extends React.Component {
 		)
 	}
 }
-
- // <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
-	// 		        	aria-hidden="true"></i>
-	// 		        <i 
-	// 		        	onClick={this._favoriteClick.bind(this)} 
-	// 		        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
-	// 		        	aria-hidden="true"></i>

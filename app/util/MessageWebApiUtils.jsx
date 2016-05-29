@@ -4,7 +4,7 @@ import AppConstants from '../constants/AppConstants.jsx';
 
 var MessageApi = {
 	fetchMessages: function () {
-		Promise.all([
+		return Promise.all([
 			$.getJSON('/api/message/sent'),
 			$.getJSON('/api/message/received'), 		
 			$.getJSON('/api/message/')
@@ -19,19 +19,6 @@ var MessageApi = {
 				AppDispatcher.handleAction({
 					actionType: AppConstants.FETCH_MESSAGES,
 					data: null
-				});
-			});
-	},
-
-	fetchCategories: function (messageId) {
-		$.getJSON('/api/category/' + messageId)
-			.then(data => {
-				AppDispatcher.handleAction({
-					actionType: AppConstants.FETCH_CATEGORIES,
-					data: {
-						id: messageId,
-						categories: data
-					}
 				});
 			});
 	},
