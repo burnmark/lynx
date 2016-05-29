@@ -19,9 +19,9 @@ const AppConstants = {
 	LOGIN_FAILED: 'LOGIN_FAILED',
 
 	tabNames: {
-		SENT: 'SENT',
-		RECEIVED: 'RECEIVED',
 		ALL: 'ALL',
+		SENT: 'SENT',
+		RECEIVED: 'RECEIVED',		
 		STARRED: 'STARRED'
 	}
 };

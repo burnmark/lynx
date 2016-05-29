@@ -5,9 +5,10 @@ import AppConstants from '../constants/AppConstants.jsx';
 var MessageApi = {
 	fetchMessages: function () {
 		return Promise.all([
+			$.getJSON('/api/message/'),
 			$.getJSON('/api/message/sent'),
-			$.getJSON('/api/message/received'), 		
-			$.getJSON('/api/message/')
+			$.getJSON('/api/message/received'),
+			$.getJSON('/api/message/starred')					
 		])
 			.then(values => {
 				AppDispatcher.handleAction({
@@ -36,15 +37,7 @@ var MessageApi = {
 	},
 
 	favoriteMessage: function (messageId) {
-		$.getJSON('/api/message/favorite/' + messageId) 
-			.then(() => {
-				AppDispatcher.handleAction({
-					actionType: AppConstants.FAVORITE_MESSAGE,
-					data: {
-						id: messageId
-					}
-				})
-			})
+		return Promise.all([$.getJSON('/api/message/favorite/' + messageId)]);
 	}
 }
 

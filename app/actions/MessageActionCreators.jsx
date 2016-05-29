@@ -12,7 +12,7 @@ var MessageActions = {
 	},
 
 	favoriteMessage: function (messageId) {		
-		MessageApi.favoriteMessage(messageId);
+		return MessageApi.favoriteMessage(messageId);
 	}
 }
 

@@ -5,40 +5,7 @@ import Avatar from './Avatar.jsx';
 import FilterBtn from './FilterBtn.jsx';
 import LinkDetail from './LinkDetail.jsx';
 
-import MessageActions from '../actions/MessageActionCreators.jsx';
-import MessageStore from '../stores/MessageStore.jsx';
-
 export default class Message extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			// this property will be filled in with props data in the future		
-			favorited: parseInt(this.props.data.favorited)	
-		}		
-	}
-
-	componentDidMount() {
-		MessageStore.addChangeListener(this._onChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		MessageStore.removeChangeListener(this._onChange.bind(this));
-	}
-	
-	_favoriteClick() {		
-		this.setState({
-			favorited: !this.state.favorited
-		});
-		MessageActions.favoriteMessage(this.props.data.id);
-
-	}
-
-	_onChange() {
-		// this.setState({
-		// 	categories: MessageStore.getCategories(this.props.data.id)
-		// });
-	}
-
 	render() {
 		var categories;
 		if (this.props.data.categoryName) {			
@@ -64,15 +31,15 @@ export default class Message extends React.Component {
 			        <i className="fa fa-trash-o" aria-hidden="true"></i>
 
 			        <i 
-			        	onClick={this._favoriteClick.bind(this)} 
-			        	className={this.state.favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
+			        	onClick={this.props.handleStarred} 
+			        	data-messageId={this.props.data.id}
+			        	className={favorited ? "fa fa-star-o hidden" : "fa fa-star-o"} 
 			        	aria-hidden="true"></i>
 			        <i 
-			        	onClick={this._favoriteClick.bind(this)} 
-			        	className={this.state.favorited ? "fa fa-star" : "fa fa-star hidden"} 
+			        	onClick={this.props.handleStarred} 
+			        	data-messageId={this.props.data.id}
+			        	className={favorited ? "fa fa-star" : "fa fa-star hidden"} 
 			        	aria-hidden="true"></i>
-
-
 
 			    </div>
 

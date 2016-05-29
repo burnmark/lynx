@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import AppDispatcher from '../dispatcher/AppDispatcher.jsx';
 import AppConstants from '../constants/AppConstants.jsx';
 import {EventEmitter} from 'events';
@@ -10,6 +12,10 @@ class MessageStoreClass extends EventEmitter {
 		super();
 	}
 
+	getAll() {
+		return _store.all;
+	}
+
 	getSent() {
 		return _store.sent;
 	}
@@ -18,12 +24,8 @@ class MessageStoreClass extends EventEmitter {
 		return _store.received;
 	}
 
-	getAll() {
-		return _store.all;
-	}
-
-	getCategories(messageId) {
-		return _store[messageId];
+	getStarred() {
+		return _store.starred;
 	}
 
 	addChangeListener(callback) {
@@ -44,15 +46,17 @@ MessageStore.dispatchToken = AppDispatcher.register(payload => {
 		case AppConstants.FETCH_MESSAGES:
 			if (data) {
 				_store = {
-					sent: data[0],
-					received: data[1],
-					all: data[2]
+					all: data[0],
+					sent: data[1],
+					received: data[2],
+					starred: data[3]					
 				};
 			} else {
 				_store = {
+					all: [],
 					sent: [],
 					received: [],
-					all: []
+					starred: []					
 				}
 			}
 			MessageStore.emit(CHANGE_EVENT);

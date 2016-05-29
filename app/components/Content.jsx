@@ -11,8 +11,6 @@ import AppConstants from '../constants/AppConstants.jsx';
 export default class Content extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// currently not being sorted by sent/received
 		this.state = {
 			messages: [],
 			clickedTab: AppConstants.tabNames.RECEIVED
@@ -30,50 +28,69 @@ export default class Content extends React.Component {
 		MessageStore.addChangeListener(this._onChange);
 	}
 
-	componentWillUnmount() {
+	componentWillUnmount() {		
 		MessageStore.removeChangeListener(this._onChange);		
 	}
 
+	_handleStarred(event) {
+		var messageId = $(event.target).attr('data-messageId');
+		MessageActions.favoriteMessage(messageId)
+			.then(() => {
+				MessageActions.getAllMessages()
+					.then(() => {
+						this._onChange(this.state.clickedTab);
+					});
+			});
+	}	
+
 	_onChange(tabName) {
 		switch(tabName) {
-			case AppConstants.tabNames.RECEIVED:
-				this.setState({
-					messages: MessageStore.getReceived(),
-					clickedTab: AppConstants.tabNames.RECEIVED
-				});
-				break;
-
-			case AppConstants.tabNames.SENT:
-				this.setState({
-					messages: MessageStore.getSent(),
-					clickedTab: AppConstants.tabNames.SENT
-				});
-				break;
-
 			case AppConstants.tabNames.ALL:
 				this.setState({
 					messages: MessageStore.getAll(),
 					clickedTab: AppConstants.tabNames.ALL
 				});
 				break;
+			
+			case AppConstants.tabNames.SENT:
+				this.setState({
+					messages: MessageStore.getSent(),
+					clickedTab: AppConstants.tabNames.SENT
+				});
+				break;	
+
+			case AppConstants.tabNames.RECEIVED:
+				this.setState({
+					messages: MessageStore.getReceived(),
+					clickedTab: AppConstants.tabNames.RECEIVED
+				});
+				break;	
+
+			case AppConstants.tabNames.STARRED:
+				this.setState({
+					messages: MessageStore.getStarred(),
+					clickedTab: AppConstants.tabNames.STARRED
+				});
+				break;	
 		}
 	}
 // tbd: starred clicked
 	
-	render() {
+	render() {		
 		var messages = 'No messages yet.';		
 		if (this.state.messages) {
-			messages = this.state.messages.map((message, i) => {
-				return <Message key={i} data={message} />;
+			messages = this.state.messages.map((message) => {
+				return <Message key={message.id} data={message} handleStarred={this._handleStarred.bind(this)}/>;
 			});
 		}
 
 		return (
 			<div className="panel panel-main">
 				<TabBar 
+					allClicked={this._onChange.bind(this, AppConstants.tabNames.ALL)}
 					sentClicked={this._onChange.bind(this, AppConstants.tabNames.SENT)}
 					receivedClicked={this._onChange.bind(this, AppConstants.tabNames.RECEIVED)}
-					allClicked={this._onChange.bind(this, AppConstants.tabNames.ALL)}
+					starredClicked={this._onChange.bind(this, AppConstants.tabNames.STARRED)}					
 				/>
 				<div className="panel-content">
 					{messages}
