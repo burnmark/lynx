@@ -7,7 +7,7 @@ var MessageDB = {
 					'm.linkId, ' +
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
-					'm.read, ' + 
+					'm.isRead, ' + 
 					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
@@ -43,7 +43,7 @@ var MessageDB = {
 					'm.linkId, ' +
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
-					'm.read, ' + 
+					'm.isRead, ' + 
 					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
@@ -79,7 +79,7 @@ var MessageDB = {
 					'm.linkId, ' +
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
-					'm.read, ' + 
+					'm.isRead, ' + 
 					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
@@ -112,7 +112,7 @@ var MessageDB = {
 					'm.linkId, ' +
 					'm.note, ' +
 					'UNIX_TIMESTAMP(m.timeSent) AS timeSent, ' +
-					'm.read, ' + 
+					'm.isRead, ' + 
 					'm.favorited, ' +
 					'l.url, ' + 
 					'l.title, ' + 
