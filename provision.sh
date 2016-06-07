@@ -11,6 +11,9 @@ rm /etc/apt/apt.conf.d/70debconf
 # update the package index 
 apt-get update
 
+#install vim
+sudo apt-get install vim
+
 # install git
 apt-get install -y git
 
@@ -52,14 +55,15 @@ apt-get install -y redis-server
 
 # Installing java and solr
 # https://www.vultr.com/docs/how-to-install-and-configure-solr-on-ubuntu-14-04
-apt-get install python-software-properties
-add-apt-repository ppa:webupd8team/java -y
-apt-get update -y
-apt-get install oracle-java8-installer -y
-apt-get install ant -y
-wget http://apache.mirror1.spango.com/lucene/solr/5.2.1/solr-5.2.1.tgz
-tar xzf solr-5.2.1.tgz solr-5.2.1/bin/install_solr_service.sh --strip-components=2
-./install_solr_service.sh solr-5.2.1.tgz
+# 
+# apt-get install python-software-properties
+# add-apt-repository ppa:webupd8team/java -y
+# apt-get update -y
+# apt-get install oracle-java8-installer -y
+# apt-get install ant -y
+# wget http://apache.mirror1.spango.com/lucene/solr/5.2.1/solr-5.2.1.tgz
+# tar xzf solr-5.2.1.tgz solr-5.2.1/bin/install_solr_service.sh --strip-components=2
+# ./install_solr_service.sh solr-5.2.1.tgz
 
 # set the loglevel for npm to show errors only
 npm config set loglevel error -g
