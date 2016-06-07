@@ -17,7 +17,8 @@ CREATE TABLE category (
 
 CREATE TABLE user (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	displayName VARCHAR(127) NOT NULL,
+	firstName VARCHAR(127) NOT NULL,
+	lastName VARCHAR(127) NOT NULL,
 	email VARCHAR(127) NOT NULL,
 	passwordHash CHAR(96) NOT NULL
 );
@@ -40,7 +41,7 @@ CREATE TABLE message (
 	recipientId INT UNSIGNED NOT NULL,
 	note VARCHAR(511),
 	timeSent TIMESTAMP,
-	isRead BOOLEAN NOT NULL DEFAULT 0,
+	read BOOLEAN NOT NULL DEFAULT 0,
 	favorited BOOLEAN NOT NULL DEFAULT 0,
 	deleted BOOLEAN NOT NULL DEFAULT 0
 );
@@ -58,12 +59,3 @@ CREATE TABLE message_category (
 ALTER TABLE message_category ADD CONSTRAINT `fk_mc_message` FOREIGN KEY (messageId) REFERENCES  message (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 ALTER TABLE message_category ADD CONSTRAINT `fk_mc_category` FOREIGN KEY (categoryId) REFERENCES  category (id) ON DELETE CASCADE ON UPDATE RESTRICT;
 
--- Stored procedure for adding new messages, message_categories, and links
-
-DELIMITER //
-CREATE PROCEDURE new_message (
-	linkId INT,
-	senderId INT,
-	recipientEmail VARCHAR(127),
-	note
-)

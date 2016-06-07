@@ -34,7 +34,7 @@ var UserDB = {
 	getFriends(userId) {
 		return this._getObjects(
 			(
-				'SELECT DISTINCT u.id, u.displayName, u.imgUrl FROM user u ' + 
+				'SELECT DISTINCT u.id, u.email, u.imgUrl FROM user u ' + 
 				'JOIN message m1 ON u.id = m1.recipientId ' + 
 				'JOIN message m2 ON u.id = m2.senderId ' +
 				'WHERE m1.senderId = :id AND m2.recipientId = :id'
@@ -61,11 +61,12 @@ var UserDB = {
 					return _this._connection
 						.queryAsync(
 							(
-								'INSERT INTO user (displayName, email, passwordHash) ' + 
-								'VALUES (:displayName, :email, :passwordHash)'
+								'INSERT INTO user (firstName, lastName, email, passwordHash) ' + 
+								'VALUES (:firstName, :lastName, :email, :passwordHash)'
 							), 
 							{
-								displayName: displayName,
+								firstName: firstName,
+								lastName: lastName,
 								email: email,
 								passwordHash: passwordHash
 							}
