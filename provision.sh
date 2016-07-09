@@ -69,4 +69,4 @@ apt-get install -y redis-server
 npm config set loglevel error -g
 
 # create database
-mysql -u root < /vagrant/database/schema.sql
+# mysql -u root < /vagrant/database/schema.sql
