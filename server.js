@@ -41,7 +41,7 @@ app.use(session({
 }));
 
 passport.use(new LocalStrategy({usernameField: 'email'}, function (email, password, done) {
-	Database.getUserByEmail(email)
+	UserDB.getUserByEmail(email)
 		.then(function (dbUser) {	
 			
 			if (!dbUser) return done(null, false, {message: 'Incorrect credentials.'});
@@ -65,7 +65,7 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
 
-	Database.getUserById(id)
+	UserDB.getUserById(id)
 		.then(function (dbUser) {
 			if (!dbUser) {
 				req.logout();
@@ -109,7 +109,7 @@ app.post('/api/signup', function (req, res, next) {
 		if (err) return next(err);
 		// if username is already in db, returns error
 		// if not, adds new user to db, returns user information
-		Database.addUser(req.body.displayName, req.body.email, passwordHash)
+		UserDB.addUser(req.body.firstName, req.body.lastName, req.body.email, passwordHash)
 			.then(user => {				
 				req.body = user; 
 				req.login(req.body, err => {
