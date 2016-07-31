@@ -25,7 +25,7 @@ export default class Message extends React.Component {
 			        <Avatar imgUrl={this.props.data.senderImg} />
 
 			        <div className="info">
-			        	<span className="name">{this.props.data.senderName}</span>			     
+			        	<span className="name">{this.props.data.senderFirstName} {this.props.data.senderLastName}</span>
 			        	<span className="dateString">{dateString}</span>
 			        </div>
 

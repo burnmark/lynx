@@ -1,4 +1,4 @@
-
+USE lynx;
 
 DROP PROCEDURE IF EXISTS insert_link;
 DROP PROCEDURE IF EXISTS insert_message;
@@ -27,8 +27,8 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE insert_message (	
 	linkUrl VARCHAR(2083),
-	senderName VARCHAR(127),
-	recipientName VARCHAR(127),
+	senderEmail VARCHAR(127),
+	recipientEmail VARCHAR(127),
 	note VARCHAR(511)
 )
 	BEGIN
@@ -37,8 +37,8 @@ CREATE PROCEDURE insert_message (
 		DECLARE recipientId INT;
 
 		SELECT id INTO linkid FROM link WHERE url = linkUrl LIMIT 1;
-		SELECT id INTO senderId FROM user WHERE displayName = senderName LIMIT 1;
-		SELECT id INTO recipientId FROM user WHERE displayName = recipientName LIMIT 1;
+		SELECT id INTO senderId FROM user WHERE email = senderEmail LIMIT 1;
+		SELECT id INTO recipientId FROM user WHERE email = recipientEmail LIMIT 1;
 
 		INSERT INTO message (linkid, senderId, recipientId, note)
 		VALUES (linkid, senderId, recipientId, note);
@@ -82,13 +82,18 @@ INSERT INTO category (name) VALUES
 	('programming'), 
 	('tips');
 
-INSERT INTO user (displayName, email, passwordHash)
+INSERT INTO user (firstName, lastName, email, passwordHash, imgUrl)
 VALUES
-	('enamark', 'enagmail.com', 'sdkhfjdsh'),
-	('alexburn', 'alexgmail.com', 'sdjfhksjdhg'),
-	('amycool', 'amygmail.com', 'sdjhfjksdhf'),
-	('jeff', 'jeffgmail.com', 'skdjghfksdjhfjks'),
-	('stearns', 'stearnsgmail.com', 'kjsdhfkjdhsghkds');
+									-- enamark
+	('ena', 'mark', 'ena@gmail.com', '$2a$10$Gw4PvGXCE8cLy9OJHZpdYe97VsRAvujxEAeJGLCBzTo5Txgf25AUO', 'img/placeholder.png'),
+									-- alexburn
+	('alex', 'burn', 'alex@gmail.com', '$2a$10$C1X3bAKWxB4lcjbiFKWvK.lZq6HvIzf8HZmZJOJaW8tOqclj2/Z3K', 'img/placeholder.png'),
+									-- amycool
+	('amy', 'cool', 'amy@gmail.com', '$2a$10$t3leXbZZ7Scv.NpOdLsvVOCMyDixhFnVIBXjcPvnwPMT6MeYwKuCK', 'img/placeholder.png'),
+									-- jeffcool
+	('jeff', 'cool', 'jeff@gmail.com', '$2a$10$rfTsiXqhZbTxFyudNuXGQ.6o8YaaaxE2qg5K7bXJi91H0vjHxtiWO', 'img/placeholder.png'),
+									-- davestearns
+	('dave', 'stearns', 'stearns@gmail.com', '$2a$10$2TFIOXQh.XG/N4hxyJkXyuttrcWzcKoGvjVAtgsARdrG63FXU4BNm', 'img/placeholder.png');
 
 	
 
@@ -130,38 +135,38 @@ CALL insert_link (
 
 CALL insert_message (
 	'www.yahoo.com',
-	'enamark',
-	'alexburn',
+	'ena@gmail.com',
+	'alex@gmail.com',
 	'check this out, its pretty cool!'
 );
 CALL insert_message (
 	'www.buzzfeed.com',
-	'alexburn',
-	'enamark',
+	'alex@gmail.com',
+	'ena@gmail.com',
 	'I saw your message, and i agree... it is cool. BUT you should actually check out buzzfeed'
 );
 CALL insert_message (
 	'www.twitter.com',
-	'amycool',
-	'jeff',
+	'amy@gmail.com',
+	'jeff@gmail.com',
 	'I thought you would appreciate this tweet!'
 );
 CALL insert_message (
 	'www.twitter.com',
-	'jeff',
-	'amycool',
+	'jeff@gmail.com',
+	'amy@gmail.com',
 	'haha that is pretty funny! check this one out'
 );
 CALL insert_message (
 	'www.reddit.com',
-	'stearns',
-	'enamark',
+	'stearns@gmail.com',
+	'ena@gmail.com',
 	'Become addicted to reddit please.'
 );
 CALL insert_message (
 	'www.facebook.com',
-	'enamark',
-	'stearns',
+	'ena@gmail.com',
+	'stearns@gmail.com',
 	'Become addicted to facebook please.'
 );
 

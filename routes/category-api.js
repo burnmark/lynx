@@ -29,7 +29,6 @@ module.exports.Router = function (CategoryDB) {
 	});	
 
 	router.get('/:messageId', (req, res, next) => {
-		console.log(req.params.messageId);
 		CategoryDB.getCategoriesByMessageId(req.params.messageId)
 		.then(rows => res.json(_.map(rows, 'name')))
 		.catch(next);

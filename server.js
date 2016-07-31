@@ -126,7 +126,6 @@ app.post('/api/signup', function (req, res, next) {
 // Ensures that only authenticated users can reach the api calls after this point
 app.use(function (req, res, next) {
 	if (req.isAuthenticated()) {
-		console.log('is authenticated, going to next');
 		return next();
 	} else {
 		res.status(401).json({message: 'Must sign in.'});		

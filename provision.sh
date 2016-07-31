@@ -22,7 +22,7 @@ apt-get install -y git
 apt-get install -y software-properties-common
 
 # install Node.js v5.x
-curl -sL https://deb.nodesource.com/setup_5.x | bash -
+curl -sL https://deb.nodesource.com/setup_6.x | bash -
 apt-get install -y nodejs
 
 # install build-essential for Node modules w/native code
@@ -69,4 +69,5 @@ apt-get install -y redis-server
 npm config set loglevel error -g
 
 # create database
-# mysql -u root < /vagrant/database/schema.sql
+mysql -u root < /vagrant/database/schema.sql
+mysql -u root < /vagrant/database/populate.sql

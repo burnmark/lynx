@@ -47,7 +47,7 @@ var UserDB = {
 
 	// if user already exists -> promise resolves with null
 	// if not
-	addUser(displayName, email, passwordHash) {	
+	addUser(firstName, lastName, email, passwordHash) {	
 		var _this = this;
 		//see notes
 		

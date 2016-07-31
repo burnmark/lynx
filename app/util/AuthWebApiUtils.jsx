@@ -8,8 +8,8 @@ var AuthApi = {
 			type: 'POST',
 			url: '/api/signin',
 			data: JSON.stringify({
-				email: 'enagmail.com',
-				password: 'ena'
+				email: 'ena@gmail.com',
+				password: 'enamark'
 			}),
 			success: function () {
 				AppDispatcher.handleAction({

@@ -14,7 +14,10 @@ var MessageDB = {
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName, ' +
+					// 'sender.displayName AS senderName, ' +
+					'sender.firstName AS senderFirstName, ' +
+					'sender.lastName AS senderLastName, ' +
+					
 					'sender.imgUrl AS senderImg, ' +
 					'c.name AS categoryName ' +
 				'FROM message m ' + 
@@ -49,8 +52,11 @@ var MessageDB = {
 					'l.title, ' + 
 					'l.description, ' + 
 					'l.imgUrl, ' + 
-					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName, ' +
+					'sender.email AS senderEmail, ' +
+					// 'sender.displayName AS senderName, ' +
+					'sender.firstName AS senderFirstName, ' +
+					'sender.lastName AS senderLastName, ' +
+
 					'sender.imgUrl AS senderImg, ' +
 					'c.name AS categoryName ' +
 				'FROM message m ' + 
@@ -86,7 +92,10 @@ var MessageDB = {
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName, ' +
+					// 'sender.displayName AS senderName, ' +
+					'sender.firstName AS senderFirstName, ' +
+					'sender.lastName AS senderLastName, ' +
+
 					'sender.imgUrl AS senderImg, ' +
 					'c.name AS categoryName ' +
 				'FROM message m ' + 
@@ -119,7 +128,10 @@ var MessageDB = {
 					'l.description, ' + 
 					'l.imgUrl, ' + 
 					'sender.email AS senderEmail, ' + 
-					'sender.displayName AS senderName, ' +
+					// 'sender.displayName AS senderName, ' +
+					'sender.firstName AS senderFirstName, ' +
+					'sender.lastName AS senderLastName, ' +
+					
 					'sender.imgUrl AS senderImg, ' +
 					'c.name AS categoryName ' +
 				'FROM message m ' + 
