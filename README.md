@@ -72,4 +72,4 @@ $ npm run dev
 
 Watch this output to make sure you don't have syntax errors caught by Babel, and be patient to let the build run before refreshing your browser and seeing your changes.
 
-# YOU ARE GOOD TO GO
+### YOU ARE GOOD TO GO
