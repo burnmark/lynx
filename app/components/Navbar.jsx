@@ -19,6 +19,7 @@ export default class Navbar extends React.Component {
 			overlayHidden: !this.state.overlayHidden,
 			shareOpenedHidden: !this.state.shareOpenedHidden
 		});
+
 	}
 
 
@@ -29,10 +30,14 @@ export default class Navbar extends React.Component {
 				
 				<div className="logo">lynx</div>
 
-				<div className="share">
+				<div className="share" id="shareSection">
 					<ShareClosed data={this.state} clickEvent={this._handleShareClick.bind(this)}/>
 
-					<ShareOpened data={this.state} clickEvent={this._handleShareClick.bind(this)}/>
+					{!this.state.shareOpenedHidden ?
+						<ShareOpened data={this.state} clickEvent={this._handleShareClick.bind(this)}/> :
+						null
+					}
+
 				</div>
 				<div className="account">
 					<Avatar btnClass={true} imgUrl="img/person1.jpg" />

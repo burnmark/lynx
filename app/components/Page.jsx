@@ -38,8 +38,8 @@ export default class Page extends React.Component {
 
 				<div className="page">					
 					<Navbar />
-					<Sidebar data={this.props.sidebarData} />
-					<Content messages={this.props.messages} />
+					<Sidebar />
+					<Content />
 				</div>
 			);
 		} else {

@@ -1,45 +1,71 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Input from './Input.jsx';
 import TextArea from './TextArea.jsx';
 import Button from './Button.jsx';
 
 export default class ShareOpen extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			url: '',
+			recipient: '',
+			note: ''
+		};
+	}
+	componentDidMount() {
+		ReactDOM.findDOMNode(this.refs.url).focus();
+	}
+	handleUrlChange(e) {
+		this.setState({url: e.target.value});
+	}
+	handleSubmit() {
+		var url = ReactDOM.findDOMNode(this.refs.url);
+		var recipient = ReactDOM.findDOMNode(this.refs.recipient);
+		var note = ReactDOM.findDOMNode(this.refs.note);
+
+		//send to server
+		console.log(url.value, recipient.value, note.value);
+
+		url.value = '';
+		recipient.value = '';
+		note.value = '';
+
+	}
 	render() {
 		return (
 			<div className={this.props.data.shareOpenedHidden ? 'share-open hidden' : 'share-open'}>
-				<Input placeholder="Share a link" />
-				<Input placeholder="To a user" />
-				<TextArea placeholder="Add a note (optional)" />
-				<Button placeholder="Send" classname="button-primary" />
-				<Button cancelClick={this.props.clickEvent} placeholder="Cancel" classname="button cancel-btn" />
+				<input
+					className="u-full-width"
+					type="text"
+					placeholder="Share a link"
+					ref="url"
+					value={this.state.url}
+					onChange={this.handleUrlChange.bind(this)}
+				/>
+
+				<Input
+					placeholder="To a user"
+					ref="recipient"
+					value={this.state.recipient}
+				/>
+				<TextArea
+					placeholder="Add a note (optional)"
+					ref="note"
+					value={this.state.note}
+				/>
+				<Button
+					onClick={this.handleSubmit.bind(this)}
+					placeholder="Send"
+					classname="button-primary"
+				/>
+				<Button
+					onClick={this.props.clickEvent}
+					placeholder="Cancel"
+					classname="button cancel-btn"
+				/>
 			</div>
 		);
-		// return (
-		// 	<div className={this.props.data.shareOpenHidden ? 'share-open hidden' : 'share-open'}>
-		// 		<input 
-		// 			className="u-full-width" 
-		// 			type="text"
-		// 			placeholder="Share a link" />
-		// 		<input 
-		// 			className="u-full-width" 
-		// 			type="text"
-		// 			placeholder="To a user" />
-		// 		<textarea
-		// 			class="u-fill-width"
-		// 			type="text"
-		// 			placeholder={this.props.placeholder}
-		// 			rows="10"></textarea>
-
-		// 		<button
-		// 			className="button-primary"
-		// 			type="submit">Send</button>
-
-		// 		<button
-		// 			className="button cancel-btn"
-		// 			onClick={this.props.clickEvent}>Cancel</button>
-
-		// 	</div>
-		// );
 	}
 }

@@ -6,7 +6,9 @@ export default class Input extends React.Component {
 			<input 
 				className="u-full-width" 
 				type="text"
-				placeholder={this.props.placeholder} />
+				placeholder={this.props.placeholder}
+				onChange={this.props.onChange}
+			/>
 		)
 	}
 }

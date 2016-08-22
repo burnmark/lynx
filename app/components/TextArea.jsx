@@ -7,7 +7,9 @@ export default class TextArea extends React.Component {
 				class="u-fill-width"
 				type="text"
 				placeholder={this.props.placeholder}
-				rows="10">
+				rows="10"
+				onChange={this.props.onChange}
+			>
 			</textarea>
 		);
 	}
