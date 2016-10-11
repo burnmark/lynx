@@ -23,14 +23,20 @@ var MessageApi = {
 				});
 			});
 	},
-
+	
+	//change jquery to use fetch!
 	deleteMessage: function (messageId) {
 		return Promise.all([$.getJSON('api/message/delete/' + messageId)]);
 	},
 
 	favoriteMessage: function (messageId) {
 		return Promise.all([$.getJSON('/api/message/favorite/' + messageId)]);
+	},
+	
+	sendMessage: function (url, recipient, note) {
+		return
 	}
+	
 }
 
 export default MessageApi;

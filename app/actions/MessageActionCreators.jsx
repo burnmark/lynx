@@ -13,6 +13,10 @@ var MessageActions = {
 
 	favoriteMessage: function (messageId) {		
 		return MessageApi.favoriteMessage(messageId);
+	},
+
+	sendMessage: function (url, recipient, message) {
+		return MessageApi.sendMessage(url, recipient, message);
 	}
 }
 
